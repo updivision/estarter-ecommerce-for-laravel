@@ -14,7 +14,7 @@
 ## Installation
 - Clone repository
 ```
-$ git clone git@github.com:updivision/estarter-ecommerce-for-laravel.git
+$ git clone https://github.com/updivision/estarter-ecommerce-for-laravel.git
 ```
 - Run in your terminal
 ```
