@@ -62,6 +62,10 @@ After creating these, you’re ready to add your first product.
 - Improve and fix styles
 - Cool ideas from developers :)
 
+
+## ER Diagram
+![alt_text](http://i.imgur.com/bNaxv0o.png "ERD")
+
 ## Screenshots
 ![alt text](http://i.imgur.com/i3rp9Jk.png "List categories")
 ![alt text](http://i.imgur.com/CCCgGvl.png "Edit category")
@@ -70,9 +74,6 @@ After creating these, you’re ready to add your first product.
 ![alt text](http://i.imgur.com/xmb0u7o.png "Edit attribute set")
 ![alt text](http://i.imgur.com/OVbI44p.png "Edit currency")
 ![alt text](http://i.imgur.com/86mx9U2.png "Edit tax")
-
-## ER Diagram
-![alt_text](http://i.imgur.com/bNaxv0o.png "ERD")
 
 ## Contributors
  - [Paul Duca](https://github.com/pduca)
