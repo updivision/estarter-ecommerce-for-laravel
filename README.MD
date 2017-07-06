@@ -70,3 +70,7 @@ After creating these, you’re ready to add your first product.
 ![alt text](http://i.imgur.com/xmb0u7o.png "Edit attribute set")
 ![alt text](http://i.imgur.com/OVbI44p.png "Edit currency")
 ![alt text](http://i.imgur.com/86mx9U2.png "Edit tax")
+
+## Contributors
+ - [Paul Duca](https://github.com/pduca)
+ - [Andrei Barta](https://github.com/abarta)
