@@ -52,8 +52,8 @@ After creating these, you’re ready to add your first product.
 
 ## Known Issues
 - Product image uploader not fully responsive
-- Changing attributes set on a product where old set has a media attribute type with an uploaded image and upload a new image to media attribute type cause an error
-- Cloning a product does not clone values field from products_attributes_values table
+- Changing attribute set on a product that had an old set of media attribute type with an uploaded image and uploading a new image to media attribute type causes an error
+- Cloning a product does not clone values field from attribute_product_value table
 
 ## Roadmap for v1.0
 - Implement orders
