@@ -38,7 +38,7 @@ $ php artisan migrate --seed
 
 - Access it on
 ```
-http://localhost/laravel-ecommerce/admin/login
+http://localhost/estarter-ecommerce-for-laravel/admin/login
 ```
 
 ## Setup
@@ -61,3 +61,13 @@ After creating these, you’re ready to add your first product.
 - Improve product image uploader
 - Improve and fix styles
 - Cool ideas from developers :)
+
+## Screenshots
+![alt text](http://i.imgur.com/i3rp9Jk.png "List categories")
+![alt text](http://i.imgur.com/CCCgGvl.png "Edit category")
+![alt text](http://i.imgur.com/92WE6wd.png "Edit product")
+![alt text](http://i.imgur.com/NFaDSlV.png "Add carrier")
+![alt text](http://i.imgur.com/ZZF70eo.png "Edit attribute")
+![alt text](http://i.imgur.com/xmb0u7o.png "Edit attribute set")
+![alt text](http://i.imgur.com/OVbI44p.png "Edit currency")
+![alt text](http://i.imgur.com/86mx9U2.png "Edit tax")
