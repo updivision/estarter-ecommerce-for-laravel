@@ -7,7 +7,7 @@
 - Create carriers
 - Create taxes and use them on products
 - Create order statuses
-- Create products and upload product multiple images on single time using dropzone
+- Create products and upload product multiple images at once, using dropzone
 - Ability to create product groups
 - Ability to clone a product
 
