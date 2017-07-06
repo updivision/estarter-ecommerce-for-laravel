@@ -42,7 +42,7 @@ http://localhost/laravel-ecommerce/admin/login
 ```
 
 ## Setup
-In order to the shop and be able to add products, you must have a minimum configuration:
+In order to use the shop and be able to add products, you must have a minimum configuration:
 - Create at least one category;
 - Create at least one attribute for at least one of these types: text, textarea, date, dropdown, multiple select, media;
 - Create at least one attribute set;
