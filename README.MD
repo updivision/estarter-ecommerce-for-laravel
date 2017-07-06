@@ -66,7 +66,6 @@ After creating these, you’re ready to add your first product.
 ![alt text](http://i.imgur.com/i3rp9Jk.png "List categories")
 ![alt text](http://i.imgur.com/CCCgGvl.png "Edit category")
 ![alt text](http://i.imgur.com/92WE6wd.png "Edit product")
-![alt text](http://i.imgur.com/NFaDSlV.png "Add carrier")
 ![alt text](http://i.imgur.com/ZZF70eo.png "Edit attribute")
 ![alt text](http://i.imgur.com/xmb0u7o.png "Edit attribute set")
 ![alt text](http://i.imgur.com/OVbI44p.png "Edit currency")
