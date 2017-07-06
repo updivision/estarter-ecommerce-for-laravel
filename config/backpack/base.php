@@ -12,14 +12,14 @@ return [
     */
 
     // Project name. Shown in the breadcrumbs and a few other places.
-    'project_name' => 'Foundation Ecommerce for Laravel',
+    'project_name' => 'eStarter',
 
     // Menu logos
-    'logo_lg'   => '<b>Laravel</b>Ecommerce',
-    'logo_mini' => '<b>L</b>E',
+    'logo_lg'   => '<b>e</b>Starter',
+    'logo_mini' => '<b>e</b>S',
 
     // Developer or company name. Shown in footer.
-    'developer_name' => 'Paul Duca @UpDivision',
+    'developer_name' => 'updivision',
 
     // Developer website. Link in footer.
     'developer_link' => 'http://updivision.com',
