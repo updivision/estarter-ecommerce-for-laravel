@@ -74,3 +74,10 @@ After creating these, you’re ready to add your first product.
 ## Contributors
  - [Paul Duca](https://github.com/pduca)
  - [Andrei Barta](https://github.com/abarta)
+ 
+## License
+eStarter is based on Backpack which is free for non-commercial use and $19/project for commercial use. Please see [License File](LICENSE.md) and [backpackforlaravel.com](https://backpackforlaravel.com/#pricing) for more information.
+
+[ico-version]: https://img.shields.io/packagist/v/backpack/base.svg?style=flat-square
+[ico-license]: https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square
+[ico-downloads]: https://img.shields.io/packagist/dt/backpack/base.svg?style=flat-square
