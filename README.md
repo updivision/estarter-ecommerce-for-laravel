@@ -75,6 +75,9 @@ After creating these, you’re ready to add your first product.
 ![alt text](http://i.imgur.com/OVbI44p.png "Edit currency")
 ![alt text](http://i.imgur.com/86mx9U2.png "Edit tax")
 
+## Test it out
+[![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
+
 ## Contributors
  - [Paul Duca](https://github.com/pduca)
  - [Andrei Barta](https://github.com/abarta)
