@@ -29,7 +29,6 @@ class CategoryCrudController extends CrudController
         |--------------------------------------------------------------------------
         */
         $this->crud->enableReorder('name', 0);
-        $this->crud->allowAccess('reorder');
 
         /*
         |--------------------------------------------------------------------------
@@ -57,6 +56,13 @@ class CategoryCrudController extends CrudController
 
         /*
         |--------------------------------------------------------------------------
+        | PERMISSIONS
+        |-------------------------------------------------------------------------
+        */
+        $this->setPermissions();
+
+        /*
+        |--------------------------------------------------------------------------
         | FIELDS
         |--------------------------------------------------------------------------
         */
@@ -71,9 +77,42 @@ class CategoryCrudController extends CrudController
 
     }
 
+    public function setPermissions()
+    {
+        // Get authenticated user
+        $user = auth()->user();
+
+        // Deny all accesses
+        $this->crud->denyAccess(['list', 'create', 'update', 'reorder', 'delete']);
+
+        // Allow list access
+        if ($user->can('list_categories')) {
+            $this->crud->allowAccess('list');
+        }
+
+        // Allow create access
+        if ($user->can('create_category')) {
+            $this->crud->allowAccess('create');
+        }
+
+        // Allow update access
+        if ($user->can('update_category')) {
+            $this->crud->allowAccess('update');
+        }
+
+        // Allow reorder access
+        if ($user->can('reorder_categories')) {
+            $this->crud->allowAccess('reorder');
+        }
+
+        // Allow delete access
+        if ($user->can('delete_category')) {
+            $this->crud->allowAccess('delete');
+        }
+    }
+
     public function setFields()
     {
-
         $this->crud->addFields([
             [
                 'name'  => 'name',
@@ -86,7 +125,6 @@ class CategoryCrudController extends CrudController
                 'type'  => 'text',
             ]
         ]);
-
     }
 
 	public function store(StoreRequest $request)

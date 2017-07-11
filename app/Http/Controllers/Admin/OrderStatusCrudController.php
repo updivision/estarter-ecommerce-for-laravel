@@ -37,6 +37,13 @@ class OrderStatusCrudController extends CrudController
 
         /*
         |--------------------------------------------------------------------------
+        | PERMISSIONS
+        |-------------------------------------------------------------------------
+        */
+        $this->setPermissions();
+
+        /*
+        |--------------------------------------------------------------------------
         | FIELDS
         |--------------------------------------------------------------------------
         */
@@ -51,9 +58,37 @@ class OrderStatusCrudController extends CrudController
 
     }
 
+    public function setPermissions()
+    {
+        // Get authenticated user
+        $user = auth()->user();
+
+        // Deny all accesses
+        $this->crud->denyAccess(['list', 'create', 'update', 'delete']);
+
+        // Allow list access
+        if ($user->can('list_order_statuses')) {
+            $this->crud->allowAccess('list');
+        }
+
+        // Allow create access
+        if ($user->can('create_order_status')) {
+            $this->crud->allowAccess('create');
+        }
+
+        // Allow update access
+        if ($user->can('update_order_status')) {
+            $this->crud->allowAccess('update');
+        }
+
+        // Allow delete access
+        if ($user->can('delete_order_status')) {
+            $this->crud->allowAccess('delete');
+        }
+    }
+
     public function setFields()
     {
-
         $this->crud->addFields([
             [
                 'name'  => 'name',
@@ -61,7 +96,6 @@ class OrderStatusCrudController extends CrudController
                 'type'  => 'text',
             ]
         ]);
-
     }
 
 	public function store(StoreRequest $request)

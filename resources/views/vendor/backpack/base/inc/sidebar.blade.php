@@ -21,18 +21,50 @@
           <!-- ================================================ -->
           <li><a href="{{ url(config('backpack.base.route_prefix', 'admin').'/dashboard') }}"><i class="fa fa-dashboard"></i> <span>{{ trans('backpack::base.dashboard') }}</span></a></li>
 
-          <li><a href="{{ url(config('backpack.base.route_prefix', 'admin').'/categories') }}"><i class="fa fa-bars"></i> <span>{{ trans('category.categories') }}</span></a></li>
-          <li><a href="{{ url(config('backpack.base.route_prefix', 'admin').'/products') }}"><i class="fa fa-list"></i> <span>{{ trans('product.products') }}</span></a></li>
-          <li><a href="{{ url(config('backpack.base.route_prefix', 'admin').'/attributes') }}"><i class="fa fa-tag"></i> <span>{{ trans('attribute.attributes') }}</span></a></li>
-          <li><a href="{{ url(config('backpack.base.route_prefix', 'admin').'/attributes-sets') }}"><i class="fa fa-tags"></i> <span>{{ trans('attribute.attribute_sets') }}</span></a></li>
-          <li><a href="{{ url(config('backpack.base.route_prefix', 'admin').'/currencies') }}"><i class="fa fa-usd"></i> <span>{{ trans('currency.currencies') }}</span></a></li>
-          <li><a href="{{ url(config('backpack.base.route_prefix', 'admin').'/carriers') }}"><i class="fa fa-truck"></i> <span>{{ trans('carrier.carriers') }}</span></a></li>
-          <li><a href="{{ url(config('backpack.base.route_prefix', 'admin').'/taxes') }}"><i class="fa fa-balance-scale"></i> <span>{{ trans('tax.taxes') }}</span></a></li>
-          <li><a href="{{ url(config('backpack.base.route_prefix', 'admin').'/orders') }}"><i class="fa fa-list-ul"></i> <span>{{ trans('order.orders') }}</span></a></li>
-          <li><a href="{{ url(config('backpack.base.route_prefix', 'admin').'/order-statuses') }}"><i class="fa fa-list-ul"></i> <span>{{ trans('order.order_statuses') }}</span></a></li>
+          @can('list_categories')
+            <li><a href="{{ url(config('backpack.base.route_prefix', 'admin').'/categories') }}"><i class="fa fa-bars"></i> <span>{{ trans('category.categories') }}</span></a></li>
+          @endcan
 
+          @can('list_products')
+            <li><a href="{{ url(config('backpack.base.route_prefix', 'admin').'/products') }}"><i class="fa fa-list"></i> <span>{{ trans('product.products') }}</span></a></li>
+          @endcan
 
-          <li><a href="{{ url('admin/setting') }}"><i class="fa fa-cog"></i> <span>Settings</span></a></li>
+          @can('list_attributes')
+            <li><a href="{{ url(config('backpack.base.route_prefix', 'admin').'/attributes') }}"><i class="fa fa-tag"></i> <span>{{ trans('attribute.attributes') }}</span></a></li>
+          @endcan
+
+          @can('list_attribute_sets')
+            <li><a href="{{ url(config('backpack.base.route_prefix', 'admin').'/attributes-sets') }}"><i class="fa fa-tags"></i> <span>{{ trans('attribute.attribute_sets') }}</span></a></li>
+          @endcan
+
+          @can('list_currencies')
+            <li><a href="{{ url(config('backpack.base.route_prefix', 'admin').'/currencies') }}"><i class="fa fa-usd"></i> <span>{{ trans('currency.currencies') }}</span></a></li>
+          @endcan
+
+          @can('list_carriers')
+            <li><a href="{{ url(config('backpack.base.route_prefix', 'admin').'/carriers') }}"><i class="fa fa-truck"></i> <span>{{ trans('carrier.carriers') }}</span></a></li>
+          @endcan
+
+          @can('list_taxes')
+            <li><a href="{{ url(config('backpack.base.route_prefix', 'admin').'/taxes') }}"><i class="fa fa-balance-scale"></i> <span>{{ trans('tax.taxes') }}</span></a></li>
+          @endcan
+
+            {{-- <li><a href="{{ url(config('backpack.base.route_prefix', 'admin').'/orders') }}"><i class="fa fa-list-ul"></i> <span>{{ trans('order.orders') }}</span></a></li> --}}
+
+          @can('list_order_statuses')
+            <li><a href="{{ url(config('backpack.base.route_prefix', 'admin').'/order-statuses') }}"><i class="fa fa-list-ul"></i> <span>{{ trans('order.order_statuses') }}</span></a></li>
+          @endcan
+
+          <li class="treeview">
+            <a href="#"><i class="fa fa-group"></i> <span>Users, Roles, Permissions</span> <i class="fa fa-angle-left pull-right"></i></a>
+            <ul class="treeview-menu">
+              <li><a href="{{ url(config('backpack.base.route_prefix', 'admin') . '/users') }}"><i class="fa fa-user"></i> <span>{{ trans('user.users') }}</span></a></li>
+              <li><a href="{{ url(config('backpack.base.route_prefix', 'admin') . '/role') }}"><i class="fa fa-group"></i> <span>Roles</span></a></li>
+              <li><a href="{{ url(config('backpack.base.route_prefix', 'admin') . '/permission') }}"><i class="fa fa-key"></i> <span>Permissions</span></a></li>
+            </ul>
+          </li>
+
+          {{-- <li><a href="{{ url('admin/setting') }}"><i class="fa fa-cog"></i> <span>Settings</span></a></li> --}}
 
 
           <!-- ======================================= -->

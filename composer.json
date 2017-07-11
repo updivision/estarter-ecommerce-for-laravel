@@ -9,7 +9,8 @@
         "laravel/framework": "5.4.*",
         "backpack/base": "^0.7.16",
         "backpack/crud": "^3.2",
-        "backpack/settings": "^2.0"
+        "backpack/settings": "^2.0",
+        "backpack/permissionmanager": "^2.1"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

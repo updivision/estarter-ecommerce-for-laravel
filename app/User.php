@@ -2,13 +2,15 @@
 
 namespace App;
 
+use Backpack\CRUD\CrudTrait;
+use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Backpack\Base\app\Notifications\ResetPasswordNotification as ResetPasswordNotification;
 
 class User extends Authenticatable
 {
-    use Notifiable;
+    use Notifiable, HasRoles, CrudTrait;
 
     /**
      * The attributes that are mass assignable.
@@ -20,8 +22,6 @@ class User extends Authenticatable
         'email',
         'password',
         'salutation',
-        'first_name',
-        'last_name',
         'birthday',
         'gender',
         'active',
