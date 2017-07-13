@@ -50,6 +50,8 @@ return [
     'admin'                     => 'Admin',
     'details_row'               => 'This is the details row. Modify as you please.',
     'details_row_loading_error' => 'There was an error loading the details. Please retry.',
+    'confirm_delete'            => 'Yes, delete it!',
+    'are_you_sure'              => 'Are you sure?',
 
         // Confirmation messages and bubbles
         'delete_confirm'                              => 'Are you sure you want to delete this item?',
