@@ -295,36 +295,39 @@
           var delete_button = $(this);
           var delete_url = $(this).attr('href');
 
-          if (confirm("{{ trans('backpack::crud.delete_confirm') }}") == true) {
-              $.ajax({
-                  url: delete_url,
-                  type: 'DELETE',
-                  success: function(result) {
-                      // Show an alert with the result
-                      new PNotify({
-                          title: "{{ trans('backpack::crud.delete_confirmation_title') }}",
-                          text: "{{ trans('backpack::crud.delete_confirmation_message') }}",
-                          type: "success"
-                      });
-                      // delete the row from the table
-                      delete_button.parentsUntil('tr').parent().remove();
-                  },
-                  error: function(result) {
-                      // Show an alert with the result
-                      new PNotify({
-                          title: "{{ trans('backpack::crud.delete_confirmation_not_title') }}",
-                          text: "{{ trans('backpack::crud.delete_confirmation_not_message') }}",
-                          type: "warning"
-                      });
-                  }
-              });
-          } else {
-              new PNotify({
-                  title: "{{ trans('backpack::crud.delete_confirmation_not_deleted_title') }}",
-                  text: "{{ trans('backpack::crud.delete_confirmation_not_deleted_message') }}",
-                  type: "info"
-              });
-          }
+	swal({
+		title: "{{ trans('backpack::crud.are_you_sure') }}",
+		text: "{{ trans('backpack::crud.delete_confirm') }}",
+		type: "warning",
+		showCancelButton: true,
+		confirmButtonColor: "#3C8DBC",
+		confirmButtonText: "{{ trans('backpack::crud.confirm_delete') }}",
+		closeOnConfirm: false,
+		closeOnCancel: false
+	    },
+	    function (isConfirm) {
+		if (isConfirm) {
+		    $.ajax({
+			url: delete_url,
+			type: 'DELETE',
+			success: function () {
+			    // delete the row from the table
+			    delete_button.parentsUntil('tr').parent().remove();
+			},
+			error: function () {
+			    // Show an alert with the result
+			    new PNotify({
+				title: "{{ trans('backpack::crud.delete_confirmation_not_title') }}",
+				text: "{{ trans('backpack::crud.delete_confirmation_not_message') }}",
+				type: "warning"
+			    });
+			}
+		    });
+		    swal("{{ trans('backpack::crud.delete_confirmation_title') }}", "{{ trans('backpack::crud.delete_confirmation_message') }}", "success");
+		} else {
+		    swal("{{ trans('backpack::crud.delete_confirmation_not_deleted_title') }}", "{{ trans('backpack::crud.delete_confirmation_not_deleted_message') }}", "error");
+		}
+	    });
         });
       }
 
