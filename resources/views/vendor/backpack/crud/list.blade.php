@@ -155,6 +155,7 @@
   <link rel="stylesheet" href="{{ asset('vendor/backpack/crud/css/list.css') }}">
 
   <!-- CRUD LIST CONTENT - crud_list_styles stack -->
+  <link href="{{ asset('css/sweetalert.css') }}" rel="stylesheet">
   @stack('crud_list_styles')
 @endsection
 
@@ -179,8 +180,8 @@
     @endif
 
     <script src="{{ asset('vendor/adminlte/plugins/datatables/dataTables.bootstrap.js') }}" type="text/javascript"></script>
-
-	<script type="text/javascript">
+    <script src="{{ asset('js/sweetalert.min.js') }}"></script>
+    <script type="text/javascript">
 	  jQuery(document).ready(function($) {
 
       @if ($crud->exportButtons())
