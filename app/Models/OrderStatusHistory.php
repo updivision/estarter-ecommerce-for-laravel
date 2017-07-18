@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Backpack\CRUD\CrudTrait;
 
-class OrderStatus extends Model
+class OrderStatusHistory extends Model
 {
     use CrudTrait;
 
@@ -15,11 +15,14 @@ class OrderStatus extends Model
 	|--------------------------------------------------------------------------
 	*/
 
-    protected $table = 'order_statuses';
+    protected $table = 'order_status_history';
     //protected $primaryKey = 'id';
-    public $timestamps = false;
+    // public $timestamps = false;
     // protected $guarded = ['id'];
-    protected $fillable = ['name'];
+    protected $fillable = [
+    	'order_id',
+    	'status_id'
+	];
     // protected $hidden = [];
     // protected $dates = [];
 
@@ -34,6 +37,10 @@ class OrderStatus extends Model
 	| RELATIONS
 	|--------------------------------------------------------------------------
 	*/
+	public function status()
+	{
+		return $this->hasOne('App\Models\OrderStatus', 'id', 'status_id');
+	}
 
     /*
 	|--------------------------------------------------------------------------
@@ -52,4 +59,8 @@ class OrderStatus extends Model
 	| MUTATORS
 	|--------------------------------------------------------------------------
 	*/
+    public function getCreatedAtAttribute($value)
+    {
+        return \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $value)->format('d-m-Y H:i:s');
+    }
 }

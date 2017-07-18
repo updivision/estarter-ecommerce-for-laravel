@@ -29,6 +29,12 @@
             <li><a href="{{ url(config('backpack.base.route_prefix', 'admin').'/products') }}"><i class="fa fa-list"></i> <span>{{ trans('product.products') }}</span></a></li>
           @endcan
 
+          <li><a href="{{ url(config('backpack.base.route_prefix', 'admin').'/orders') }}"><i class="fa fa-list-ul"></i> <span>{{ trans('order.orders') }}</span></a></li>
+
+          @can('list_clients')
+            <li><a href="{{ url(config('backpack.base.route_prefix', 'admin').'/clients') }}"><i class="fa fa-users"></i> <span>{{ trans('client.clients') }}</span></a></li>
+          @endcan
+
           @can('list_attributes')
             <li><a href="{{ url(config('backpack.base.route_prefix', 'admin').'/attributes') }}"><i class="fa fa-tag"></i> <span>{{ trans('attribute.attributes') }}</span></a></li>
           @endcan
@@ -48,8 +54,6 @@
           @can('list_taxes')
             <li><a href="{{ url(config('backpack.base.route_prefix', 'admin').'/taxes') }}"><i class="fa fa-balance-scale"></i> <span>{{ trans('tax.taxes') }}</span></a></li>
           @endcan
-
-            {{-- <li><a href="{{ url(config('backpack.base.route_prefix', 'admin').'/orders') }}"><i class="fa fa-list-ul"></i> <span>{{ trans('order.orders') }}</span></a></li> --}}
 
           @can('list_order_statuses')
             <li><a href="{{ url(config('backpack.base.route_prefix', 'admin').'/order-statuses') }}"><i class="fa fa-list-ul"></i> <span>{{ trans('order.order_statuses') }}</span></a></li>

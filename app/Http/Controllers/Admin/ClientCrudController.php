@@ -8,7 +8,7 @@ use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Http\Requests\CrudRequest;
 use Illuminate\Http\Request;
 
-class UserCrudController extends CrudController
+class ClientCrudController extends CrudController
 {
     public function setup()
     {
@@ -19,11 +19,11 @@ class UserCrudController extends CrudController
         |--------------------------------------------------------------------------
         */
         $this->crud->setModel('App\User');
-        $this->crud->setRoute(config('backpack.base.route_prefix') . '/users');
-        $this->crud->setEntityNameStrings('user', 'users');
+        $this->crud->setRoute(config('backpack.base.route_prefix') . '/clients');
+        $this->crud->setEntityNameStrings('client', 'clients');
         $this->crud->addClause('whereHas', 'roles', function ($query) {
-            $adminRoleName = env('ADMIN_ROLE_NAME');
-            $query->whereName($adminRoleName ?: 'administrator');
+            $clientRoleName = env('CLIENT_ROLE_NAME');
+            $query->whereName($clientRoleName ?: 'client');
         });
 
         /*
@@ -33,33 +33,25 @@ class UserCrudController extends CrudController
         */
         $this->crud->addColumns([
             [
-                'name'  => 'salutation',
-                'label' => trans('user.salutation'),
+                'name'        => 'salutation',
+                'label'       => trans('client.salutation'),
             ],
             [
                 'name'  => 'name',
-                'label' => trans('user.name'),
+                'label' => trans('client.name'),
             ],
             [
                 'name'      => 'gender',
-                'label'     => trans('user.gender'),
+                'label'     => trans('client.gender'),
                 'type'      => 'boolean',
                 'options'   => [
-                    1 => trans('user.male'),
-                    2 => trans('user.female'),
+                    1 => trans('client.male'),
+                    2 => trans('client.female'),
                 ],
             ],
             [
                 'name'  => 'email',
-                'label' => trans('user.email'),
-            ],
-            [
-               'label'     => trans('permissionmanager.roles'),
-               'type'      => 'select_multiple',
-               'name'      => 'roles',
-               'entity'    => 'roles',
-               'attribute' => 'name',
-               'model'     => config('laravel-permission.models.role'),
+                'label' => trans('client.email'),
             ],
             [
                 'name'      => 'active',
@@ -96,32 +88,68 @@ class UserCrudController extends CrudController
 
         $this->crud->addFields([
             [
-                'name'  => 'name',
-                'label' => trans('user.name'),
+                'name'  => 'salutation',
+                'label' => trans('client.salutation'),
                 'type'  => 'text',
 
-                'tab'   => trans('user.tab_general'),
+                'tab'   => trans('client.tab_general'),
+            ],
+            [
+                'name'  => 'name',
+                'label' => trans('client.name'),
+                'type'  => 'text',
+
+                'tab'   => trans('client.tab_general'),
             ],
             [
                 'name'  => 'email',
-                'label' => trans('user.email'),
+                'label' => trans('client.email'),
                 'type'  => 'email',
 
-                'tab'   => trans('user.tab_general'),
+                'tab'   => trans('client.tab_general'),
             ],
             [
                 'name'  => 'password',
-                'label' => trans('user.password'),
+                'label' => trans('client.password'),
                 'type'  => 'password',
 
-                'tab'   => trans('user.tab_general'),
+                'tab'   => trans('client.tab_general'),
             ],
             [
                 'name'  => 'password_confirmation',
-                'label' => trans('user.password_confirmation'),
+                'label' => trans('client.password_confirmation'),
                 'type'  => 'password',
 
-                'tab'   => trans('user.tab_general'),
+                'tab'   => trans('client.tab_general'),
+            ],
+            [
+                'name'      => 'gender',
+                'label'     => trans('client.gender'),
+                'type'      => 'select_from_array',
+                'options'   => [
+                    1 => trans('client.male'),
+                    2 => trans('client.female'),
+                ],
+
+                'tab'   => trans('client.tab_general'),
+            ],
+            [
+                'name'  => 'birthday',
+                'label' => trans('client.birthday'),
+                'type'  => 'date',
+
+                'tab'   => trans('client.tab_general'),
+            ],
+            [
+                'name'      => 'active',
+                'label'     => trans('common.status'),
+                'type'      => 'select_from_array',
+                'options'   => [
+                    0 => trans('common.inactive'),
+                    1 => trans('common.active'),
+                ],
+
+                'tab'   => trans('client.tab_general'),
             ],
             [
             // two interconnected entities
@@ -152,14 +180,29 @@ class UserCrudController extends CrudController
                     ],
                 ],
 
-                'tab'   => trans('user.tab_permissions'),
+                'tab'   => trans('client.tab_permissions'),
             ],
         ]);
+
+        $this->crud->addField([
+            'name'          => 'client_address',
+            'type'          => 'client_address',
+            'country_model' => 'App\Models\Country',
+
+            'tab'           => trans('client.tab_address'),
+        ], 'update');
+
+        $this->crud->addField([
+            'name'          => 'client_company',
+            'type'          => 'client_company',
+            'country_model' => 'App\Models\Company',
+
+            'tab'           => trans('client.tab_company'),
+        ], 'update');
     }
 
     public function store(StoreRequest $request)
     {
-
         $this->handlePasswordInput($request);
 
         $redirect_location = parent::storeCrud($request);

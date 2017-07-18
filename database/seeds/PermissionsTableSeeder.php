@@ -55,6 +55,11 @@ class PermissionsTableSeeder extends Seeder
             ['name' => 'create_order_status'],
             ['name' => 'update_order_status'],
             ['name' => 'delete_order_status'],
+
+            ['name' => 'list_clients'],
+            ['name' => 'create_client'],
+            ['name' => 'update_client'],
+            ['name' => 'delete_client'],
     	];
 
     	DB::table('permissions')->insert($permissions);

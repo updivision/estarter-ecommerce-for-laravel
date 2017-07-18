@@ -2,8 +2,8 @@
 
 return [
 
-	'user'                  => 'User',
-	'users'                 => 'Users',
+	'client'                => 'Client',
+	'clients'               => 'Clients',
 	'email'                 => 'E-mail',
 	'name'                  => 'Name',
 	'salutation'            => 'Salutation',
@@ -17,4 +17,6 @@ return [
 	// Tabs
 	'tab_general'			=> 'General',
 	'tab_permissions'		=> 'Permissions',
+	'tab_address'			=> 'Address',
+	'tab_company'			=> 'Company',
 ];

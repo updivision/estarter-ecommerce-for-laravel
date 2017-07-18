@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use App\Http\Requests\Request;
 
-class UserRequest extends \Backpack\CRUD\app\Http\Requests\CrudRequest
+class UserStoreRequest extends \Backpack\CRUD\app\Http\Requests\CrudRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,7 +25,9 @@ class UserRequest extends \Backpack\CRUD\app\Http\Requests\CrudRequest
     public function rules()
     {
         return [
-            // 'name' => 'required|min:5|max:255'
+            'name'     => 'required',
+            'email'    => 'required|unique:'.config('laravel-permission.table_names.users', 'users').',email',
+            'password' => 'required|confirmed',
         ];
     }
 

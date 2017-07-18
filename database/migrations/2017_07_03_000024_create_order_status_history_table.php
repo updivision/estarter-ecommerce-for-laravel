@@ -18,8 +18,6 @@ class CreateOrderStatusHistoryTable extends Migration
             $table->increments('id');
             $table->integer('order_id')->unsigned();
             $table->integer('status_id')->unsigned();
-            $table->integer('user_id')->unsigned();
-            $table->dateTime('date')->nullable()->default(null);
             $table->nullableTimestamps();
 
 
@@ -30,11 +28,6 @@ class CreateOrderStatusHistoryTable extends Migration
 
             $table->foreign('order_id')
                 ->references('id')->on('orders')
-                ->onDelete('no action')
-                ->onUpdate('no action');
-
-            $table->foreign('user_id')
-                ->references('id')->on('users')
                 ->onDelete('no action')
                 ->onUpdate('no action');
         });

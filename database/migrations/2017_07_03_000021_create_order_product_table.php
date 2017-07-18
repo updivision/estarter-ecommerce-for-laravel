@@ -17,9 +17,11 @@ class CreateOrderProductTable extends Migration
             $table->engine = 'InnoDB';
             $table->integer('product_id')->unsigned();
             $table->integer('order_id')->unsigned();
-            $table->decimal('price', 13, 6)->nullable()->default(null);
+            $table->string('name', 255)->nullable()->default(null);
+            $table->string('sku', 100);
+            $table->decimal('price', 13, 2)->nullable()->default(null);
+            $table->decimal('price_with_tax', 13, 2)->nullable()->default(null);
             $table->integer('quantity');
-
 
             $table->foreign('order_id')
                 ->references('id')->on('orders')

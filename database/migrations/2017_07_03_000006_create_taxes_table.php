@@ -17,7 +17,7 @@ class CreateTaxesTable extends Migration
             $table->engine = 'InnoDB';
             $table->increments('id');
             $table->string('name', 255)->nullable()->default(null);
-            $table->decimal('value', 13, 6)->nullable()->default('0.000000');
+            $table->decimal('value', 13, 2)->nullable()->default('0.00');
         });
     }
 

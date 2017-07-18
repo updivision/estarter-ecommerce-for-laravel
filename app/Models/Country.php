@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Backpack\CRUD\CrudTrait;
 
-class OrderStatus extends Model
+class Country extends Model
 {
     use CrudTrait;
 
@@ -15,11 +15,14 @@ class OrderStatus extends Model
 	|--------------------------------------------------------------------------
 	*/
 
-    protected $table = 'order_statuses';
+    protected $table = 'countries';
     //protected $primaryKey = 'id';
     public $timestamps = false;
     // protected $guarded = ['id'];
-    protected $fillable = ['name'];
+    protected $fillable = [
+    	'code',
+    	'name'
+	];
     // protected $hidden = [];
     // protected $dates = [];
 

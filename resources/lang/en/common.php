@@ -2,6 +2,7 @@
 
 return [
 
+	'add'              => 'Add',
 	'cancel'           => 'Cancel',
 	'edit'             => 'Edit',
 	'delete'           => 'Delete',
@@ -19,5 +20,10 @@ return [
 	'error_occurred'   => 'An error has occurred',
 	'must_be_unique'   => 'Must be unique',
 	'loading_ellipsis' => 'Loading...',
+	'view'             => 'View',
+	'year'             => 'Year',
+	'years'            => 'Years',
+	'date'             => 'Date',
+	'total'            => 'Total',
 
 ];

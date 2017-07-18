@@ -25,7 +25,7 @@
                 tax_val = new BigNumber(tax_value);
                 price_val = new BigNumber(price.val());
 
-                priceWithTax = price_val.plus(tax_val.dividedBy(100).times(price_val)).toFixed(6);
+                priceWithTax = price_val.plus(tax_val.dividedBy(100).times(price_val)).toFixed(2);
 
                 price_with_vat.val(priceWithTax);
             }
@@ -37,7 +37,7 @@
                 tax_val = new BigNumber(tax_value);
                 price_with_vat_val = new BigNumber(price_with_vat.val());
 
-                priceWithoutTax = price_with_vat_val.dividedBy(tax_val.dividedBy(100).plus(1)).toFixed(6);
+                priceWithoutTax = price_with_vat_val.dividedBy(tax_val.dividedBy(100).plus(1)).toFixed(2);
 
                 price.val(priceWithoutTax);
             } else {
@@ -52,7 +52,7 @@
             tax_val = new BigNumber(tax_value);
             price_with_vat_val = new BigNumber(price_with_vat.val());
 
-            priceWithoutTax = price_with_vat_val.dividedBy(tax_val.dividedBy(100).plus(1)).toFixed(6);
+            priceWithoutTax = price_with_vat_val.dividedBy(tax_val.dividedBy(100).plus(1)).toFixed(2);
 
             price.val(priceWithoutTax);
           });

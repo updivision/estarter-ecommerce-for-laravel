@@ -18,8 +18,7 @@ class CreateAddressesTable extends Migration
             $table->increments('id');
             $table->integer('user_id')->unsigned();
             $table->integer('country_id')->unsigned();
-            $table->string('first_name', 100)->nullable()->default(null);
-            $table->string('last_name', 45)->nullable()->default(null);
+            $table->string('name', 100)->nullable()->default(null);
             $table->string('address1', 255)->nullable()->default(null);
             $table->string('address2', 255)->nullable()->default(null);
             $table->string('county', 255)->nullable()->default(null);
