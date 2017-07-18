@@ -11,7 +11,7 @@
 			<tr @if($currentProductId == $product->id) class="tr-current-product" @endif>
 				<td>{{ $product->name }}</td>
 				<td>{{ $product->sku }}</td>
-				<td>{{ number_format((float)$product->price, 2, '.', '') }}</td>
+				<td>{{ decimalFormat($product->price) }}</td>
 				<td>{{ $product->active == 1 ? trans('common.status') : trans('common.inactive') }}</td>
 				<td>
 					<a href="{{ route('crud.products.edit', $product->id) }}" class="btn btn-xs btn-default" target="_blank">{{ trans('common.edit') }}</a>

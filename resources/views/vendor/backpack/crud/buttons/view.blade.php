@@ -1,0 +1,1 @@
+<a href="{{ url($crud->route.'/'.$entry->id) }}" class="btn btn-xs btn-default clone-btn"><i class="fa fa-eye"></i> {{ trans('common.view') }}</a>

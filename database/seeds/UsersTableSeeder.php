@@ -14,12 +14,10 @@ class UsersTableSeeder extends Seeder
     	DB::table('users')->delete();
 
     	$users = [
-    		'name'			=> 'Ecommerce Admin',
-    		'email'			=> 'admin@ecommerce.com',
-    		'password'		=> '$2y$10$QNf5iYdhmFxVn7OMrtZJQemkt46VPLZtGmU6ncJk3LERyd1r/zSqW', // Encrypted password is: adminpass
-    		'salutation'	=> 'Mr.',
-    		'first_name'	=> 'Admin',
-    		'last_name'		=> 'Ecommerce',
+    		'name'	        => 'Ecommerce Admin',
+            'email'         => 'admin@ecommerce.com',
+            'password'      => '$2y$10$QNf5iYdhmFxVn7OMrtZJQemkt46VPLZtGmU6ncJk3LERyd1r/zSqW', // Encrypted password is: adminpass
+            'salutation'    => 'Mr.',
     		'birthday'		=> \Carbon\Carbon::now()->toDateString(),
     		'gender'		=> 1,
     		'active'		=> 1,

@@ -31,8 +31,8 @@ class ProductCrudController extends CrudController
         |--------------------------------------------------------------------------
         | BUTTONS
         |--------------------------------------------------------------------------
+        | See setPermissions method
         */
-        $this->crud->addButtonFromView('line', 'Clone Product', 'clone_product', 'end');
 
         /*
         |--------------------------------------------------------------------------
@@ -77,6 +77,13 @@ class ProductCrudController extends CrudController
 
         /*
         |--------------------------------------------------------------------------
+        | PERMISSIONS
+        |-------------------------------------------------------------------------
+        */
+        $this->setPermissions();
+
+        /*
+        |--------------------------------------------------------------------------
         | FIELDS
         |--------------------------------------------------------------------------
         */
@@ -91,9 +98,42 @@ class ProductCrudController extends CrudController
 
     }
 
+    public function setPermissions()
+    {
+        // Get authenticated user
+        $user = auth()->user();
+
+        // Deny all accesses
+        $this->crud->denyAccess(['list', 'create', 'update', 'delete']);
+
+        // Allow list access
+        if ($user->can('list_products')) {
+            $this->crud->allowAccess('list');
+        }
+
+        // Allow create access
+        if ($user->can('create_product')) {
+            $this->crud->allowAccess('create');
+        }
+
+        // Allow update access
+        if ($user->can('update_product')) {
+            $this->crud->allowAccess('update');
+        }
+
+        // Allow clone access
+        if ($user->can('clone_product')) {
+            $this->crud->addButtonFromView('line', trans('product.clone'), 'clone_product', 'end');
+        }
+
+        // Allow delete access
+        if ($user->can('delete_product')) {
+            $this->crud->allowAccess('delete');
+        }
+    }
+
     public function setFields()
     {
-
         $this->crud->addFields([
             [
                 'name'  => 'name',
@@ -238,7 +278,6 @@ class ProductCrudController extends CrudController
             // TAB
             'tab'           => trans('product.group_tab'),
         ], 'update');
-
     }
 
     public function ajaxUploadProductImages(Request $request, Product $product)

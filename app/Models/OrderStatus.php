@@ -15,7 +15,7 @@ class OrderStatus extends Model
 	|--------------------------------------------------------------------------
 	*/
 
-    //protected $table = 'order_statuss';
+    protected $table = 'order_statuses';
     //protected $primaryKey = 'id';
     public $timestamps = false;
     // protected $guarded = ['id'];
