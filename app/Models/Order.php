@@ -90,6 +90,11 @@ class Order extends Model
         return $this->hasOne('App\Models\Address', 'id', 'billing_address_id');
     }
 
+    public function billingCompanyInfo()
+    {
+        return $this->hasOne('App\Models\Company', 'id', 'billing_company_id');
+    }
+
     public function currency()
     {
         return $this->hasOne('App\Models\Currency', 'id', 'currency_id');

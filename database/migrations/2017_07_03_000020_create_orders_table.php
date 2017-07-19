@@ -19,14 +19,15 @@ class CreateOrdersTable extends Migration
             $table->integer('user_id')->unsigned();
             $table->integer('status_id')->unsigned();
             $table->integer('carrier_id')->unsigned();
+            $table->integer('shipping_address_id')->unsigned()->nullable()->default(null);
+            $table->integer('billing_address_id')->unsigned()->nullable()->default(null);
+            $table->integer('billing_company_id')->unsigned()->nullable()->default(null);
             $table->integer('currency_id')->unsigned();
             $table->mediumText('comment')->nullable()->default(null);
             $table->string('shipping_no', 50)->nullable()->default(null);
             $table->string('invoice_no', 50)->nullable()->default(null);
             $table->dateTime('invoice_date')->nullable()->default(null);
             $table->dateTime('delivery_date')->nullable()->default(null);
-            $table->text('shipping_address')->nullable()->default(null);
-            $table->text('billing_address')->nullable()->default(null);
             $table->decimal('total_discount', 13, 2)->nullable()->default(null);
             $table->decimal('total_discount_tax', 13, 2)->nullable()->default(null);
             $table->decimal('total_shipping', 13, 2)->nullable()->default(null);

@@ -46,6 +46,10 @@ class Address extends Model
 	| RELATIONS
 	|--------------------------------------------------------------------------
 	*/
+	public function country()
+	{
+		return $this->hasOne('App\Models\Country', 'id', 'country_id');
+	}
 
     /*
 	|--------------------------------------------------------------------------
