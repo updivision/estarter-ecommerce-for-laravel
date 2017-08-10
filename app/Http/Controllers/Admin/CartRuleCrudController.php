@@ -99,11 +99,11 @@ class CartRuleCrudController extends CrudController
             //     'label' => trans('cartrule.multiply_gift'),
             // ],
             // [
-            //     'name'  => 'limit_to_one_customer',
+            //     'name'  => 'customer_id',
             //     'label' => trans('cartrule.limit_to_one_customer'),
             // ],
             // [
-            //     'name'  => 'gift',
+            //     'name'  => 'gift_product_id',
             //     'label' => trans('cartrule.gift'),
             // ],
             // [
@@ -252,10 +252,14 @@ class CartRuleCrudController extends CrudController
     public function setFields()
     {
         $this->crud->addFields([
+            // INFORMATION TAB
             [
                 'name'  => 'name',
                 'label' => trans('cartrule.name'),
                 'type'  => 'text',
+                'attributes' => [
+                    'required' => 'true',
+                ],
                 'tab'   => trans('cartrule.information_tab'),
             ],
             [
@@ -264,20 +268,20 @@ class CartRuleCrudController extends CrudController
                 'tab'   => trans('cartrule.information_tab'),
             ],
             [
+                'name'  => 'highlight',
+                'label' => trans('cartrule.highlight'),
+                'type'  => 'toggle_switch',
+                'tab'   => trans('cartrule.information_tab'),
+            ],
+            [
                 'name'  => 'priority',
                 'label' => trans('cartrule.priority'),
-                'type'  => 'select_from_array',
-                'options' => [1 => 1, 2 => 2, 3=>3, 4=>4, 5=>5],
                 'tab'   => trans('cartrule.information_tab'),
             ],
             [
                 'name'  => 'status',
                 'label' => trans('cartrule.status'),
-                'tab'   => trans('cartrule.information_tab'),
-            ],
-            [
-                'name'  => 'highlight',
-                'label' => trans('cartrule.highlight'),
+                'type'  => 'toggle_switch',
                 'tab'   => trans('cartrule.information_tab'),
             ],
             [
@@ -291,8 +295,9 @@ class CartRuleCrudController extends CrudController
                 'tab'   => trans('cartrule.information_tab'),
                 'type'  => 'textarea',
             ],
+            // CONDITIONS TAB
             [
-                'name'  => 'limit_to_one_customer',
+                'name'  => 'customer_id',
                 'label' => trans('cartrule.limit_to_one_customer'),
                 'tab'   => trans('cartrule.conditions_tab'),
                 'type'  => 'select2',
@@ -312,10 +317,10 @@ class CartRuleCrudController extends CrudController
                 'type'  => 'date_picker',
                 'tab'   => trans('cartrule.conditions_tab'),
             ],
-            [
+             [
                 'name'  => 'minimum_amount',
                 'label' => trans('cartrule.minimum_amount'),
-                'tab'   => trans('cartrule.actions_tab'),
+                'tab'   => trans('cartrule.conditions_tab'),
             ],
             [
                 'name'  => 'minimum_amount_currency_id',
@@ -324,36 +329,29 @@ class CartRuleCrudController extends CrudController
                 'entity'    => 'currency',
                 'attribute' => 'name',
                 'model' => 'App\Models\Currency',
-                'tab'   => trans('cartrule.actions_tab'),
+                'tab'   => trans('cartrule.conditions_tab'),
             ],
             [
                 'name'  => 'total_available',
                 'label' => trans('cartrule.total_available'),
-                'tab'   => trans('cartrule.actions_tab'),
+                'tab'   => trans('cartrule.conditions_tab'),
             ],
             [
                 'name'  => 'total_available_each_customer',
                 'label' => trans('cartrule.total_available_each_customer'),
-                'tab'   => trans('cartrule.actions_tab'),
-            ],
-            [
-                'name'  => 'multiply_gift',
-                'label' => trans('cartrule.multiply_gift'),
-                'tab'   => trans('cartrule.actions_tab'),
-            ],
-            [
-                'name'  => 'gift',
-                'label' => trans('cartrule.gift'),
-                'tab'   => trans('cartrule.actions_tab'),
-                'type'  => 'select2',
-                'entity'=> 'products',
-                'attribute'=> 'name',
-                'model' => 'App\Models\Product'
+                'tab'   => trans('cartrule.conditions_tab'),
             ],
             [
                 'name'  => 'min_nr_products',
                 'label' => trans('cartrule.min_nr_products'),
+                'tab'   => trans('cartrule.conditions_tab'),
+            ],
+            // ACTIONS TAB
+            [
+                'name'  => 'free_delivery',
+                'label' => trans('cartrule.free_delivery'),
                 'tab'   => trans('cartrule.actions_tab'),
+                'type'  => 'toggle_switch',
             ],
             [
                 'name'  => 'discount_type',
@@ -361,9 +359,10 @@ class CartRuleCrudController extends CrudController
                 'type'  => 'enum',
                 'tab'   => trans('cartrule.actions_tab'),
             ],
+
             [
                 'name'  => 'reduction_amount',
-                'label' => trans('cartrule.reduction_amount'),
+                'label' => trans('cartrule.reduction_value'),
                 'tab'   => trans('cartrule.actions_tab'),
             ],
             [
@@ -374,6 +373,26 @@ class CartRuleCrudController extends CrudController
                 'attribute' => 'name',
                 'model' => 'App\Models\Currency',
                 'tab'   => trans('cartrule.actions_tab'),
+            ],
+            [
+                'name'  => 'multiply_gift',
+                'label' => trans('cartrule.multiply_gift'),
+                'tab'   => trans('cartrule.actions_tab'),
+            ],
+            [
+                'name'  => '',
+                'label' => 'send a free gift',
+                'type'  => 'toggle_switch',
+                'tab'   => trans('cartrule.actions_tab'),
+            ],
+            [
+                'name'  => 'gift_product_id',
+                'label' => trans('cartrule.gift'),
+                'tab'   => trans('cartrule.actions_tab'),
+                'type'  => 'select2',
+                'entity'=> 'products',
+                'attribute'=> 'name',
+                'model' => 'App\Models\Product'
             ]
 
             ]);
