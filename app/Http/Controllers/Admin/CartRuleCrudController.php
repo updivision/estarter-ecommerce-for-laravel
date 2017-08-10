@@ -347,6 +347,7 @@ class CartRuleCrudController extends CrudController
 
             [
                 'label' => 'Add a rule concerning',
+                'tab'   => trans('cartrule.conditions_tab'),
                 'name' => 'featured', // can be a real db field, or unique name
                 'type' => 'toggle',
                 'options' => [ // same as radio, these act as the options, the key is the radio value
@@ -357,16 +358,25 @@ class CartRuleCrudController extends CrudController
                     0 => ['categories_rule'],
                     1 => ['products_rule']
                 ],
-                'default' => 0 // which option to select by default
+                'default' => 0, // which option to select by default
             ],
 
             [
-                'name' => 'categories_rule',
-                'label' => 'categories_rule',
+                'name'      => 'categories_rule',
+                'label'     => trans('cartrule.categories_rule'),
+                'type'      => 'select2_multiple',
+                'entity'    => 'category',
+                'attribute' => 'name',
+                'model'     => 'App\Models\Category',
+                'tab'       => trans('cartrule.conditions_tab'),
             ],
             [
-                'name' => 'products_rule',
-                'label' => 'products_rule',
+                'name'      => 'products_rule',
+                'label'     => trans('cartrule.products_rule'),
+                'tab'       => trans('cartrule.conditions_tab'),
+                'type'      => 'select2_multiple',
+                'attribute' => 'name',
+                'model'     =>'App\Models\Product'
             ],
             // ACTIONS TAB
             [
@@ -388,13 +398,13 @@ class CartRuleCrudController extends CrudController
                 'tab'   => trans('cartrule.actions_tab'),
             ],
             [
-                'name'  => 'reduction_currency_id',
-                'label' => trans('cartrule.currency'),
-                'type'  => 'select',
+                'name'      => 'reduction_currency_id',
+                'label'     => trans('cartrule.currency'),
+                'type'      => 'select',
                 'entity'    => 'currency',
                 'attribute' => 'name',
-                'model' => 'App\Models\Currency',
-                'tab'   => trans('cartrule.actions_tab'),
+                'model'     => 'App\Models\Currency',
+                'tab'       => trans('cartrule.actions_tab'),
             ],
             [
                 'name'  => 'multiply_gift',
@@ -403,18 +413,18 @@ class CartRuleCrudController extends CrudController
             ],
             [
                 'name'  => '',
-                'label' => 'send a free gift',
+                'label' => trans('cartrule.send_free_gift'),
                 'type'  => 'toggle_switch',
                 'tab'   => trans('cartrule.actions_tab'),
             ],
             [
-                'name'  => 'gift_product_id',
-                'label' => trans('cartrule.gift'),
-                'tab'   => trans('cartrule.actions_tab'),
-                'type'  => 'select2',
-                'entity'=> 'products',
-                'attribute'=> 'name',
-                'model' => 'App\Models\Product'
+                'name'      => 'gift_product_id',
+                'label'     => trans('cartrule.gift'),
+                'tab'       => trans('cartrule.actions_tab'),
+                'type'      => 'select2',
+                'entity'    => 'products',
+                'attribute' => 'name',
+                'model'     => 'App\Models\Product'
             ],
             // [
             //     'name' => 'compatibleCartRules',
@@ -426,6 +436,11 @@ class CartRuleCrudController extends CrudController
             //     'tab'   => trans('cartrule.actions_tab'),
 
             // ]
+        //     [
+        //          'label'     => 'STATUS',
+        // 'type'      => 'checkbox',
+        // 'name'      => 'status',
+        //     ],
 
             ]);
     }

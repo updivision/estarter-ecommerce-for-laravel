@@ -31,5 +31,8 @@ return [
 	'conditions_tab'				=> 'Conditions',
 	'free_delivery'					=> 'Free delivery',
 	'compatible_with_rules'			=> 'Compatible with rules',
+	'send_free_gift'				=> 'Send free gift',
+	'categories_rule'				=> 'Categories rule',
+	'products_rule'					=> 'Products_rule',
 
 ];

@@ -39,7 +39,8 @@ class CartRule extends Model
         'reduction_currency_id',
         'minimum_amount_currency_id',
         'gift_product_id',
-        'customer_id'
+        'customer_id',
+        'free_delivery',
     ];
     // protected $hidden = [];
     // protected $dates = [];
