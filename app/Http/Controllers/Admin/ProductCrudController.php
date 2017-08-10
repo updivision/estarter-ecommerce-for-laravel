@@ -41,39 +41,39 @@ class ProductCrudController extends CrudController
         */
         $this->crud->addColumns([
             [
-                'name'  => 'name',
-                'label' => trans('product.name'),
+            'name'  => 'name',
+            'label' => trans('product.name'),
             ],
             [
-               'type'      => "select_multiple",
-               'label'     => trans('category.categories'),
-               'name'      => 'categories',
-               'entity'    => 'categories',
-               'attribute' => "name",
-               'model'     => "App\Models\Category",
+            'type'      => "select_multiple",
+            'label'     => trans('category.categories'),
+            'name'      => 'categories',
+            'entity'    => 'categories',
+            'attribute' => "name",
+            'model'     => "App\Models\Category",
             ],
             [
-                'name'  => 'sku',
-                'label' => trans('product.sku'),
+            'name'  => 'sku',
+            'label' => trans('product.sku'),
             ],
             [
-                'name'  => 'price',
-                'label' => trans('product.price'),
+            'name'  => 'price',
+            'label' => trans('product.price'),
             ],
             [
-                'name'  => 'stock',
-                'label' => trans('product.stock'),
+            'name'  => 'stock',
+            'label' => trans('product.stock'),
             ],
             [
-                'name'      => 'active',
-                'label'     => trans('common.status'),
-                'type'      => 'boolean',
-                'options'   => [
-                    0 => trans('common.inactive'),
-                    1 => trans('common.active')
-                ],
+            'name'      => 'active',
+            'label'     => trans('common.status'),
+            'type'      => 'boolean',
+            'options'   => [
+            0 => trans('common.inactive'),
+            1 => trans('common.active')
+            ],
             ]
-        ]);
+            ]);
 
         /*
         |--------------------------------------------------------------------------
@@ -140,7 +140,7 @@ class ProductCrudController extends CrudController
                 'label' => trans('product.name'),
                 'type'  => 'text',
 
-                // TAB
+                    // TAB
                 'tab'   => trans('product.general_tab'),
             ],
             [
@@ -148,7 +148,7 @@ class ProductCrudController extends CrudController
                 'label' => trans('product.description'),
                 'type'  => 'ckeditor',
 
-                // TAB
+                    // TAB
                 'tab'   => trans('product.general_tab'),
             ],
             [
@@ -161,7 +161,7 @@ class ProductCrudController extends CrudController
                 'model'     => "App\Models\Category",
                 'pivot'     => true,
 
-                // TAB
+                    // TAB
                 'tab'   => trans('product.general_tab'),
             ],
             [
@@ -169,7 +169,7 @@ class ProductCrudController extends CrudController
                 'label' => trans('product.sku'),
                 'type'  => 'text',
 
-                // TAB
+                    // TAB
                 'tab'   => trans('product.general_tab'),
             ],
             [
@@ -177,7 +177,7 @@ class ProductCrudController extends CrudController
                 'label' => trans('product.stock'),
                 'type'  => 'number',
 
-                // TAB
+                    // TAB
                 'tab'   => trans('product.general_tab'),
             ],
             [
@@ -188,7 +188,7 @@ class ProductCrudController extends CrudController
                     'step' => 'any',
                 ],
 
-                // TAB
+                    // TAB
                 'tab'   => trans('product.general_tab'),
             ],
             [
@@ -196,10 +196,10 @@ class ProductCrudController extends CrudController
                 'label'         => trans('product.price_without_vat'),
                 'type'          => 'text',
                 'attributes'    => [
-                    'readonly'  => 'readonly',
-                ],
+                'readonly'  => 'readonly',
+            ],
 
-                // TAB
+                    // TAB
                 'tab'   => trans('product.general_tab'),
             ],
             [
@@ -207,18 +207,18 @@ class ProductCrudController extends CrudController
                 'type'  => 'product_vat',
             ],
             [
-               'type'           => 'select2_tax',
-               'label'          => trans('tax.tax'),
-               'name'           => 'tax_id',
-               'entity'         => 'tax',
-               'attribute'      => 'name',
-               'data_value'     => 'value',
-               'model'          => "App\Models\Tax",
-               'attributes'     => [
-                    'id'    => 'tax',
-               ],
+                'type'           => 'select2_tax',
+                'label'          => trans('tax.tax'),
+                'name'           => 'tax_id',
+                'entity'         => 'tax',
+                'attribute'      => 'name',
+                'data_value'     => 'value',
+                'model'          => "App\Models\Tax",
+                'attributes'     => [
+                'id'    => 'tax',
+            ],
 
-                // TAB
+                    // TAB
                 'tab'   => trans('product.general_tab'),
             ],
             [
@@ -226,58 +226,58 @@ class ProductCrudController extends CrudController
                 'label'   => trans('common.status'),
                 'type'    => 'select_from_array',
                 'options' => [
-                    '0' => trans('common.inactive'),
-                    '1' => trans('common.active'),
-                 ],
+                '0' => trans('common.inactive'),
+                '1' => trans('common.active'),
+            ],
 
-                // TAB
+                    // TAB
                 'tab'   => trans('product.general_tab'),
             ],
             [
-               'name'       => 'attribute_set_id',
-               'label'      => trans('attribute.attribute_sets'),
-               'type'       => 'select2',
-               'entity'     => 'attributes',
-               'attribute'  => 'name',
-               'model'      => "App\Models\AttributeSet",
-               'attributes' => [
-                    'id'    => 'attributes-set'
-               ],
+                'name'       => 'attribute_set_id',
+                'label'      => trans('attribute.attribute_sets'),
+                'type'       => 'select2',
+                'entity'     => 'attributes',
+                'attribute'  => 'name',
+                'model'      => "App\Models\AttributeSet",
+                'attributes' => [
+                'id'    => 'attributes-set'
+            ],
 
-               // TAB
-               'tab'   => trans('product.attributes_tab'),
+                   // TAB
+                'tab'   => trans('product.attributes_tab'),
             ],
             [
                 'name'  => 'attribute_types',
                 'label' => trans('attribute.name'),
                 'type'  => 'product_attributes',
 
-                // TAB
+                    // TAB
                 'tab'   => trans('product.attributes_tab'),
             ]
-        ]);
+            ]);
 
         $this->crud->addField([
-            'name'          => 'dropzone',
-            'type'          => 'dropzone',
-            'disk'          => 'products', // disk where images will be uploaded
-            'mimes'         => [
+                'name'          => 'dropzone',
+                'type'          => 'dropzone',
+                'disk'          => 'products', // disk where images will be uploaded
+                'mimes'         => [
                 'image/*'
-            ],
-            'filesize'      => 5, // maximum file size in MB
+                ],
+                'filesize'      => 5, // maximum file size in MB
 
-            // TAB
-            'tab'           => trans('product.product_images_tab'),
-        ], 'update');
+                // TAB
+                'tab'           => trans('product.product_images_tab'),
+            ], 'update');
 
         $this->crud->addField([
-            'name'          => 'product_group',
-            'type'          => 'product_group',
-            'model'         => 'App\Models\Product',
+                'name'          => 'product_group',
+                'type'          => 'product_group',
+                'model'         => 'App\Models\Product',
 
-            // TAB
-            'tab'           => trans('product.group_tab'),
-        ], 'update');
+                // TAB
+                'tab'           => trans('product.group_tab'),
+            ], 'update');
     }
 
     public function ajaxUploadProductImages(Request $request, Product $product)
@@ -479,21 +479,21 @@ class ProductCrudController extends CrudController
 
             switch($relationType) {
                 case 'hasMany':
-                    if (count($product->{$relationName}) > 0) {
-                        foreach ($product->{$relationName} as $relationValue) {
-                            $clone->{$relationName}()->create($relationValue->toArray());
-                        }
+                if (count($product->{$relationName}) > 0) {
+                    foreach ($product->{$relationName} as $relationValue) {
+                        $clone->{$relationName}()->create($relationValue->toArray());
                     }
+                }
                 break;
 
                 case 'hasOne':
-                    if ($product->{$relationName}) {
-                        $clone->{$relationName}()->create($values->toArray());
-                    }
+                if ($product->{$relationName}) {
+                    $clone->{$relationName}()->create($values->toArray());
+                }
                 break;
 
                 case 'belongsToMany':
-                    $clone->{$relationName}()->sync($values);
+                $clone->{$relationName}()->sync($values);
                 break;
             }
         }
@@ -504,3 +504,4 @@ class ProductCrudController extends CrudController
     }
 
 }
+
