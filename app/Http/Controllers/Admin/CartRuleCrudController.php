@@ -19,7 +19,7 @@ class CartRuleCrudController extends CrudController
         |--------------------------------------------------------------------------
         */
         $this->crud->setModel('App\Models\CartRule');
-        $this->crud->setRoute(config('backpack.base.route_prefix') . '/cartrule');
+        $this->crud->setRoute('admin/cart-rules');
         $this->crud->setEntityNameStrings('cart rule', 'cart rules');
 
         /*
@@ -257,9 +257,6 @@ class CartRuleCrudController extends CrudController
                 'name'  => 'name',
                 'label' => trans('cartrule.name'),
                 'type'  => 'text',
-                'attributes' => [
-                    'required' => 'true',
-                ],
                 'tab'   => trans('cartrule.information_tab'),
             ],
             [
@@ -393,7 +390,17 @@ class CartRuleCrudController extends CrudController
                 'entity'=> 'products',
                 'attribute'=> 'name',
                 'model' => 'App\Models\Product'
-            ]
+            ],
+            // [
+            //     'name' => 'compatibleCartRules',
+            //     'label' => trans('cartrule.compatible_with_rules'),
+            //     'type' => 'select2_multiple',
+            //     'entity' => 'cart_rules',
+            //     'attribute'=> 'name',
+            //     'model' => 'App\Models\CartRule',
+            //     'tab'   => trans('cartrule.actions_tab'),
+
+            // ]
 
             ]);
     }

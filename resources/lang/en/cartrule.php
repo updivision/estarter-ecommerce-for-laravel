@@ -30,5 +30,6 @@ return [
 	'actions_tab'					=> 'Actions',
 	'conditions_tab'				=> 'Conditions',
 	'free_delivery'					=> 'Free delivery',
+	'compatible_with_rules'			=> 'Compatible with rules',
 
 ];

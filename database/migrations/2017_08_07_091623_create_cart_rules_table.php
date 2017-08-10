@@ -25,7 +25,7 @@ class CreateCartRulesTable extends Migration
             $table->boolean('status')->default(0);
             $table->boolean('highlight')->default(0);
             $table->integer('minimum_amount')->nullable()->default(0);
-            $table->integer('free_delivery')->nullable()->default(0);
+            $table->integer('free_delivery')->default(0);
             $table->integer('total_available')->nullable();
             $table->integer('total_available_each_user')->nullable();
             $table->string('promo_label', 255)->nullable();
