@@ -343,6 +343,31 @@ class CartRuleCrudController extends CrudController
                 'label' => trans('cartrule.min_nr_products'),
                 'tab'   => trans('cartrule.conditions_tab'),
             ],
+            
+
+            [
+                'label' => 'Add a rule concerning',
+                'name' => 'featured', // can be a real db field, or unique name
+                'type' => 'toggle',
+                'options' => [ // same as radio, these act as the options, the key is the radio value
+                    0 => 'Products',
+                    1 => 'Categories'
+                ],
+                'hide_when' => [ // these fields hide (by name) when the key matches the radio value
+                    0 => ['categories_rule'],
+                    1 => ['products_rule']
+                ],
+                'default' => 0 // which option to select by default
+            ],
+
+            [
+                'name' => 'categories_rule',
+                'label' => 'categories_rule',
+            ],
+            [
+                'name' => 'products_rule',
+                'label' => 'products_rule',
+            ],
             // ACTIONS TAB
             [
                 'name'  => 'free_delivery',
