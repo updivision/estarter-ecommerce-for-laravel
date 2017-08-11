@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCartRuleProductSelectionCategoryTable extends Migration
+class CreateCartRulesProductGroupsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,20 +13,20 @@ class CreateCartRuleProductSelectionCategoryTable extends Migration
      */
     public function up()
     {
-        Schema::create('cart_rule_product_selection_category', 
+         Schema::create('cart_rules_product_groups', 
             function(Blueprint $table)
         {
             $table->engine = 'InnoDB';
             $table->integer('cart_rule_id')->unsigned();
-            $table->integer('category_id')->unsigned();
+            $table->integer('product_group_id')->unsigned();
           
             $table->foreign('cart_rule_id')
                 ->references('id')->on('cart_rules')  
                 ->onDelete('no action')
                 ->onUpdate('no action');
 
-            $table->foreign('category_id')
-                ->references('id')->on('categories')
+            $table->foreign('product_group_id')
+                ->references('id')->on('product_groups')
                 ->onDelete('no action')
                 ->onUpdate('no action');
             $table->nullableTimestamps();
@@ -40,6 +40,6 @@ class CreateCartRuleProductSelectionCategoryTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('cart_rule_product_selection_category');
+        Schema::dropIfExists('cart_rules_product_groups');
     }
 }

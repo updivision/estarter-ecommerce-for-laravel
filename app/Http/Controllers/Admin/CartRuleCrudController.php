@@ -8,6 +8,7 @@ use Backpack\CRUD\app\Http\Controllers\CrudController;
 use App\Http\Requests\CartRuleRequest as StoreRequest;
 use App\Http\Requests\CartRuleRequest as UpdateRequest;
 
+
 class CartRuleCrudController extends CrudController
 {
     public function setup()
@@ -371,12 +372,14 @@ class CartRuleCrudController extends CrudController
                 'tab'       => trans('cartrule.conditions_tab'),
             ],
             [
-                'name'      => 'products_rule',
+                'name'      => 'products',
                 'label'     => trans('cartrule.products_rule'),
                 'tab'       => trans('cartrule.conditions_tab'),
                 'type'      => 'select2_multiple',
                 'attribute' => 'name',
-                'model'     =>'App\Models\Product'
+                'entity'    => 'products',
+                'model'     =>'App\Models\Product',
+                'pivot'     => true,
             ],
             // ACTIONS TAB
             [
@@ -430,7 +433,7 @@ class CartRuleCrudController extends CrudController
             //     'name' => 'compatibleCartRules',
             //     'label' => trans('cartrule.compatible_with_rules'),
             //     'type' => 'select2_multiple',
-            //     'entity' => 'cart_rules',
+            //     'entity' => 'compatibleCartRules',
             //     'attribute'=> 'name',
             //     'model' => 'App\Models\CartRule',
             //     'tab'   => trans('cartrule.actions_tab'),
@@ -448,6 +451,7 @@ class CartRuleCrudController extends CrudController
 
     public function store(StoreRequest $request)
     {
+        
         // your additional operations before save here
         $redirect_location = parent::storeCrud();
         // your additional operations after save here

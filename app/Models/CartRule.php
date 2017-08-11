@@ -79,7 +79,13 @@ class CartRule extends Model
 
     public function compatibleCartRules()
     {
-        return $this->hasMany('App\Models\CartRule');
+        return $this->belongsToMany('App\Models\CartRule', 'cart_rules_combinations', 'cart_rule_id_1', 'cart_rule_id_2');
+    }
+
+
+    public function products()
+    {
+        return $this->belongsToMany('App\Models\Product', 'cart_rules_products', 'cart_rule_id', 'product_id');
     }
 
     /*

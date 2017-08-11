@@ -4,7 +4,7 @@
   <div class="row">
     <div class="col-md-4"> 
       <label class="switch-light switch-default" onclick="">
-      
+
       <input type="hidden" name="{{ $field['name'] }}" value="0">
       <input type="checkbox" value="1" name="{{ $field['name'] }}"
 
@@ -23,8 +23,8 @@
           @endif >
 
       <span>
-        <span class="no" value="0">NO</span>
-        <span class="yes" value="1">YES</span>
+        <span class="no" value="0">@lang('common.no')</span>
+        <span class="yes" value="1">@lang('common.yes')</span>
         <a></a>
       </span>
       </label>

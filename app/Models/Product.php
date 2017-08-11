@@ -100,6 +100,13 @@ class Product extends Model
         return $this->belongsTo('App\Models\ProductGroup');
     }
 
+    
+    public function cartRules()
+    {
+        return $this->belongsToMany('App\Models\CartRule');
+    }
+
+
     /*
     |--------------------------------------------------------------------------
     | SCOPES
@@ -114,6 +121,7 @@ class Product extends Model
     {
         return $query->where('active', 1);
     }
+
 
     /*
 	|--------------------------------------------------------------------------

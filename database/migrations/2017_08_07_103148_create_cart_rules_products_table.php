@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCartRuleCustomerGroupTable extends Migration
+class CreateCartRulesProductsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,23 +13,22 @@ class CreateCartRuleCustomerGroupTable extends Migration
      */
     public function up()
     {
-        Schema::create('cart_rule_customer_group', function (Blueprint $table) 
+        Schema::create('cart_rules_products', 
+            function(Blueprint $table)
         {
             $table->engine = 'InnoDB';
             $table->integer('cart_rule_id')->unsigned();
-            $table->integer('customer_id')->unsigned();
-
-
+            $table->integer('product_id')->unsigned();
+          
             $table->foreign('cart_rule_id')
-                ->references('id')->on('cart_rules')
+                ->references('id')->on('cart_rules')  
                 ->onDelete('no action')
                 ->onUpdate('no action');
 
-            $table->foreign('customer_id')
-                ->references('id')->on('users')
+            $table->foreign('product_id')
+                ->references('id')->on('products')
                 ->onDelete('no action')
                 ->onUpdate('no action');
-
             $table->nullableTimestamps();
         });
     }
@@ -41,6 +40,6 @@ class CreateCartRuleCustomerGroupTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('cart_rule_customer_group');
+        Schema::dropIfExists('cart_rules_products');
     }
 }
