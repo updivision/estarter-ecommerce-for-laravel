@@ -13,7 +13,7 @@ return [
 	'highlight'						=> 'Highlight',
 	'minimum_amount'				=> 'Minimum amount',
 	'total_available'				=> 'Total available',
-	'total_available_each_customer' => 'Total available each customer',
+	'total_available_each_user' 	=> 'Total available for each customer',
 	'promo_label'					=> 'Promo label',
 	'promo_text'					=> 'Promo text',
 	'multiply_gift'					=> 'Multiply gift by',
@@ -34,5 +34,8 @@ return [
 	'send_free_gift'				=> 'Send free gift',
 	'categories_rule'				=> 'Categories rule',
 	'products_rule'					=> 'Products rule',
+	'customer_groups_rule'			=> 'Customer groups rule',
+	'product_groups_rule'			=> 'Product groups rule',
+	
 
 ];

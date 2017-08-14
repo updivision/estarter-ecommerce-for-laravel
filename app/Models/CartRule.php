@@ -85,7 +85,26 @@ class CartRule extends Model
 
     public function products()
     {
-        return $this->belongsToMany('App\Models\Product', 'cart_rules_products', 'cart_rule_id', 'product_id');
+        return $this->belongsToMany('App\Models\Product', 
+            'cart_rules_products', 'cart_rule_id', 'product_id');
+    }
+
+    public function categories()
+    {
+        return $this->belongsToMany('App\Models\Category', 
+            'cart_rules_categories', 'cart_rule_id', 'category_id');
+    }
+
+    public function productGroups()
+    {
+        return $this->belongsToMany('App\Models\ProductGroup',
+            'cart_rules_product_groups', 'cart_rule_id', 'product_group_id');
+    }
+
+    public function customers()
+    {
+        return $this->belongsToMany('App\User',
+            'cart_rules_customer_groups', 'cart_rule_id', 'customer_id');
     }
 
     /*

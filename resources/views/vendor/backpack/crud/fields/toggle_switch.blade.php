@@ -6,7 +6,7 @@
       <label class="switch-light switch-default" onclick="">
 
       <input type="hidden" name="{{ $field['name'] }}" value="0">
-      <input type="checkbox" value="1" name="{{ $field['name'] }}"
+      <input type="checkbox" value="1" name="{{ $field['name'] }}" onchange="onToggle(this)"
 
           @if (isset($field['value']))
             @if( ((int) $field['value'] == 1 || old($field['name']) == 1) && old($field['name']) !== '0' )
@@ -53,6 +53,20 @@
   {{-- push things in the after_scripts section --}}
 
       @push('crud_fields_scripts')
-          <!-- no scripts -->
+          <script>
+
+            function onToggle(obj){
+              item_to_enable_name = $(obj).attr('field_to_enable')
+              item_to_enable = $("[name='" + String(item_to_enable_name) + "']");
+             
+              if(item_to_enable.attr('disabled') == 'disabled') {
+                item_to_enable.prop("disabled", false);
+              }
+              else {
+                item_to_enable.prop("disabled", 'disabled');
+              }
+            }
+            
+        </script>
       @endpush
 @endif

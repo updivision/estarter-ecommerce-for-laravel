@@ -84,8 +84,8 @@ class CartRuleCrudController extends CrudController
             //     'label' => trans('cartrule.total_available'),
             // ],
             // [
-            //     'name'  => 'total_available_each_customer',
-            //     'label' => trans('cartrule.total_available_each_customer'),
+            //     'name'  => 'total_available_each_user',
+            //     'label' => trans('cartrule.total_available_each_user'),
             // ],
             // [
             //     'name'  => 'promo_label',
@@ -272,8 +272,12 @@ class CartRuleCrudController extends CrudController
                 'tab'   => trans('cartrule.information_tab'),
             ],
             [
-                'name'  => 'priority',
-                'label' => trans('cartrule.priority'),
+                'name'      => 'priority',
+                'label'     => trans('cartrule.priority'),
+                'type'      => 'number',
+                'attributes'=> [
+                    'step'  => 'any',
+                ],
                 'tab'   => trans('cartrule.information_tab'),
             ],
             [
@@ -318,6 +322,10 @@ class CartRuleCrudController extends CrudController
              [
                 'name'  => 'minimum_amount',
                 'label' => trans('cartrule.minimum_amount'),
+                'type'      => 'number',
+                'attributes'=> [
+                    'step'  => 'any',
+                ],
                 'tab'   => trans('cartrule.conditions_tab'),
             ],
             [
@@ -332,19 +340,38 @@ class CartRuleCrudController extends CrudController
             [
                 'name'  => 'total_available',
                 'label' => trans('cartrule.total_available'),
+                'type'      => 'number',
+                'attributes'=> [
+                    'step'  => 'any',
+                ],
                 'tab'   => trans('cartrule.conditions_tab'),
             ],
             [
-                'name'  => 'total_available_each_customer',
-                'label' => trans('cartrule.total_available_each_customer'),
+                'name'  => 'total_available_each_user',
+                'label' => trans('cartrule.total_available_each_user'),
+                'type'      => 'number',
+                'attributes'=> [
+                    'step'  => 'any',
+                ],
                 'tab'   => trans('cartrule.conditions_tab'),
             ],
             [
                 'name'  => 'min_nr_products',
                 'label' => trans('cartrule.min_nr_products'),
+                'type'      => 'number',
+                'attributes'=> [
+                    'step'  => 'any',
+                ],
                 'tab'   => trans('cartrule.conditions_tab'),
             ],
-            
+            [
+                'name' => 'add_a_rule_concerning',
+                'label' => '',
+                'type'  => 'custom_html',
+                'value' => '<h2>Add a rule concerning</h2>',
+                'tab'   => trans('cartrule.conditions_tab'),
+
+            ],            
 
             [
                 'label' => 'Add a rule concerning',
@@ -363,13 +390,14 @@ class CartRuleCrudController extends CrudController
             ],
 
             [
-                'name'      => 'categories_rule',
+                'name'      => 'categories',
                 'label'     => trans('cartrule.categories_rule'),
                 'type'      => 'select2_multiple',
-                'entity'    => 'category',
+                'entity'    => 'categories',
                 'attribute' => 'name',
                 'model'     => 'App\Models\Category',
                 'tab'       => trans('cartrule.conditions_tab'),
+                'pivot'     => true,
             ],
             [
                 'name'      => 'products',
@@ -381,6 +409,28 @@ class CartRuleCrudController extends CrudController
                 'model'     =>'App\Models\Product',
                 'pivot'     => true,
             ],
+            [
+                'name'      => 'customers',
+                'label'     => trans('cartrule.customer_groups_rule'),
+                'tab'       => trans('cartrule.conditions_tab'),
+                'type'      => 'select2_multiple',
+                'attribute' => 'name',
+                'entity'    => 'customers',
+                'model'     =>'App\User',
+                'pivot'     => true,
+            ],
+            [
+                'name'      => 'productGroups',
+                'label'     => trans('cartrule.product_groups_rule'),
+                'tab'       => trans('cartrule.conditions_tab'),
+                'type'      => 'select2_multiple',
+                'attribute' => 'id',
+                'entity'    => 'productGroups',
+                'model'     =>'App\Models\ProductGroup',
+                'pivot'     => true,
+            ],
+
+
             // ACTIONS TAB
             [
                 'name'  => 'free_delivery',
@@ -398,6 +448,10 @@ class CartRuleCrudController extends CrudController
             [
                 'name'  => 'reduction_amount',
                 'label' => trans('cartrule.reduction_value'),
+                'type'      => 'number',
+                'attributes'=> [
+                    'step'  => 'any',
+                ],
                 'tab'   => trans('cartrule.actions_tab'),
             ],
             [
@@ -412,12 +466,18 @@ class CartRuleCrudController extends CrudController
             [
                 'name'  => 'multiply_gift',
                 'label' => trans('cartrule.multiply_gift'),
+                'type'      => 'number',
+                'attributes'=> [
+                    'step'  => 'any',
+                ],
                 'tab'   => trans('cartrule.actions_tab'),
             ],
             [
-                'name'  => '',
+                'name'  => 'send_free_gift',
                 'label' => trans('cartrule.send_free_gift'),
                 'type'  => 'toggle_switch',
+                'attributes' => ['field_to_enable' => 'gift_product_id'],
+
                 'tab'   => trans('cartrule.actions_tab'),
             ],
             [
@@ -427,18 +487,21 @@ class CartRuleCrudController extends CrudController
                 'type'      => 'select2',
                 'entity'    => 'products',
                 'attribute' => 'name',
-                'model'     => 'App\Models\Product'
+                'model'     => 'App\Models\Product',
+                'attributes'=> ['disabled' => 'disabled', ],
             ],
-            // [
-            //     'name' => 'compatibleCartRules',
-            //     'label' => trans('cartrule.compatible_with_rules'),
-            //     'type' => 'select2_multiple',
-            //     'entity' => 'compatibleCartRules',
-            //     'attribute'=> 'name',
-            //     'model' => 'App\Models\CartRule',
-            //     'tab'   => trans('cartrule.actions_tab'),
 
-            // ]
+
+            [
+                'name' => 'compatibleCartRules',
+                'label' => trans('cartrule.compatible_with_rules'),
+                'type' => 'select2_multiple',
+                'entity' => 'compatibleCartRules',
+                'attribute'=> 'name',
+                'model' => 'App\Models\CartRule',
+                'tab'   => trans('cartrule.actions_tab'),
+                'pivot'     => true,
+            ]
         //     [
         //          'label'     => 'STATUS',
         // 'type'      => 'checkbox',

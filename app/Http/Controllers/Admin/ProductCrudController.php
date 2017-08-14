@@ -196,8 +196,8 @@ class ProductCrudController extends CrudController
                 'label'         => trans('product.price_without_vat'),
                 'type'          => 'text',
                 'attributes'    => [
-                'readonly'  => 'readonly',
-            ],
+                    'readonly'  => 'readonly',
+                ],
 
                     // TAB
                 'tab'   => trans('product.general_tab'),

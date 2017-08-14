@@ -35,6 +35,11 @@ class ProductGroup extends Model
 	|--------------------------------------------------------------------------
 	*/
 
+    public function cartRules()
+    {
+        return $this->belongsToMany('App\Models\CartRule');
+    }
+
     /*
 	|--------------------------------------------------------------------------
 	| SCOPES
