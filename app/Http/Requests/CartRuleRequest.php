@@ -37,8 +37,6 @@ class CartRuleRequest extends \Backpack\CRUD\app\Http\Requests\CrudRequest
             'reduction_amount'          => 'numeric',
             'total_available'           => 'numeric',
             'total_available_each_user' => 'numeric',
-            
-       
         ];
     }
 

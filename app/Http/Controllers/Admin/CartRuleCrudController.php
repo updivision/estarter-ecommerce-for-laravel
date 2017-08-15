@@ -61,72 +61,7 @@ class CartRuleCrudController extends CrudController
             [
                 'name'  => 'status',
                 'label' => trans('cartrule.status'),
-            ]
-
-            /*
-            |---------------------------------------------------------------------
-            | CRUD ADDITIONAL COLUMNS
-            | These columns are also available from database
-            | You can add them to the existing table
-            |---------------------------------------------------------------------
-            */
-            // 
-            //[
-            //     'name'  => 'highlight',
-            //     'label' => trans('cartrule.highlight'),
-            // ],
-            // [
-            //     'name'  => 'minimum_amount',
-            //     'label' => trans('cartrule.minimum_amount'),
-            // ],
-            // [
-            //     'name'  => 'total_available',
-            //     'label' => trans('cartrule.total_available'),
-            // ],
-            // [
-            //     'name'  => 'total_available_each_user',
-            //     'label' => trans('cartrule.total_available_each_user'),
-            // ],
-            // [
-            //     'name'  => 'promo_label',
-            //     'label' => trans('cartrule.promo_label'),
-            // ],
-            // [
-            //     'name'  => 'promo_text',
-            //     'label' => trans('cartrule.promo_text'),
-            // ],
-            // [
-            //     'name'  => 'multiply_gift',
-            //     'label' => trans('cartrule.multiply_gift'),
-            // ],
-            // [
-            //     'name'  => 'customer_id',
-            //     'label' => trans('cartrule.limit_to_one_customer'),
-            // ],
-            // [
-            //     'name'  => 'gift_product_id',
-            //     'label' => trans('cartrule.gift'),
-            // ],
-            // [
-            //     'name'  => 'min_nr_products',
-            //     'label' => trans('cartrule.min_nr_products'),
-            // ],
-            // [
-            //     'name'  => 'discount_type',
-            //     'label' => trans('cartrule.discount_type'),
-            //     'type'  => 'enum',
-            // ],
-            // [
-            //     'name'  => 'reduction_amount',
-            //     'label' => trans('cartrule.reduction_amount'),
-            // ],
-            // [
-            //     'name'  => 'currency_id',
-            //     'label' => trans('cartrule.currency'),
-            //     'type'  => 'select',
-            //     'model' => 'App\Models\Currency',
-            // ]
-
+            ],
         ]);
 
         /*
@@ -148,7 +83,7 @@ class CartRuleCrudController extends CrudController
         | AJAX TABLE VIEW
         |--------------------------------------------------------------------------
         */
-        // $this->crud->enableAjaxTable();
+        $this->crud->enableAjaxTable();
 
         // ------ CRUD FIELDS
         // $this->crud->addField($options, 'update/create/both');
@@ -256,13 +191,14 @@ class CartRuleCrudController extends CrudController
             // INFORMATION TAB
             [
                 'name'  => 'name',
-                'label' => trans('cartrule.name'),
+                'label' => trans('cartrule.name') . ' *',
                 'type'  => 'text',
+                'attributes' => ['required' => 'true'],
                 'tab'   => trans('cartrule.information_tab'),
             ],
             [
                 'name'  => 'code',
-                'label' => trans('cartrule.code'),
+                'label' => trans('cartrule.code') . ' *',
                 'tab'   => trans('cartrule.information_tab'),
             ],
             [
@@ -273,7 +209,7 @@ class CartRuleCrudController extends CrudController
             ],
             [
                 'name'      => 'priority',
-                'label'     => trans('cartrule.priority'),
+                'label'     => trans('cartrule.priority') . ' *',
                 'type'      => 'number',
                 'attributes'=> [
                     'step'  => 'any',
@@ -297,6 +233,7 @@ class CartRuleCrudController extends CrudController
                 'tab'   => trans('cartrule.information_tab'),
                 'type'  => 'textarea',
             ],
+            
             // CONDITIONS TAB
             [
                 'name'  => 'customer_id',
@@ -309,13 +246,13 @@ class CartRuleCrudController extends CrudController
             ],
             [
                 'name'  => 'start_date',
-                'label' => trans('cartrule.start_date'),
+                'label' => trans('cartrule.start_date') . ' *',
                 'type'  => 'date_picker',
                 'tab'   => trans('cartrule.conditions_tab'),
             ],
             [
                 'name'  => 'expiration_date',
-                'label' => trans('cartrule.expiration_date'),
+                'label' => trans('cartrule.expiration_date') . ' *',
                 'type'  => 'date_picker',
                 'tab'   => trans('cartrule.conditions_tab'),
             ],
@@ -368,27 +305,10 @@ class CartRuleCrudController extends CrudController
                 'name' => 'add_a_rule_concerning',
                 'label' => '',
                 'type'  => 'custom_html',
-                'value' => '<h2>Add a rule concerning</h2>',
+                'value' => '<h3>Restrictions</h3>',
                 'tab'   => trans('cartrule.conditions_tab'),
 
             ],            
-
-            [
-                'label' => 'Add a rule concerning',
-                'tab'   => trans('cartrule.conditions_tab'),
-                'name' => 'featured', // can be a real db field, or unique name
-                'type' => 'toggle',
-                'options' => [ // same as radio, these act as the options, the key is the radio value
-                    0 => 'Products',
-                    1 => 'Categories'
-                ],
-                'hide_when' => [ // these fields hide (by name) when the key matches the radio value
-                    0 => ['categories_rule'],
-                    1 => ['products_rule']
-                ],
-                'default' => 0, // which option to select by default
-            ],
-
             [
                 'name'      => 'categories',
                 'label'     => trans('cartrule.categories_rule'),
@@ -429,7 +349,6 @@ class CartRuleCrudController extends CrudController
                 'model'     =>'App\Models\ProductGroup',
                 'pivot'     => true,
             ],
-
 
             // ACTIONS TAB
             [
@@ -490,8 +409,6 @@ class CartRuleCrudController extends CrudController
                 'model'     => 'App\Models\Product',
                 'attributes'=> ['disabled' => 'disabled', ],
             ],
-
-
             [
                 'name' => 'compatibleCartRules',
                 'label' => trans('cartrule.compatible_with_rules'),
@@ -502,32 +419,21 @@ class CartRuleCrudController extends CrudController
                 'tab'   => trans('cartrule.actions_tab'),
                 'pivot'     => true,
             ]
-        //     [
-        //          'label'     => 'STATUS',
-        // 'type'      => 'checkbox',
-        // 'name'      => 'status',
-        //     ],
-
-            ]);
+        ]);
     }
 
 
     public function store(StoreRequest $request)
     {
-        
-        // your additional operations before save here
         $redirect_location = parent::storeCrud();
-        // your additional operations after save here
-        // use $this->data['entry'] or $this->crud->entry
+     
         return $redirect_location;
     }
 
     public function update(UpdateRequest $request)
     {
-        // your additional operations before save here
         $redirect_location = parent::updateCrud();
-        // your additional operations after save here
-        // use $this->data['entry'] or $this->crud->entry
+     
         return $redirect_location;
     }
 }

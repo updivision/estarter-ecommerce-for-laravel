@@ -32,10 +32,10 @@ return [
 	'free_delivery'					=> 'Free delivery',
 	'compatible_with_rules'			=> 'Compatible with rules',
 	'send_free_gift'				=> 'Send free gift',
-	'categories_rule'				=> 'Categories rule',
-	'products_rule'					=> 'Products rule',
-	'customer_groups_rule'			=> 'Customer groups rule',
-	'product_groups_rule'			=> 'Product groups rule',
+	'categories_rule'				=> 'The categories are matching one of these:',
+	'products_rule'					=> 'The products are matching one of these:',
+	'customer_groups_rule'			=> 'Apply rule to customers:',
+	'product_groups_rule'			=> 'Apply rule to product groups:',
 	
 
 ];
