@@ -45,6 +45,25 @@ class CartRule extends Model
     // protected $hidden = [];
     // protected $dates = [];
 
+
+    /*
+    |--------------------------------------------------------------------------
+    | EVENTS
+    |--------------------------------------------------------------------------
+    */
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::deleting(function($model) {
+            $model->compatibleCartRules()->detach();
+            $model->products()->detach();
+            $model->categories()->detach();
+            $model->productGroups()->detach();
+            $model->customers()->detach();
+        });
+
+    }
     /*
     |--------------------------------------------------------------------------
     | FUNCTIONS
