@@ -7,6 +7,7 @@ use Backpack\CRUD\app\Http\Controllers\CrudController;
 // VALIDATION: change the requests to match your own file names if you need form validation
 use App\Http\Requests\CartRuleRequest as StoreRequest;
 use App\Http\Requests\CartRuleRequest as UpdateRequest;
+use App\Models\Currency;
 
 
 class CartRuleCrudController extends CrudController
@@ -190,11 +191,11 @@ class CartRuleCrudController extends CrudController
         $this->crud->addFields([
             // INFORMATION TAB
             [
-                'name'  => 'name',
-                'label' => trans('cartrule.name') . ' *',
-                'type'  => 'text',
-                'attributes' => ['required' => 'true'],
-                'tab'   => trans('cartrule.information_tab'),
+                'name'      => 'name',
+                'label'     => trans('cartrule.name') . ' *',
+                'type'      => 'text',
+                'attributes'=> ['required' => 'true'],
+                'tab'       => trans('cartrule.information_tab'),
             ],
             [
                 'name'  => 'code',
@@ -214,7 +215,7 @@ class CartRuleCrudController extends CrudController
                 'attributes'=> [
                     'step'  => 'any',
                 ],
-                'tab'   => trans('cartrule.information_tab'),
+                'tab'       => trans('cartrule.information_tab'),
             ],
             [
                 'name'  => 'status',
@@ -236,79 +237,88 @@ class CartRuleCrudController extends CrudController
             
             // CONDITIONS TAB
             [
-                'name'  => 'customer_id',
-                'label' => trans('cartrule.limit_to_one_customer'),
-                'tab'   => trans('cartrule.conditions_tab'),
-                'type'  => 'select2',
-                'entity'=> 'user',
+                'name'      => 'customers',
+                'label'     => trans('cartrule.customer_groups_rule'),
+                'type'      => 'select2_multiple',
                 'attribute' => 'name',
-                'model' => 'App\User',
-            ],
+                'entity'    => 'customers',
+                'model'     =>'App\User',
+                'pivot'     => true,
+                'tab'       => trans('cartrule.conditions_tab'),
+            ],    
             [
                 'name'  => 'start_date',
                 'label' => trans('cartrule.start_date') . ' *',
-                'type'  => 'date_picker',
+                'type'  => 'datetime_picker',
                 'tab'   => trans('cartrule.conditions_tab'),
             ],
             [
                 'name'  => 'expiration_date',
                 'label' => trans('cartrule.expiration_date') . ' *',
-                'type'  => 'date_picker',
+                'type'  => 'datetime_picker',
                 'tab'   => trans('cartrule.conditions_tab'),
             ],
-             [
-                'name'  => 'minimum_amount',
-                'label' => trans('cartrule.minimum_amount'),
+            [
+                'name'      => 'total_available',
+                'label'     => trans('cartrule.total_available'),
                 'type'      => 'number',
                 'attributes'=> [
                     'step'  => 'any',
                 ],
-                'tab'   => trans('cartrule.conditions_tab'),
+                'tab'       => trans('cartrule.conditions_tab'),
             ],
             [
-                'name'  => 'minimum_amount_currency_id',
-                'label' => trans('cartrule.currency'),
-                'type'  => 'select',
+                'name'      => 'total_available_each_user',
+                'label'     => trans('cartrule.total_available_each_user'),
+                'type'      => 'number',
+                'attributes'=> [
+                    'step'  => 'any',
+                ],
+                'tab'       => trans('cartrule.conditions_tab'),
+            ],
+            [
+                'name'      => 'min_nr_products',
+                'label'     => trans('cartrule.min_nr_products'),
+                'type'      => 'number',
+                'attributes'=> [
+                    'step'  => 'any',
+                ],
+                'tab'       => trans('cartrule.conditions_tab'),
+            ],
+            [
+                'name'      => 'minimum_amount',
+                'label'     => trans('cartrule.minimum_amount'),
+                'type'      => 'number',
+                'attributes'=> [
+                    'step'  => 'any',
+                ],
+                'wrapperAttributes' => [
+                    'class' => 'form-group col-md-8'
+                ],
+                'tab'       => trans('cartrule.conditions_tab'),
+            ],
+            [
+                'name'      => 'minimum_amount_currency_id',
+                'label'     => trans('cartrule.currency'),
                 'entity'    => 'currency',
                 'attribute' => 'name',
-                'model' => 'App\Models\Currency',
-                'tab'   => trans('cartrule.conditions_tab'),
-            ],
-            [
-                'name'  => 'total_available',
-                'label' => trans('cartrule.total_available'),
-                'type'      => 'number',
-                'attributes'=> [
-                    'step'  => 'any',
+                'model'     => 'App\Models\Currency',
+                'wrapperAttributes' => [
+                    'class' => 'form-group col-md-4'
                 ],
-                'tab'   => trans('cartrule.conditions_tab'),
+                'type'      => 'select2_currency',
+                'default_currency'   => $this->getDefaultCurrencyName(),
+                'default_currency_id' => $this->getDefaultCurrencyId(),
+                'tab'       => trans('cartrule.conditions_tab'),
             ],
             [
-                'name'  => 'total_available_each_user',
-                'label' => trans('cartrule.total_available_each_user'),
-                'type'      => 'number',
-                'attributes'=> [
-                    'step'  => 'any',
-                ],
-                'tab'   => trans('cartrule.conditions_tab'),
-            ],
-            [
-                'name'  => 'min_nr_products',
-                'label' => trans('cartrule.min_nr_products'),
-                'type'      => 'number',
-                'attributes'=> [
-                    'step'  => 'any',
-                ],
-                'tab'   => trans('cartrule.conditions_tab'),
-            ],
-            [
-                'name' => 'add_a_rule_concerning',
+                'name'  => 'restrictions',
                 'label' => '',
                 'type'  => 'custom_html',
                 'value' => '<h3>Restrictions</h3>',
                 'tab'   => trans('cartrule.conditions_tab'),
 
-            ],            
+            ],        
             [
                 'name'      => 'categories',
                 'label'     => trans('cartrule.categories_rule'),
@@ -316,38 +326,38 @@ class CartRuleCrudController extends CrudController
                 'entity'    => 'categories',
                 'attribute' => 'name',
                 'model'     => 'App\Models\Category',
-                'tab'       => trans('cartrule.conditions_tab'),
                 'pivot'     => true,
-            ],
-            [
-                'name'      => 'products',
-                'label'     => trans('cartrule.products_rule'),
                 'tab'       => trans('cartrule.conditions_tab'),
-                'type'      => 'select2_multiple',
-                'attribute' => 'name',
-                'entity'    => 'products',
-                'model'     =>'App\Models\Product',
-                'pivot'     => true,
-            ],
-            [
-                'name'      => 'customers',
-                'label'     => trans('cartrule.customer_groups_rule'),
-                'tab'       => trans('cartrule.conditions_tab'),
-                'type'      => 'select2_multiple',
-                'attribute' => 'name',
-                'entity'    => 'customers',
-                'model'     =>'App\User',
-                'pivot'     => true,
             ],
             [
                 'name'      => 'productGroups',
                 'label'     => trans('cartrule.product_groups_rule'),
-                'tab'       => trans('cartrule.conditions_tab'),
                 'type'      => 'select2_multiple',
                 'attribute' => 'id',
                 'entity'    => 'productGroups',
                 'model'     =>'App\Models\ProductGroup',
                 'pivot'     => true,
+                'tab'       => trans('cartrule.conditions_tab'),
+            ],
+            [
+                'name'      => 'products',
+                'label'     => trans('cartrule.products_rule'),
+                'type'      => 'select2_multiple',
+                'attribute' => 'name',
+                'entity'    => 'products',
+                'model'     =>'App\Models\Product',
+                'pivot'     => true,
+                'tab'       => trans('cartrule.conditions_tab'),
+            ],
+            [
+                'name'      => 'compatibleCartRules',
+                'label'     => trans('cartrule.compatible_with_rules'),
+                'type'      => 'select2_multiple',
+                'entity'    => 'compatibleCartRules',
+                'attribute' => 'name',
+                'model'     => 'App\Models\CartRule',
+                'pivot'     => true,
+                'tab'       => trans('cartrule.conditions_tab'),
             ],
 
             // ACTIONS TAB
@@ -360,44 +370,46 @@ class CartRuleCrudController extends CrudController
             [
                 'name'  => 'discount_type',
                 'label' => trans('cartrule.discount_type'),
-                'type'  => 'enum',
+                'type'  => 'enum_discount_type',
+                'attributes' => ['field_to_enable' => 'reduction_currency_id', 
+                                'enable_field_on_option' => 'Amount - order'],
                 'tab'   => trans('cartrule.actions_tab'),
             ],
 
             [
-                'name'  => 'reduction_amount',
-                'label' => trans('cartrule.reduction_value'),
+                'name'      => 'reduction_amount',
+                'label'     => trans('cartrule.reduction_value'),
                 'type'      => 'number',
                 'attributes'=> [
                     'step'  => 'any',
                 ],
-                'tab'   => trans('cartrule.actions_tab'),
-            ],
-            [
-                'name'      => 'reduction_currency_id',
-                'label'     => trans('cartrule.currency'),
-                'type'      => 'select',
-                'entity'    => 'currency',
-                'attribute' => 'name',
-                'model'     => 'App\Models\Currency',
+                'wrapperAttributes' => [
+                    'class' => 'form-group col-md-8'
+                ],
                 'tab'       => trans('cartrule.actions_tab'),
             ],
             [
-                'name'  => 'multiply_gift',
-                'label' => trans('cartrule.multiply_gift'),
-                'type'      => 'number',
-                'attributes'=> [
-                    'step'  => 'any',
+                'name'              => 'reduction_currency_id',
+                'label'             => trans('cartrule.currency'),
+                'entity'            => 'currency',
+                'attribute'         => 'name',
+                'model'             => 'App\Models\Currency',
+                'attributes'        => ['disabled' => 'disabled'],
+                'wrapperAttributes' => [
+                                        'class' => 'form-group col-md-4'
                 ],
-                'tab'   => trans('cartrule.actions_tab'),
+                'type'      => 'select2_currency',
+                'default_currency'   => $this->getDefaultCurrencyName(),
+                'default_currency_id' => $this->getDefaultCurrencyId(),
+                'tab'       => trans('cartrule.actions_tab'),
             ],
             [
-                'name'  => 'send_free_gift',
-                'label' => trans('cartrule.send_free_gift'),
-                'type'  => 'toggle_switch',
-                'attributes' => ['field_to_enable' => 'gift_product_id'],
-
-                'tab'   => trans('cartrule.actions_tab'),
+                'name'      => 'send_free_gift',
+                'label'     => trans('cartrule.send_free_gift'),
+                'type'      => 'toggle_switch_free_gift',
+                'attributes'=> ['field_to_enable' => 'gift_product_id',
+                                'field_to_enable_2' => 'multiply_gift'],
+                'tab'       => trans('cartrule.actions_tab'),
             ],
             [
                 'name'      => 'gift_product_id',
@@ -410,16 +422,28 @@ class CartRuleCrudController extends CrudController
                 'attributes'=> ['disabled' => 'disabled', ],
             ],
             [
-                'name' => 'compatibleCartRules',
-                'label' => trans('cartrule.compatible_with_rules'),
-                'type' => 'select2_multiple',
-                'entity' => 'compatibleCartRules',
-                'attribute'=> 'name',
-                'model' => 'App\Models\CartRule',
-                'tab'   => trans('cartrule.actions_tab'),
-                'pivot'     => true,
-            ]
+                'name'      => 'multiply_gift',
+                'label'     => trans('cartrule.multiply_gift'),
+                'type'      => 'toggle_switch',
+                'attributes'=> ['disabled' => 'disabled', ],
+                'tab'       => trans('cartrule.actions_tab'),
+            ],
         ]);
+    }
+
+
+
+    public function getDefaultCurrencyName() {
+        $default_currency = Currency::where('default', 1)->first();
+        $default_currency_name = $default_currency->name;
+        return $default_currency_name;
+    }
+
+
+    public function getDefaultCurrencyId() {
+        $default_currency = Currency::where('default', 1)->first();
+        $default_currency_id = $default_currency->id;
+        return $default_currency_id;
     }
 
 

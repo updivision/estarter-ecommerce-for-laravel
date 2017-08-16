@@ -16,7 +16,7 @@ return [
 	'total_available_each_user' 	=> 'Total available for each customer',
 	'promo_label'					=> 'Promo label',
 	'promo_text'					=> 'Promo text',
-	'multiply_gift'					=> 'Multiply gift by',
+	'multiply_gift'					=> 'Multiply gift',
 	'limit_to_one_customer'			=> 'Limit to a single customer',
 	'gift'							=> 'Gift',
 	'min_nr_products'				=> 'Minimum nr. of products',

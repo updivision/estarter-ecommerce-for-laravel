@@ -1,4 +1,4 @@
-<!-- toggle switch  -->
+<!-- toggle switch gift -->
 <div @include('crud::inc.field_wrapper_attributes') >
      <label>{!! $field['label'] !!}</label>
   <div class="row">
@@ -6,7 +6,7 @@
       <label class="switch-light switch-default" onclick="">
 
       <input type="hidden" name="{{ $field['name'] }}" value="0">
-      <input type="checkbox" value="1" name="{{ $field['name'] }}" onchange="onToggle(this)"
+      <input type="checkbox" value="1" name="{{ $field['name'] }}" onchange="onToggle(this)"  
 
           @if (isset($field['value']))
             @if( ((int) $field['value'] == 1 || old($field['name']) == 1) && old($field['name']) !== '0' )
@@ -17,9 +17,9 @@
           @endif
 
           @if (isset($field['attributes']))
-              @foreach ($field['attributes'] as $attribute => $value)
-                {{ $attribute }}="{{ $value }}"
-              @endforeach
+            @foreach ($field['attributes'] as $attribute => $value)
+              {{ $attribute }}="{{ $value }}"
+            @endforeach
           @endif >
 
       <span>
@@ -57,15 +57,23 @@
 
             function onToggle(obj){
               item_to_enable_name = $(obj).attr('field_to_enable');
+              item_to_enable_name_2 = $(obj).attr('field_to_enable_2');
+
               item_to_enable = $("[name='" + String(item_to_enable_name) + "']");
+              item_to_enable_2 = $("[name='" + String(item_to_enable_name_2) + "']");
+
              
               if(item_to_enable.attr('disabled') == 'disabled') {
                 item_to_enable.prop("disabled", false);
+                item_to_enable_2.prop("disabled", false);
               }
               else {
                 item_to_enable.prop("disabled", 'disabled');
+                item_to_enable_2.prop("disabled", 'disabled');
+
               }
-            }
+          }
+
             
         </script>
       @endpush
