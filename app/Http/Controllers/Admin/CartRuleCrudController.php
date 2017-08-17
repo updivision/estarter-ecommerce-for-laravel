@@ -435,14 +435,22 @@ class CartRuleCrudController extends CrudController
 
     public function getDefaultCurrencyName() {
         $default_currency = Currency::where('default', 1)->first();
-        $default_currency_name = $default_currency->name;
+        if(isset($default_currency)){
+            $default_currency_name = $default_currency->name;
+        }
+        else
+            $default_currency_name = '-';    
         return $default_currency_name;
     }
 
 
     public function getDefaultCurrencyId() {
         $default_currency = Currency::where('default', 1)->first();
-        $default_currency_id = $default_currency->id;
+        if(isset($default_currency)){
+            $default_currency_id = $default_currency->id;
+        }
+        else
+            $default_currency_id = NULL;
         return $default_currency_id;
     }
 

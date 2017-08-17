@@ -123,7 +123,7 @@ class CartRule extends Model
     public function customers()
     {
         return $this->belongsToMany('App\User',
-            'cart_rules_customer_groups', 'cart_rule_id', 'customer_id');
+            'cart_rules_customers', 'cart_rule_id', 'customer_id');
     }
 
     /*
