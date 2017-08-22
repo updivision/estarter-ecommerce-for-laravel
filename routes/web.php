@@ -22,6 +22,7 @@ Route::group(['middleware' => 'admin',
 	CRUD::resource('clients', 'ClientCrudController');
 	CRUD::resource('users', 'UserCrudController');
 	CRUD::resource('cart-rules', 'CartRuleCrudController');
+	CRUD::resource('specific-prices', 'SpecificPriceCrudController');
 
 	// Clone Products
 	Route::post('products/clone', ['as' => 'clone.product', 'uses' => 'ProductCrudController@cloneProduct']);

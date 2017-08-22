@@ -9,6 +9,7 @@ use App\Models\Product;
 use App\Models\ProductGroup;
 use App\Models\ProductImage;
 use App\Models\Tax;
+use App\Models\SpecificPrice;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -278,6 +279,65 @@ class ProductCrudController extends CrudController
                 // TAB
                 'tab'           => trans('product.group_tab'),
             ], 'update');
+
+
+        // Specific price functionality
+        $this->crud->addFields([
+            
+            // [
+            //     'name'  => 'currency',
+            //     'label' => trans('specificprice.currency'),
+            //     'model' => 'App\Models\Currency',
+            //     'type'  => 'select2',
+            //     // 'pivot' => true
+                
+            //     // TAB
+            //     'tab'   => trans('specificprice.specific_price')
+            // ],
+            //  [
+            //     'name'  => 'discount_type',
+            //     'label' => trans('specificprice.discount_type'),
+            //      'model' =>'App\Models\SpecificPrice',
+            //      'entity' => 'specificPrice',
+            //     'type'  => 'enum_discount_type',
+            //     'attributes' => ['field_to_enable' => 'currency_id', 
+            //                     'enable_field_on_option' => 'Amount'],
+            //        // TAB
+            //     'tab'   => trans('specificprice.specific_price')
+            // ],
+            [
+                'name'  => 'reduction',
+                'label' => trans('specificprice.reduction'),
+                'model' => 'App\Models\SpecificPrice',
+                'attribute'   => 'reduction',
+                'type'  => 'number',
+
+
+                // TAB
+                'tab'   => trans('specificprice.specific_price')
+            ],
+            [
+                'name'  => 'start_date',
+                'label' => trans('specificprice.start_date'),
+                'type'  => 'datetime_picker',
+                'model' => 'App\Models\SpecificPrice',
+                'attribute'   => 'start_date',
+                // TAB
+                'tab'   => trans('specificprice.specific_price')  
+            ],
+            [
+                'name'  => 'expiration_date',
+                'label' => trans('specificprice.expiration_date'),
+                'type'  => 'datetime_picker',
+                'model' => 'App\Models\SpecificPrice',
+                'attribute'   => 'expiration_date',
+                
+                // TAB
+                'tab'   => trans('specificprice.specific_price')  
+            ],
+
+        ]);
+
     }
 
     public function ajaxUploadProductImages(Request $request, Product $product)
@@ -342,16 +402,27 @@ class ProductCrudController extends CrudController
         }
     }
 
-    public function store(StoreRequest $request, ProductGroup $productGroup)
+    public function store(StoreRequest $request, ProductGroup $productGroup, 
+                            SpecificPrice $specificPrice)
     {
+        // dd($request->input('reduction'));
+
+
         // Create group entry
         $productGroup = $productGroup->create();
+
+
+       
 
         $request->merge([
             'group_id' => $productGroup->id
         ]);
 
+        // $request =   $request->except(['reduction', 
+                                        // 'start_date', 'expiration_date', 'discount_type']);
         $redirect_location = parent::storeCrud($request);
+
+
 
         // Save product's attribute values
         if ($request->input('attributes')) {
@@ -365,6 +436,16 @@ class ProductCrudController extends CrudController
                 }
             }
         }
+
+
+        // Save specific price
+        $specificPrice->reduction = $request->input('reduction');
+        $specificPrice->start_date = $request->input('start_date');
+        $specificPrice->expiration_date = $request->input('expiration_date');
+        $specificPrice->product_id = $this->crud->entry->id;
+        $specificPrice = $specificPrice->save();
+
+        
 
         return $redirect_location;
     }

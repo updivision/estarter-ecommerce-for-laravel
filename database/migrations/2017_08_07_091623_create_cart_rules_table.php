@@ -20,8 +20,8 @@ class CreateCartRulesTable extends Migration
             $table->string('name', 255);
             $table->string('code', 100);
             $table->tinyInteger('priority');
-            $table->date('start_date');
-            $table->date('expiration_date');
+            $table->dateTime('start_date');
+            $table->dateTime('expiration_date');
             $table->boolean('status')->default(0);
             $table->boolean('highlight')->default(0);
             $table->integer('minimum_amount')->nullable()->default(0);
@@ -35,7 +35,7 @@ class CreateCartRulesTable extends Migration
             $table->enum('discount_type', array('Percent - order', 
                         'Percent - selected products', 'Percent - cheapest product', 
                         'Percent - most expensive product', 'Amount - order'));
-            $table->integer('reduction_amount')->nullable()->default(0);
+            $table->decimal('reduction_amount', 13, 2)->nullable()->default(0);
             $table->integer('reduction_currency_id')->unsigned()->nullable();
             $table->integer('minimum_amount_currency_id')->unsigned()->nullable();
             $table->integer('gift_product_id')->unsigned()->nullable();

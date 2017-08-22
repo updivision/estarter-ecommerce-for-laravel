@@ -61,6 +61,10 @@
           @can('list_cart_rules')
             <li><a href="{{ url(config('backpack.base.route_prefix', 'admin').'/cart-rules') }}"><i class="fa fa-shopping-cart"></i> <span>{{ trans('cartrule.cart_rules') }}</span></a></li>
           @endcan
+
+          @can('list_specific_prices')
+            <li><a href="{{ url(config('backpack.base.route_prefix', 'admin').'/specific-prices') }}"><i class="fa fa-money"></i> <span>{{ trans('specificprice.specific_prices') }}</span></a></li>
+          @endcan
      
           <li class="treeview">
             <a href="#"><i class="fa fa-group"></i> <span>Users, Roles, Permissions</span> <i class="fa fa-angle-left pull-right"></i></a>
