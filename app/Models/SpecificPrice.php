@@ -36,16 +36,8 @@ class SpecificPrice extends Model
     | EVENTS
     |--------------------------------------------------------------------------
     */
-    protected static function boot()
-    {
-        parent::boot();
-
-        static::deleting(function($model) {
-            $model->product()->detach();
-            $model->currency()->detach();
-        });
-
-    }
+    
+    
     /*
 
     |--------------------------------------------------------------------------
@@ -53,26 +45,39 @@ class SpecificPrice extends Model
     |--------------------------------------------------------------------------
     */
 
-    public function getCurrencyName()
-    {
-        $currency = Currency::find($this->currency_id);
-        if(isset($currency)){
-            return $currency->name;  
-        }
-        return '-';
-    }
+    // public function getCurrencyName()
+    // {
+    //     $currency = Currency::find($this->currency_id);
+    //     if(isset($currency)){
+    //         return $currency->name;  
+    //     }
+    //     return '-';
+    // }
 
 
-    public function getReductionWithCurrency()
+    // public function getReductionWithCurrency()
+    // {
+    //     $currency = Currency::find($this->currency_id);
+    //     $reduction = $this->reduction;
+
+    //     if(isset($reduction) and isset($currency)) {
+    //         return $reduction . ' ' . $currency->iso;
+    //     }
+    //     if(isset($reduction) and $this->discount_type=='Percent') {
+    //         return $reduction . ' %';
+    //     }
+    //     return '-'; 
+    // }
+
+    public function getReduction()
     {
-        $currency = Currency::find($this->currency_id);
         $reduction = $this->reduction;
 
-        if(isset($reduction) and isset($currency)) {
-            return $reduction . ' ' . $currency->iso;
-        }
-        if(isset($reduction) and $this->discount_type=='Percent') {
-            return $reduction . ' %';
+        if(isset($reduction)){
+            if($this->discount_type=='Percent') {
+                return $reduction . ' %';
+            }
+            return $reduction;
         }
         return '-'; 
     }
@@ -95,8 +100,9 @@ class SpecificPrice extends Model
             if($this->discount_type == 'Percent'){
                 return $oldPrice - $this->reduction/100 * $oldPrice;
             }
-            //else
-            // TO DO - for amount, get currencies and convert accordingly
+            if($this->discount_type == 'Amount'){
+                return $oldPrice - $this->reduction;
+            }
             return $product->price;
         }
         return '-';
@@ -122,10 +128,10 @@ class SpecificPrice extends Model
         return $this->hasOne('App\Models\Product');
     }
 
-    public function currency(){
-        return $this->hasOne('App\Models\Currency', 'id');
-        // return $this->hasOne('App\Models\Currency', 'currency_id');
-    }
+    // public function currency(){
+    //     return $this->hasOne('App\Models\Currency', 'id');
+    //     // return $this->hasOne('App\Models\Currency', 'currency_id');
+    // }
 
     /*
     |--------------------------------------------------------------------------

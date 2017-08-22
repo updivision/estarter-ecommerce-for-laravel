@@ -294,17 +294,18 @@ class ProductCrudController extends CrudController
             //     // TAB
             //     'tab'   => trans('specificprice.specific_price')
             // ],
-            //  [
-            //     'name'  => 'discount_type',
-            //     'label' => trans('specificprice.discount_type'),
-            //      'model' =>'App\Models\SpecificPrice',
-            //      'entity' => 'specificPrice',
-            //     'type'  => 'enum_discount_type',
-            //     'attributes' => ['field_to_enable' => 'currency_id', 
-            //                     'enable_field_on_option' => 'Amount'],
-            //        // TAB
-            //     'tab'   => trans('specificprice.specific_price')
-            // ],
+             [
+                'name'  => 'discount_type',
+                'label' => trans('specificprice.discount_type'),
+                'model' =>'App\Models\SpecificPrice',
+                'entity' => 'specificPrice',
+                'type'  => 'enum_discount_simple',
+
+                // 'attributes' => ['field_to_enable' => 'currency_id', 
+                //                 'enable_field_on_option' => 'Amount'],
+                   // TAB
+                'tab'   => trans('specificprice.specific_price')
+            ],
             [
                 'name'  => 'reduction',
                 'label' => trans('specificprice.reduction'),
@@ -439,6 +440,7 @@ class ProductCrudController extends CrudController
 
 
         // Save specific price
+        $specificPrice->discount_type = $request->input('discount_type');
         $specificPrice->reduction = $request->input('reduction');
         $specificPrice->start_date = $request->input('start_date');
         $specificPrice->expiration_date = $request->input('expiration_date');

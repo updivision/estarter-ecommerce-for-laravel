@@ -25,10 +25,9 @@ class SpecificPriceRequest extends \Backpack\CRUD\app\Http\Requests\CrudRequest
     public function rules()
     {
         return [
-            'price'             => 'numeric',
-            'reduction'         => 'numeric',
-            'start_date'        => 'required|date',
-            'expiration_date'   => 'required|date',
+            'reduction'         => 'required|numeric',
+            'start_date'        => 'required|date|before:expiration_date',
+            'expiration_date'   => 'required|date|after:start_date',
             'product_id'        => 'required',
         ];
     }
@@ -53,7 +52,8 @@ class SpecificPriceRequest extends \Backpack\CRUD\app\Http\Requests\CrudRequest
     public function messages()
     {
         return [
-            //
+            'start_date.before'    => 'The start date should be before to end date',
+            'expiration_date.after' => 'The expiration date should be after start date'
         ];
     }
 }
