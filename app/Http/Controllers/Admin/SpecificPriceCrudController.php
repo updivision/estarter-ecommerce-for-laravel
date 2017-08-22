@@ -347,6 +347,30 @@ class SpecificPriceCrudController extends CrudController
         return NULL; 
     }   
 
+     /**
+     * Check if it doesn't already exist a specific price reduction for the same 
+     * period for a product
+     *
+     * @return boolean
+     */
+    public function validateProductDates($productId, $startDate, $expirationDate) 
+    {
+        $specificPrice = SpecificPrice::where('product_id', $productId)->get();
+        
+        foreach ($specificPrice as $item) {
+            $existingStartDate = $item->start_date;
+            $existingExpirationDate = $item->expiration_date;    
+            if($startDate >= $existingStartDate && $startDate <= $existingExpirationDate) {
+                return false;
+            }
+            if($expirationDate >= $existingStartDate && $startDate <= $existingExpirationDate) {
+                return false;
+            }
+        }
+       
+        return true;
+    }
+    
 
     public function store(StoreRequest $request)
     {
@@ -356,6 +380,9 @@ class SpecificPriceCrudController extends CrudController
         
         $discountType = $request->input()['discount_type'];
         $reduction = $request->input()['reduction'];
+        $startDate = $request->input()['start_date'];
+        $expirationDate = $request->input()['expiration_date'];
+
 
         // Get the first product which price is less than 0 after reduction
         $productNotValidatedName = $this
@@ -367,6 +394,16 @@ class SpecificPriceCrudController extends CrudController
                     ->flash();
 
             return redirect()->back()->withInput();                     
+        }
+
+        foreach ($productIDs as $productId) {
+            if(!$this->validateProductDates($productId, $startDate, $expirationDate)) {
+                $product = Product::find($productId);
+                $productName = $product->name;
+
+                 \Alert::error(trans('specificprice.wrong_dates', ['productName' => $productName]))->flash();
+                return redirect()->back()->withInput();                        
+            }
         }
     
 
