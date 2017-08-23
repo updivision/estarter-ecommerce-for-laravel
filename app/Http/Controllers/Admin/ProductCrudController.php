@@ -652,10 +652,16 @@ class ProductCrudController extends CrudController
         foreach ($specificPrice as $item) {
             $existingStartDate = $item->start_date;
             $existingExpirationDate = $item->expiration_date;    
-            if($startDate >= $existingStartDate && $startDate <= $existingExpirationDate) {
+             if($expirationDate >= $existingStartDate 
+                && $startDate <= $existingExpirationDate) {
                 return false;
             }
-            if($expirationDate >= $existingStartDate && $startDate <= $existingExpirationDate) {
+            if($expirationDate >= $existingStartDate 
+                && $startDate <= $existingExpirationDate) {
+                return false;
+            }
+            if($startDate <= $existingStartDate 
+                && $expirationDate >= $existingExpirationDate) {
                 return false;
             }
         }

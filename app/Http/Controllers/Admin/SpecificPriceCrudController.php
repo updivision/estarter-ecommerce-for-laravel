@@ -231,7 +231,7 @@ class SpecificPriceCrudController extends CrudController
 
 
 
-    public function update(UpdateRequest $request)
+    public function update($id, UpdateRequest $request)
     {
         $productId = $request->input()['product_id'];
         
@@ -252,7 +252,9 @@ class SpecificPriceCrudController extends CrudController
             return redirect()->back()->withInput();   
         }
 
-        if(!$this->validateProductDates($productId, $startDate, $expirationDate)) {
+        $specificPriceId = $id ;
+
+        if(!$this->validateProductDates($productId, $startDate, $expirationDate, $specificPriceId )) {
             $product = Product::find($productId);
             $productName = $product->name;
 
@@ -315,20 +317,26 @@ class SpecificPriceCrudController extends CrudController
      *
      * @return boolean
      */
-    public function validateProductDates($productId, $startDate, $expirationDate) 
+    public function validateProductDates($productId, $startDate, $expirationDate, $specificPriceId=0) 
     {
         $specificPrice = SpecificPrice::where('product_id', $productId)->get();
         
         foreach ($specificPrice as $item) {
-            if($item->product_id == $productId) {
+            if($item->id == $specificPriceId) {
                 break;
             }
             $existingStartDate = $item->start_date;
             $existingExpirationDate = $item->expiration_date;    
-            if($startDate >= $existingStartDate && $startDate <= $existingExpirationDate) {
+            if($expirationDate >= $existingStartDate 
+                && $startDate <= $existingExpirationDate) {
                 return false;
             }
-            if($expirationDate >= $existingStartDate && $startDate <= $existingExpirationDate) {
+            if($expirationDate >= $existingStartDate 
+                && $startDate <= $existingExpirationDate) {
+                return false;
+            }
+            if($startDate <= $existingStartDate 
+                && $expirationDate >= $existingExpirationDate) {
                 return false;
             }
         }
