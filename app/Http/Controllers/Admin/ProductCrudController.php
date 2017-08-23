@@ -267,7 +267,7 @@ class ProductCrudController extends CrudController
                 ],
                 'filesize'      => 5, // maximum file size in MB
 
-                // TAB
+                    // TAB
                 'tab'           => trans('product.product_images_tab'),
             ], 'update');
 
@@ -276,24 +276,13 @@ class ProductCrudController extends CrudController
                 'type'          => 'product_group',
                 'model'         => 'App\Models\Product',
 
-                // TAB
+                    // TAB
                 'tab'           => trans('product.group_tab'),
             ], 'update');
 
 
         // Specific price functionality
         $this->crud->addFields([
-            
-            // [
-            //     'name'  => 'currency',
-            //     'label' => trans('specificprice.currency'),
-            //     'model' => 'App\Models\Currency',
-            //     'type'  => 'select2',
-            //     // 'pivot' => true
-                
-            //     // TAB
-            //     'tab'   => trans('specificprice.specific_price')
-            // ],
              [
                 'name'  => 'discount_type',
                 'label' => trans('specificprice.discount_type'),
@@ -301,9 +290,7 @@ class ProductCrudController extends CrudController
                 'entity' => 'specificPrice',
                 'type'  => 'enum_discount_simple',
 
-                // 'attributes' => ['field_to_enable' => 'currency_id', 
-                //                 'enable_field_on_option' => 'Amount'],
-                   // TAB
+                    // TAB
                 'tab'   => trans('specificprice.specific_price')
             ],
             [
@@ -314,7 +301,7 @@ class ProductCrudController extends CrudController
                 'type'  => 'number',
 
 
-                // TAB
+                    // TAB
                 'tab'   => trans('specificprice.specific_price')
             ],
             [
@@ -323,7 +310,7 @@ class ProductCrudController extends CrudController
                 'type'  => 'datetime_picker',
                 'model' => 'App\Models\SpecificPrice',
                 'attribute'   => 'start_date',
-                // TAB
+                    // TAB
                 'tab'   => trans('specificprice.specific_price')  
             ],
             [
@@ -333,7 +320,7 @@ class ProductCrudController extends CrudController
                 'model' => 'App\Models\SpecificPrice',
                 'attribute'   => 'expiration_date',
                 
-                // TAB
+                    // TAB
                 'tab'   => trans('specificprice.specific_price')  
             ],
 
@@ -406,23 +393,18 @@ class ProductCrudController extends CrudController
     public function store(StoreRequest $request, ProductGroup $productGroup, 
                             SpecificPrice $specificPrice)
     {
-        // dd($request->input('reduction'));
 
 
         // Create group entry
         $productGroup = $productGroup->create();
-
-
-       
+  
 
         $request->merge([
             'group_id' => $productGroup->id
         ]);
 
-        // $request =   $request->except(['reduction', 
-                                        // 'start_date', 'expiration_date', 'discount_type']);
-        $redirect_location = parent::storeCrud($request);
 
+        $redirect_location = parent::storeCrud($request);
 
 
         // Save product's attribute values
@@ -438,19 +420,31 @@ class ProductCrudController extends CrudController
             }
         }
 
+        $productId = $this->crud->entry->id;
+        $reduction = $request->input('reduction');
+        $discountType = $request->input('discount_type');
+       
+        // Check if the price after reduction is not less than 0
+        if(!$this->validateReductionPrice($productId, $reduction, 
+        $discountType)) {
+            \Alert::error(
+                trans('specificprice.reduction_price_not_ok'))->flash();
+        }
+        else{
+            // Save specific price
+            $specificPrice->discount_type = $request->input('discount_type');
+            $specificPrice->reduction = $request->input('reduction');
+            $specificPrice->start_date = $request->input('start_date');
+            $specificPrice->expiration_date = $request->input('expiration_date');
+            $specificPrice->product_id = $productId;
+            $specificPrice = $specificPrice->save();            
+        }
 
-        // Save specific price
-        $specificPrice->discount_type = $request->input('discount_type');
-        $specificPrice->reduction = $request->input('reduction');
-        $specificPrice->start_date = $request->input('start_date');
-        $specificPrice->expiration_date = $request->input('expiration_date');
-        $specificPrice->product_id = $this->crud->entry->id;
-        $specificPrice = $specificPrice->save();
 
-        
 
         return $redirect_location;
     }
+
 
     public function update(UpdateRequest $request, Attribute $attribute, Product $product)
     {
@@ -510,6 +504,41 @@ class ProductCrudController extends CrudController
                 }
             }
         }
+
+
+        $discountType = $request->input('discount_type');
+        $reduction = $request->input('reduction');
+        $startDate = $request->input('start_date');
+        $expirationDate = $request->input('expiration_date');
+        $productId = $this->crud->entry->id;
+
+
+        // Check if the price after reduction is not less than 0
+        if(!$this->validateReductionPrice($productId, $reduction, 
+        $discountType)) {
+            \Alert::error(
+                trans('specificprice.reduction_price_not_ok'))->flash();
+            return $redirect_location; 
+        }
+
+        // Check if a specific price reduction doesn't already exist in this period
+        if(!$this->validateProductDates($productId, $startDate, $expirationDate)) {
+                $product = Product::find($productId);
+                $productName = $product->name;
+
+                \Alert::error(trans('specificprice.wrong_dates', ['productName' => $productName]))->flash();
+                return $redirect_location;
+            }
+
+
+        // Save specific price
+        $specificPrice->discount_type = $discountType;
+        $specificPrice->reduction = $reduction;
+        $specificPrice->start_date = $startDate;
+        $specificPrice->expiration_date = $expirationDate;
+        $specificPrice->product_id = $productId;
+        $specificPrice = $specificPrice->save();
+
 
         return $redirect_location;
     }
@@ -586,5 +615,55 @@ class ProductCrudController extends CrudController
         return redirect()->back();
     }
 
+
+    /**
+     * Validate if the price after reduction is not less than 0
+     *
+     * @return boolean
+     */
+    public function validateReductionPrice($productId, $reduction, 
+        $discountType)
+    {
+        $product = Product::find($productId);
+        $oldPrice = $product->price;
+        if($discountType == 'Amount') {
+            $newPrice = $oldPrice - $reduction;
+        }
+        if($discountType == 'Percent') {
+            $newPrice = $oldPrice - $reduction/100.00 * $oldPrice;
+        }
+
+        if($newPrice < 0) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Check if it doesn't already exist a specific price reduction for the same 
+     * period for a product
+     *
+     * @return boolean
+     */
+    public function validateProductDates($productId, $startDate, $expirationDate) 
+    {
+        $specificPrice = SpecificPrice::where('product_id', $productId)->get();
+        
+        foreach ($specificPrice as $item) {
+            $existingStartDate = $item->start_date;
+            $existingExpirationDate = $item->expiration_date;    
+            if($startDate >= $existingStartDate && $startDate <= $existingExpirationDate) {
+                return false;
+            }
+            if($expirationDate >= $existingStartDate && $startDate <= $existingExpirationDate) {
+                return false;
+            }
+        }
+       
+        return true;
+    }
+
 }
+
+
 

@@ -45,30 +45,6 @@ class SpecificPrice extends Model
     |--------------------------------------------------------------------------
     */
 
-    // public function getCurrencyName()
-    // {
-    //     $currency = Currency::find($this->currency_id);
-    //     if(isset($currency)){
-    //         return $currency->name;  
-    //     }
-    //     return '-';
-    // }
-
-
-    // public function getReductionWithCurrency()
-    // {
-    //     $currency = Currency::find($this->currency_id);
-    //     $reduction = $this->reduction;
-
-    //     if(isset($reduction) and isset($currency)) {
-    //         return $reduction . ' ' . $currency->iso;
-    //     }
-    //     if(isset($reduction) and $this->discount_type=='Percent') {
-    //         return $reduction . ' %';
-    //     }
-    //     return '-'; 
-    // }
-
     public function getReduction()
     {
         $reduction = $this->reduction;
@@ -127,11 +103,6 @@ class SpecificPrice extends Model
     public function product(){
         return $this->hasOne('App\Models\Product');
     }
-
-    // public function currency(){
-    //     return $this->hasOne('App\Models\Currency', 'id');
-    //     // return $this->hasOne('App\Models\Currency', 'currency_id');
-    // }
 
     /*
     |--------------------------------------------------------------------------
