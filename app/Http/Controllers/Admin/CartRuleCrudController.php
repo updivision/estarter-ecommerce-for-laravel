@@ -188,6 +188,9 @@ class CartRuleCrudController extends CrudController
 
     public function setFields()
     {
+        $defaultCurrencyName = Currency::getDefaultCurrencyName();
+        $defaultCurrencyId = Currency::getDefaultCurrencyId();
+
         $this->crud->addFields([
             // INFORMATION TAB
             [
@@ -307,8 +310,8 @@ class CartRuleCrudController extends CrudController
                     'class' => 'form-group col-md-4'
                 ],
                 'type'      => 'select2_currency',
-                'default_currency'   => $this->getDefaultCurrencyName(),
-                'default_currency_id' => $this->getDefaultCurrencyId(),
+                'default_currency'   => $defaultCurrencyName,
+                'default_currency_id' => $defaultCurrencyId,
                 'tab'       => trans('cartrule.conditions_tab'),
             ],
             [
@@ -399,8 +402,8 @@ class CartRuleCrudController extends CrudController
                                         'class' => 'form-group col-md-4'
                 ],
                 'type'      => 'select2_currency',
-                'default_currency'   => $this->getDefaultCurrencyName(),
-                'default_currency_id' => $this->getDefaultCurrencyId(),
+                'default_currency'   => $defaultCurrencyName,
+                'default_currency_id' => $defaultCurrencyId,
                 'tab'       => trans('cartrule.actions_tab'),
             ],
             [
@@ -429,29 +432,6 @@ class CartRuleCrudController extends CrudController
                 'tab'       => trans('cartrule.actions_tab'),
             ],
         ]);
-    }
-
-
-
-    public function getDefaultCurrencyName() {
-        $default_currency = Currency::where('default', 1)->first();
-        if(isset($default_currency)){
-            $default_currency_name = $default_currency->name;
-        }
-        else
-            $default_currency_name = '-';    
-        return $default_currency_name;
-    }
-
-
-    public function getDefaultCurrencyId() {
-        $default_currency = Currency::where('default', 1)->first();
-        if(isset($default_currency)){
-            $default_currency_id = $default_currency->id;
-        }
-        else
-            $default_currency_id = NULL;
-        return $default_currency_id;
     }
 
 
