@@ -65,6 +65,12 @@ class PermissionsTableSeeder extends Seeder
             ['name' => 'create_cart_rule'],
             ['name' => 'update_cart_rule'],
             ['name' => 'delete_cart_rule'],
+
+
+            ['name' => 'list_specific_prices'],
+            ['name' => 'create_specific_price'],
+            ['name' => 'update_specific_price'],
+            ['name' => 'delete_specific_price'],
     	];
 
     	DB::table('permissions')->insert($permissions);

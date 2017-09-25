@@ -106,6 +106,12 @@ class Product extends Model
         return $this->belongsToMany('App\Models\CartRule');
     }
 
+    public function specificPrice()
+    {
+        return $this->belongsTo('App\Models\SpecificPrice');
+    }
+
+    
 
     /*
     |--------------------------------------------------------------------------
