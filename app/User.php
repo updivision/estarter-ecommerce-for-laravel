@@ -36,6 +36,28 @@ class User extends Authenticatable
         'remember_token',
     ];
 
+    public $notificationVars = [
+        'userSalutation',
+        'userName',
+        'userEmail',
+        'age',
+    ];
+
+    /*
+    |--------------------------------------------------------------------------
+    | NOTIFICATIONS VARIABLES
+    |--------------------------------------------------------------------------
+    */
+    public function notificationVariables()
+    {
+        return [
+            'userSalutation' => $this->user->salutation,
+            'userName'       => $this->user->name,
+            'userEmail'      => $this->user->email,
+            'age'            => $this->age(),
+        ];
+    }
+
 
     /*
     |--------------------------------------------------------------------------
@@ -78,7 +100,7 @@ class User extends Authenticatable
     {
         return $this->belongsToMany('App\Models\CartRule');
     }
-    
+
     /*
     |--------------------------------------------------------------------------
     | SCOPES

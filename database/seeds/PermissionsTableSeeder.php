@@ -71,6 +71,11 @@ class PermissionsTableSeeder extends Seeder
             ['name' => 'create_specific_price'],
             ['name' => 'update_specific_price'],
             ['name' => 'delete_specific_price'],
+
+            ['name' => 'list_notification_templates'],
+            ['name' => 'create_notification_template'],
+            ['name' => 'update_notification_template'],
+            ['name' => 'delete_notification_template'],
     	];
 
     	DB::table('permissions')->insert($permissions);

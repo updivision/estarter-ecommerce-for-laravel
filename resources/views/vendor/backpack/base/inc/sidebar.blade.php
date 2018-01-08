@@ -19,7 +19,7 @@
           <!-- ================================================ -->
           <!-- ==== Recommended place for admin menu items ==== -->
           <!-- ================================================ -->
-         
+
           @can('list_categories')
             <li><a href="{{ url(config('backpack.base.route_prefix', 'admin').'/categories') }}"><i class="fa fa-bars"></i> <span>{{ trans('category.categories') }}</span></a></li>
           @endcan
@@ -65,7 +65,11 @@
           @can('list_specific_prices')
             <li><a href="{{ url(config('backpack.base.route_prefix', 'admin').'/specific-prices') }}"><i class="fa fa-money"></i> <span>{{ trans('specificprice.specific_prices') }}</span></a></li>
           @endcan
-     
+
+          @can('list_notification_templates')
+            <li><a href="{{ url(config('backpack.base.route_prefix', 'admin').'/notification-templates') }}"><i class="fa fa-list"></i> <span>{{ trans('notification_templates.notification_templates') }}</span></a></li>
+          @endcan
+
           <li class="treeview">
             <a href="#"><i class="fa fa-group"></i> <span>Users, Roles, Permissions</span> <i class="fa fa-angle-left pull-right"></i></a>
             <ul class="treeview-menu">

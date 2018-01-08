@@ -100,7 +100,6 @@ class Product extends Model
         return $this->belongsTo('App\Models\ProductGroup');
     }
 
-    
     public function cartRules()
     {
         return $this->belongsToMany('App\Models\CartRule');
@@ -111,7 +110,7 @@ class Product extends Model
         return $this->belongsTo('App\Models\SpecificPrice');
     }
 
-    
+
 
     /*
     |--------------------------------------------------------------------------

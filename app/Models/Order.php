@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use App\Mail\OrderStatusChanged;
 use Backpack\CRUD\CrudTrait;
+use Illuminate\Database\Eloquent\Model;
 
 class Order extends Model
 {
@@ -36,6 +37,49 @@ class Order extends Model
     ];
     // protected $hidden = [];
     // protected $dates = [];
+    public $notificationVars = [
+        'userSalutation',
+        'userName',
+        'userEmail',
+        'carrier',
+        'total',
+        'status'
+    ];
+
+    /*
+    |--------------------------------------------------------------------------
+    | NOTIFICATIONS VARIABLES
+    |--------------------------------------------------------------------------
+    */
+    public function notificationVariables()
+    {
+        return [
+            'userSalutation' => $this->user->salutation,
+            'userName'       => $this->user->name,
+            'userEmail'      => $this->user->email,
+            'total'          => $this->total(),
+            'carrier'        => $this->carrier()->first()->name,
+            'status'         => $this->status->name
+        ];
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | EVENTS
+    |--------------------------------------------------------------------------
+    */
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::updating(function($order) {
+            // Send notification when order status was changed
+            $oldStatus = $order->getOriginal();
+            if ($order->status_id != $oldStatus['status_id'] && $order->status->notification != 0) {
+                return \Mail::to($order->user->email)->send(new OrderStatusChanged($order));
+            }
+        });
+    }
 
     /*
     |--------------------------------------------------------------------------
@@ -44,15 +88,9 @@ class Order extends Model
     */
     public function total()
     {
-        $total = 0;
-
-        $products = $this->products->each(function ($product) use (&$total) {
-            $total += ($product->pivot->price_with_tax*$product->pivot->quantity);
-        });
-
-        $carrierPrice = $this->carrier->price;
-
-        return decimalFormat($total+$carrierPrice);
+        return decimalFormat($this->products->sum(function ($product) {
+            return $product->pivot->price_with_tax * $product->pivot->quantity;
+        }, 0) + $this->carrier->price);
     }
 
     /*

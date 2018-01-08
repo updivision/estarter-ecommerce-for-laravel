@@ -17,6 +17,7 @@ class CreateOrderStatusesTable extends Migration
             $table->engine = 'InnoDB';
             $table->increments('id');
             $table->string('name', 50)->nullable()->default(null);
+            $table->integer('notification', 1)->default(1);
         });
     }
 
