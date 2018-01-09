@@ -149,8 +149,51 @@ class NotificationTemplateCrudController extends CrudController
         return null;
     }
 
+
+    /**
+     * Get model variables available to use in an email template
+     * @param  string $modelName 
+     * @return array
+     */
+    public function getModelVariables($modelName) 
+    {
+        $modelClass = 'App\\Models\\'.$modelName;
+
+        if ($modelName === 'User') {
+            $modelClass = 'App\\'.$modelName;
+        }
+
+        if (class_exists($modelClass)) {
+            $model = new $modelClass;
+        }
+
+        return $model->notificationVars;
+    }
+
+    /**
+     * Check variables in body to match the available variables from the model
+     * @param  $request
+     * @return boolean
+     */
+    public function checkModelVariables($request) {
+        preg_match_all('/(\{{2}\s?(.*?)\s?\}{2})/mi',
+        $request->body,
+        $out, PREG_PATTERN_ORDER);
+
+        if (count(array_diff($out[2], $this->getModelVariables($request->model))) > 0)  {
+            return false;
+        }
+        return true;
+    }
+
+
     public function store(StoreRequest $request)
     {
+        if (!$this->checkModelVariables($request))  {
+            \Alert::error(trans('notification_templates.variables_error'))->flash();
+            return redirect()->back()->withInput();
+        }
+
         // your additional operations before save here
         $redirect_location = parent::storeCrud();
         // your additional operations after save here
@@ -158,8 +201,14 @@ class NotificationTemplateCrudController extends CrudController
         return $redirect_location;
     }
 
+
     public function update(UpdateRequest $request)
     {
+        if (!$this->checkModelVariables($request))  {
+            \Alert::error(trans('notification_templates.variables_error'))->flash();
+            return redirect()->back()->withInput();
+        }
+
         // your additional operations before save here
         $redirect_location = parent::updateCrud();
         // your additional operations after save here

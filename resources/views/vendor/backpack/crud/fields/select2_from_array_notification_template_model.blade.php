@@ -24,6 +24,9 @@
                 @endforeach
             @endif
     </select>
+    @if(isset($entry)) 
+        <input type="hidden" name="{{ $field['name'] }}" value="{{ $field['value'] }}" />
+    @endif
 
     {{-- HINT --}}
     @if (isset($field['hint']))

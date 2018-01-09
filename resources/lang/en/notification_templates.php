@@ -7,5 +7,6 @@ return [
 	'slug'                   => 'Slug',
 	'model'                  => 'Model',
 	'body'                   => 'Body',
-	'available_variables'	 => 'Available variables',
+	'available_variables'    => 'Available variables',
+	'variables_error'        => 'Please check template variables'
 ];
