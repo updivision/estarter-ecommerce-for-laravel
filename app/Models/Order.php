@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Mail\OrderStatusChanged;
+use App\Mail\NotificationTemplateMail;
 use Backpack\CRUD\CrudTrait;
 use Illuminate\Database\Eloquent\Model;
 
@@ -76,7 +76,8 @@ class Order extends Model
             // Send notification when order status was changed
             $oldStatus = $order->getOriginal();
             if ($order->status_id != $oldStatus['status_id'] && $order->status->notification != 0) {
-                return \Mail::to($order->user->email)->send(new OrderStatusChanged($order));
+                // example of usage: (be sure that a notification template mail with the slug "test2" exists in db)
+                return \Mail::to($order->user->email)->send(new NotificationTemplateMail($order, "test2"));
             }
         });
     }

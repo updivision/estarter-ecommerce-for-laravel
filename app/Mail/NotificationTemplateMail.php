@@ -3,7 +3,6 @@
 namespace App\Mail;
 
 use App\Models\NotificationTemplate;
-use App\Models\Order;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
@@ -21,10 +20,10 @@ class NotificationTemplateMail extends Mailable
      *
      * @return void
      */
-    public function __construct(Order $order, $slug)
+    public function __construct($model, $slug)
     {
         $this->template = NotificationTemplate::where('slug', $slug)->first();
-        $this->model = $order;
+        $this->model = $model;
     }
 
     /**
