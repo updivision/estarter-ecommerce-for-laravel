@@ -62,7 +62,7 @@ class SpecificPrice extends Model
     {
         $product = Product::find($this->product_id);
         if(isset($product)) {
-            return $product->price . $product->currency;
+            return number_format($product->price . $product->currency, 2);
         }
         return '-';
     }
@@ -74,12 +74,12 @@ class SpecificPrice extends Model
         if(isset($product)) {
             $oldPrice = $product->price;
             if($this->discount_type == 'Percent'){
-                return $oldPrice - $this->reduction/100 * $oldPrice;
+                return number_format($oldPrice - $this->reduction/100 * $oldPrice, 2);
             }
             if($this->discount_type == 'Amount'){
-                return $oldPrice - $this->reduction;
+                return number_format($oldPrice - $this->reduction, 2);
             }
-            return $product->price;
+            return number_format($product->price, 2);
         }
         return '-';
     }
