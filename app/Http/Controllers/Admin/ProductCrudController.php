@@ -147,7 +147,8 @@ class ProductCrudController extends CrudController
             [
                 'name'  => 'description',
                 'label' => trans('product.description'),
-                'type'  => 'ckeditor',
+                // 'type'  => 'ckeditor',
+                'type'  => 'text',
 
                     // TAB
                 'tab'   => trans('product.general_tab'),
@@ -206,6 +207,8 @@ class ProductCrudController extends CrudController
             [
                 'name'  => 'price_vat_calculator',
                 'type'  => 'product_vat',
+                'tab'   => trans('product.general_tab'),
+                
             ],
             [
                 'type'           => 'select2_tax',
