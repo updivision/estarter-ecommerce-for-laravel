@@ -195,14 +195,14 @@ class CartRuleCrudController extends CrudController
             // INFORMATION TAB
             [
                 'name'      => 'name',
-                'label'     => trans('cartrule.name') . ' *',
+                'label'     => trans('cartrule.name'),
                 'type'      => 'text',
                 'attributes'=> ['required' => 'true'],
                 'tab'       => trans('cartrule.information_tab'),
             ],
             [
                 'name'  => 'code',
-                'label' => trans('cartrule.code') . ' *',
+                'label' => trans('cartrule.code'),
                 'tab'   => trans('cartrule.information_tab'),
             ],
             [
@@ -213,7 +213,7 @@ class CartRuleCrudController extends CrudController
             ],
             [
                 'name'      => 'priority',
-                'label'     => trans('cartrule.priority') . ' *',
+                'label'     => trans('cartrule.priority'),
                 'type'      => 'number',
                 'attributes'=> [
                     'step'  => 'any',
@@ -251,13 +251,13 @@ class CartRuleCrudController extends CrudController
             ],    
             [
                 'name'  => 'start_date',
-                'label' => trans('cartrule.start_date') . ' *',
+                'label' => trans('cartrule.start_date'),
                 'type'  => 'datetime_picker',
                 'tab'   => trans('cartrule.conditions_tab'),
             ],
             [
                 'name'  => 'expiration_date',
-                'label' => trans('cartrule.expiration_date') . ' *',
+                'label' => trans('cartrule.expiration_date'),
                 'type'  => 'datetime_picker',
                 'tab'   => trans('cartrule.conditions_tab'),
             ],
