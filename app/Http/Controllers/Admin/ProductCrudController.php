@@ -425,22 +425,42 @@ class ProductCrudController extends CrudController
 
         $productId = $this->crud->entry->id;
         $reduction = $request->input('reduction');
-        $discountType = $request->input('discount_type');
-       
-        // Check if the price after reduction is not less than 0
-        if(!$this->validateReductionPrice($productId, $reduction, 
-        $discountType)) {
-            \Alert::error(
-                trans('specificprice.reduction_price_not_ok'))->flash();
+        $discountType = $request->input('discount_type');        
+        $startDate = $request->input('start_date');
+        $expirationDate = $request->input('expiration_date');
+
+        if(!$request->has('start_date') || !$request->has('expiration_date')) {
+            \Alert::error(trans('specificprice.dates_cant_be_null'))->flash();
+            return $redirect_location; 
         }
-        else{
-            // Save specific price
-            $specificPrice->discount_type = $request->input('discount_type');
-            $specificPrice->reduction = $request->input('reduction');
-            $specificPrice->start_date = $request->input('start_date');
-            $specificPrice->expiration_date = $request->input('expiration_date');
-            $specificPrice->product_id = $productId;
-            $specificPrice = $specificPrice->save();            
+
+        // Check if a specific price reduction doesn't already exist in this period
+        if(!$this->validateProductDates($productId, $startDate, $expirationDate)) {
+            $product = Product::find($productId);
+            $productName = $product->name;
+
+            \Alert::error(trans('specificprice.wrong_dates', ['productName' => $productName]))->flash();
+            return $redirect_location;
+        }
+
+
+
+        // Check if the price after reduction is not less than 0
+        if($request->has('reduction') && $request->has('discount_type')) {
+            if(!$this->validateReductionPrice($productId, $reduction, 
+            $discountType)) {
+                \Alert::error(
+                    trans('specificprice.reduction_price_not_ok'))->flash();
+            }
+            else{
+                // Save specific price
+                $specificPrice->discount_type = $discountType;
+                $specificPrice->reduction = $reduction;
+                $specificPrice->start_date = $startDate;
+                $specificPrice->expiration_date = $expirationDate;
+                $specificPrice->product_id = $productId;
+                $specificPrice = $specificPrice->save();       
+            }
         }
 
 
@@ -517,30 +537,40 @@ class ProductCrudController extends CrudController
 
 
         // Check if the price after reduction is not less than 0
-        if(!$this->validateReductionPrice($productId, $reduction, 
-        $discountType)) {
-            \Alert::error(
-                trans('specificprice.reduction_price_not_ok'))->flash();
+        if($request->has('reduction') && $request->has('discount_type') && $discountType) {
+            if(!$this->validateReductionPrice($productId, $reduction, 
+            $discountType)) {
+                \Alert::error(
+                    trans('specificprice.reduction_price_not_ok'))->flash();
+                return $redirect_location; 
+            }
+        }
+
+        if(!$request->has('start_date') || !$request->has('expiration_date')) {
+            \Alert::error(trans('specificprice.dates_cant_be_null'))->flash();
             return $redirect_location; 
         }
 
         // Check if a specific price reduction doesn't already exist in this period
         if(!$this->validateProductDates($productId, $startDate, $expirationDate)) {
-                $product = Product::find($productId);
-                $productName = $product->name;
+            $product = Product::find($productId);
+            $productName = $product->name;
 
-                \Alert::error(trans('specificprice.wrong_dates', ['productName' => $productName]))->flash();
-                return $redirect_location;
-            }
+            \Alert::error(trans('specificprice.wrong_dates', ['productName' => $productName]))->flash();
+            return $redirect_location;
+        }
 
+        if($request->has('reduction') && $request->has('discount_type') && $discountType) {
+            // Save specific price
+            $specificPrice = new SpecificPrice();
 
-        // Save specific price
-        $specificPrice->discount_type = $discountType;
-        $specificPrice->reduction = $reduction;
-        $specificPrice->start_date = $startDate;
-        $specificPrice->expiration_date = $expirationDate;
-        $specificPrice->product_id = $productId;
-        $specificPrice = $specificPrice->save();
+            $specificPrice->discount_type = $discountType;
+            $specificPrice->reduction = $reduction;
+            $specificPrice->start_date = $startDate;
+            $specificPrice->expiration_date = $expirationDate;
+            $specificPrice->product_id = $productId;
+            $specificPrice = $specificPrice->save();
+        }
 
 
         return $redirect_location;
@@ -627,6 +657,7 @@ class ProductCrudController extends CrudController
     public function validateReductionPrice($productId, $reduction, 
         $discountType)
     {
+
         $product = Product::find($productId);
         $oldPrice = $product->price;
         if($discountType == 'Amount') {
