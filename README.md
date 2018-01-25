@@ -1,6 +1,15 @@
 # eStarter. The beginning of your beautiful, custom ecommerce on Laravel.
+## What's new?
+- Upgrade to Laravel 5.5 & latest version of [BackPack](https://backpackforlaravel.com/)
+- Clients Management (including addresses and companies)
+- Specific Prices for products
+- Cart Rules
+- Orders
+- Notification Templates
+- Users Management
+- Roles & Permissions
 
-## Features
+## All Features
 - Create and organize categories & subcategoires
 - Create attributes and group them in sets of attributes
 - Create currencies
@@ -10,6 +19,12 @@
 - Create products and upload product multiple images at once, using dropzone
 - Ability to create product groups
 - Ability to clone a product
+- Add Clients
+- See orders & change order statuses that will notify users via e-mail
+- Add / Edit Notification templates
+- Create users with different roles & permissions
+- Create cart rules
+- Create Specific prices
 
 ## Installation
 - Clone repository
@@ -31,7 +46,13 @@ DB_USERNAME=homestead
 DB_PASSWORD=secret
 ```
 
-- Migrate tables with demo data
+## Do not forget to add in your env file following lines:
+```
+ADMIN_ROLE_NAME=administrator
+CLIENT_ROLE_NAME=client
+```
+
+- Migrate tables and seed with demo data
 ```
 $ php artisan migrate --seed
 ```
@@ -51,22 +72,13 @@ In order to use the shop and be able to add products, you must have a minimum co
 After creating these, you’re ready to add your first product.
 
 ## Known Issues
-- Product image uploader not fully responsive
-- Changing attribute set on a product that had an old set of media attribute type with an uploaded image and uploading a new image to media attribute type causes an error
-- Cloning a product does not clone values field from attribute_product_value table
-
-## Roadmap for v1.0
-- Implement orders
-- Implement users management
-- Improve product image uploader
-- Improve and fix styles
-- Cool ideas from developers :)
+- Product image uploader - still - not fully responsive
 
 
-## ER Diagram
-![alt_text](http://i.imgur.com/bNaxv0o.png "ERD")
+## EER Diagram
+![alt_text](https://i.imgur.com/NzZM6RN.png "eStarter EER Diagram")
 
-## Screenshots
+## Screenshots (update soon)
 ![alt text](http://i.imgur.com/i3rp9Jk.png "List categories")
 ![alt text](http://i.imgur.com/CCCgGvl.png "Edit category")
 ![alt text](http://i.imgur.com/92WE6wd.png "Edit product")
@@ -75,15 +87,13 @@ After creating these, you’re ready to add your first product.
 ![alt text](http://i.imgur.com/OVbI44p.png "Edit currency")
 ![alt text](http://i.imgur.com/86mx9U2.png "Edit tax")
 
-## Test it out
-[![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
-
 ## Contributors
  - [Paul Duca](https://github.com/pduca)
+ - [Diana Marusic](https://github.com/mdiannna)
  - [Andrei Barta](https://github.com/abarta)
  
 ## License
-eStarter is based on Backpack which is free for non-commercial use and $19/project for commercial use. Please see [License File](LICENSE.md) and [backpackforlaravel.com](https://backpackforlaravel.com/#pricing) for more information.
+eStarter is based on Backpack which is free for non-commercial use and $49/project for commercial use. Please see [License File](LICENSE.md) and [backpackforlaravel.com](https://backpackforlaravel.com/#pricing) for more information.
 
 [ico-version]: https://img.shields.io/packagist/v/backpack/base.svg?style=flat-square
 [ico-license]: https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square
