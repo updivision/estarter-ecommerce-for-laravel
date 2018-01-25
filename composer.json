@@ -6,19 +6,21 @@
     "type": "project",
     "require": {
         "php": ">=5.6.4",
-        "laravel/framework": "5.4.*",
-        "backpack/base": "^0.7.16",
-        "backpack/crud": "^3.2",
-        "backpack/settings": "^2.0"
+        "laravel/framework": "5.5.*",
+        "backpack/base": "^0.8.0",
+        "backpack/crud": "^3.3.0",
+        "backpack/settings": "^2.0",
+        "backpack/permissionmanager": "^2.1"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
         "mockery/mockery": "0.9.*",
-        "phpunit/phpunit": "~5.0",
+        "phpunit/phpunit": "~6.0",
         "symfony/css-selector": "3.1.*",
         "symfony/dom-crawler": "3.1.*",
         "laracasts/generators": "dev-master as 1.1.4",
-        "backpack/generators": "^1.1"
+        "backpack/generators": "^1.1",
+        "filp/whoops": "~2.0"
     },
     "autoload": {
         "classmap": [
@@ -50,6 +52,10 @@
         "post-update-cmd": [
             "Illuminate\\Foundation\\ComposerScripts::postUpdate",
             "php artisan optimize"
+        ],
+        "post-autoload-dump": [
+            "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
+            "@php artisan package:discover"
         ]
     },
     "config": {

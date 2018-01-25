@@ -41,6 +41,13 @@ class TaxCrudController extends CrudController
 
         /*
         |--------------------------------------------------------------------------
+        | PERMISSIONS
+        |-------------------------------------------------------------------------
+        */
+        $this->setPermissions();
+
+        /*
+        |--------------------------------------------------------------------------
         | FIELDS
         |--------------------------------------------------------------------------
         */
@@ -55,9 +62,37 @@ class TaxCrudController extends CrudController
 
     }
 
+    public function setPermissions()
+    {
+        // Get authenticated user
+        $user = auth()->user();
+
+        // Deny all accesses
+        $this->crud->denyAccess(['list', 'create', 'update', 'delete']);
+
+        // Allow list access
+        if ($user->can('list_taxes')) {
+            $this->crud->allowAccess('list');
+        }
+
+        // Allow create access
+        if ($user->can('create_tax')) {
+            $this->crud->allowAccess('create');
+        }
+
+        // Allow update access
+        if ($user->can('update_tax')) {
+            $this->crud->allowAccess('update');
+        }
+
+        // Allow delete access
+        if ($user->can('delete_tax')) {
+            $this->crud->allowAccess('delete');
+        }
+    }
+
     public function setFields()
     {
-
         $this->crud->addFields([
             [
                 'name'  => 'name',
@@ -71,7 +106,6 @@ class TaxCrudController extends CrudController
                 'type'  => 'text',
             ]
         ]);
-
     }
 
 	public function store(StoreRequest $request)

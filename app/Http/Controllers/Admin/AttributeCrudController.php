@@ -40,6 +40,13 @@ class AttributeCrudController extends CrudController
 
         /*
         |--------------------------------------------------------------------------
+        | PERMISSIONS
+        |-------------------------------------------------------------------------
+        */
+        $this->setPermissions();
+
+        /*
+        |--------------------------------------------------------------------------
         | FIELDS
         |--------------------------------------------------------------------------
         */
@@ -52,18 +59,39 @@ class AttributeCrudController extends CrudController
         */
         $this->crud->enableAjaxTable();
 
-        /*
-        |--------------------------------------------------------------------------
-        | ACCESS
-        |--------------------------------------------------------------------------
-        */
-        // $this->crud->denyAccess(['delete']);
-        //
+    }
+
+    public function setPermissions()
+    {
+        // Get authenticated user
+        $user = auth()->user();
+
+        // Deny all accesses
+        $this->crud->denyAccess(['list', 'create', 'update', 'delete']);
+
+        // Allow list access
+        if ($user->can('list_attributes')) {
+            $this->crud->allowAccess('list');
+        }
+
+        // Allow create access
+        if ($user->can('create_attribute')) {
+            $this->crud->allowAccess('create');
+        }
+
+        // Allow update access
+        if ($user->can('update_attribute')) {
+            $this->crud->allowAccess('update');
+        }
+
+        // Allow delete access
+        if ($user->can('delete_attribute')) {
+            $this->crud->allowAccess('delete');
+        }
     }
 
     public function setFields()
     {
-
         $this->crud->addFields([
             [
                 'name'  => 'name',
@@ -102,7 +130,6 @@ class AttributeCrudController extends CrudController
                 'type'  => 'attribute_types',
             ]
         ]);
-
     }
 
 	public function store(StoreRequest $request)

@@ -119,31 +119,33 @@
   </div>
 
   @if (Route::is('crud.products.index'))
-        <div class="clone-product-modal modal fade" tabindex="-1" role="dialog">
-          <div class="modal-dialog" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="{{ trans('common.close') }}"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title"><i class="fa fa-clone"></i> {{ trans('product.clone_product') }}</h4>
-              </div>
-              <form action="{{ route('clone.product') }}" method="POST">
-                  <div class="modal-body">
-                    {!! csrf_field() !!}
-                    <input type="hidden" name="product_id" value="">
-
-                    <strong>{{ trans('product.cloned_product_sku') }}</strong>
-                    <input type="text" class="form-control" name="clone_sku" required="true">
-                    <span>{{ trans('common.must_be_unique') }}</span>
-                  </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">{{ trans('common.cancel') }}</button>
-                    <button type="submit" class="btn btn-primary">{{ trans('product.clone') }}</button>
-                  </div>
-              </form>
+    @can('clone_product')
+      <div class="clone-product-modal modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="{{ trans('common.close') }}"><span aria-hidden="true">&times;</span></button>
+              <h4 class="modal-title"><i class="fa fa-clone"></i> {{ trans('product.clone_product') }}</h4>
             </div>
+            <form action="{{ route('clone.product') }}" method="POST">
+                <div class="modal-body">
+                  {!! csrf_field() !!}
+                  <input type="hidden" name="product_id" value="">
+
+                  <strong>{{ trans('product.cloned_product_sku') }}</strong>
+                  <input type="text" class="form-control" name="clone_sku" required="true">
+                  <span>{{ trans('common.must_be_unique') }}</span>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">{{ trans('common.cancel') }}</button>
+                  <button type="submit" class="btn btn-primary">{{ trans('product.clone') }}</button>
+                </div>
+            </form>
           </div>
         </div>
-    @endif
+      </div>
+    @endcan
+  @endif
 
 @endsection
 
@@ -396,13 +398,15 @@
 	  });
 
     @if (Route::is('crud.products.index'))
-      // Clone products
-      $(document).on('click', '.clone-btn', function() {
-          var product_id = $(this).data('product');
-          $('input[name="product_id"]').val(product_id);
-          $('input[name="clone_sku"]').val('');
-          $('.clone-product-modal').modal('show');
-      })
+      @can('clone_product')
+        // Clone product
+        $(document).on('click', '.clone-btn', function() {
+            var product_id = $(this).data('product');
+            $('input[name="product_id"]').val(product_id);
+            $('input[name="clone_sku"]').val('');
+            $('.clone-product-modal').modal('show');
+        });
+      @endcan
     @endif
 	</script>
 

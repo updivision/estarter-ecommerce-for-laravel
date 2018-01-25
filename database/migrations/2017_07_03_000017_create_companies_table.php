@@ -18,6 +18,10 @@ class CreateCompaniesTable extends Migration
             $table->increments('id');
             $table->integer('user_id')->unsigned();
             $table->string('name', 250)->nullable()->default(null);
+            $table->string('address1', 255)->nullable()->default(null);
+            $table->string('address2', 255)->nullable()->default(null);
+            $table->string('county', 255)->nullable()->default(null);
+            $table->string('city', 255)->nullable()->default(null);
             $table->string('tin', 100)->nullable()->default(null)->comment('Tax Identification Number');
             $table->string('trn', 100)->nullable()->default(null)->comment('Trade Registry Number');
 

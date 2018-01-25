@@ -34,11 +34,42 @@ class Currency extends Model
 	|--------------------------------------------------------------------------
 	*/
 
+
+    public static function getDefaultCurrencyName() {
+        $default_currency = Currency::where('default', 1)->first();
+
+        if(isset($default_currency)){
+            $default_currency_name = $default_currency->name;
+        } else {
+            $default_currency_name = '-';
+        }
+
+        return $default_currency_name;
+    }
+
+
+    public static function getDefaultCurrencyId() {
+        $default_currency = Currency::where('default', 1)->first();
+
+        if(isset($default_currency)){
+            $default_currency_id = $default_currency->id;
+        } else {
+            $default_currency_id = NULL;
+        }
+
+        return $default_currency_id;
+    }
+
     /*
 	|--------------------------------------------------------------------------
 	| RELATIONS
 	|--------------------------------------------------------------------------
 	*/
+	public function specificPrice()
+	{
+		return $this->belongsTo('App\Models\SpecificPrice', 'id');
+	}
+
 
     /*
 	|--------------------------------------------------------------------------

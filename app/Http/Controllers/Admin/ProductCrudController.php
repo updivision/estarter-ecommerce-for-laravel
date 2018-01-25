@@ -9,6 +9,7 @@ use App\Models\Product;
 use App\Models\ProductGroup;
 use App\Models\ProductImage;
 use App\Models\Tax;
+use App\Models\SpecificPrice;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -31,8 +32,8 @@ class ProductCrudController extends CrudController
         |--------------------------------------------------------------------------
         | BUTTONS
         |--------------------------------------------------------------------------
+        | See setPermissions method
         */
-        $this->crud->addButtonFromView('line', 'Clone Product', 'clone_product', 'end');
 
         /*
         |--------------------------------------------------------------------------
@@ -41,39 +42,46 @@ class ProductCrudController extends CrudController
         */
         $this->crud->addColumns([
             [
-                'name'  => 'name',
-                'label' => trans('product.name'),
+            'name'  => 'name',
+            'label' => trans('product.name'),
             ],
             [
-               'type'      => "select_multiple",
-               'label'     => trans('category.categories'),
-               'name'      => 'categories',
-               'entity'    => 'categories',
-               'attribute' => "name",
-               'model'     => "App\Models\Category",
+            'type'      => "select_multiple",
+            'label'     => trans('category.categories'),
+            'name'      => 'categories',
+            'entity'    => 'categories',
+            'attribute' => "name",
+            'model'     => "App\Models\Category",
             ],
             [
-                'name'  => 'sku',
-                'label' => trans('product.sku'),
+            'name'  => 'sku',
+            'label' => trans('product.sku'),
             ],
             [
-                'name'  => 'price',
-                'label' => trans('product.price'),
+            'name'  => 'price',
+            'label' => trans('product.price'),
             ],
             [
-                'name'  => 'stock',
-                'label' => trans('product.stock'),
+            'name'  => 'stock',
+            'label' => trans('product.stock'),
             ],
             [
-                'name'      => 'active',
-                'label'     => trans('common.status'),
-                'type'      => 'boolean',
-                'options'   => [
-                    0 => trans('common.inactive'),
-                    1 => trans('common.active')
-                ],
+            'name'      => 'active',
+            'label'     => trans('common.status'),
+            'type'      => 'boolean',
+            'options'   => [
+            0 => trans('common.inactive'),
+            1 => trans('common.active')
+            ],
             ]
-        ]);
+            ]);
+
+        /*
+        |--------------------------------------------------------------------------
+        | PERMISSIONS
+        |-------------------------------------------------------------------------
+        */
+        $this->setPermissions();
 
         /*
         |--------------------------------------------------------------------------
@@ -91,24 +99,58 @@ class ProductCrudController extends CrudController
 
     }
 
+    public function setPermissions()
+    {
+        // Get authenticated user
+        $user = auth()->user();
+
+        // Deny all accesses
+        $this->crud->denyAccess(['list', 'create', 'update', 'delete']);
+
+        // Allow list access
+        if ($user->can('list_products')) {
+            $this->crud->allowAccess('list');
+        }
+
+        // Allow create access
+        if ($user->can('create_product')) {
+            $this->crud->allowAccess('create');
+        }
+
+        // Allow update access
+        if ($user->can('update_product')) {
+            $this->crud->allowAccess('update');
+        }
+
+        // Allow clone access
+        if ($user->can('clone_product')) {
+            $this->crud->addButtonFromView('line', trans('product.clone'), 'clone_product', 'end');
+        }
+
+        // Allow delete access
+        if ($user->can('delete_product')) {
+            $this->crud->allowAccess('delete');
+        }
+    }
+
     public function setFields()
     {
-
         $this->crud->addFields([
             [
                 'name'  => 'name',
                 'label' => trans('product.name'),
                 'type'  => 'text',
 
-                // TAB
+                    // TAB
                 'tab'   => trans('product.general_tab'),
             ],
             [
                 'name'  => 'description',
                 'label' => trans('product.description'),
-                'type'  => 'ckeditor',
+                // 'type'  => 'ckeditor',
+                'type'  => 'text',
 
-                // TAB
+                    // TAB
                 'tab'   => trans('product.general_tab'),
             ],
             [
@@ -121,7 +163,7 @@ class ProductCrudController extends CrudController
                 'model'     => "App\Models\Category",
                 'pivot'     => true,
 
-                // TAB
+                    // TAB
                 'tab'   => trans('product.general_tab'),
             ],
             [
@@ -129,7 +171,7 @@ class ProductCrudController extends CrudController
                 'label' => trans('product.sku'),
                 'type'  => 'text',
 
-                // TAB
+                    // TAB
                 'tab'   => trans('product.general_tab'),
             ],
             [
@@ -137,7 +179,7 @@ class ProductCrudController extends CrudController
                 'label' => trans('product.stock'),
                 'type'  => 'number',
 
-                // TAB
+                    // TAB
                 'tab'   => trans('product.general_tab'),
             ],
             [
@@ -148,7 +190,7 @@ class ProductCrudController extends CrudController
                     'step' => 'any',
                 ],
 
-                // TAB
+                    // TAB
                 'tab'   => trans('product.general_tab'),
             ],
             [
@@ -159,26 +201,28 @@ class ProductCrudController extends CrudController
                     'readonly'  => 'readonly',
                 ],
 
-                // TAB
+                    // TAB
                 'tab'   => trans('product.general_tab'),
             ],
             [
                 'name'  => 'price_vat_calculator',
                 'type'  => 'product_vat',
+                'tab'   => trans('product.general_tab'),
+
             ],
             [
-               'type'           => 'select2_tax',
-               'label'          => trans('tax.tax'),
-               'name'           => 'tax_id',
-               'entity'         => 'tax',
-               'attribute'      => 'name',
-               'data_value'     => 'value',
-               'model'          => "App\Models\Tax",
-               'attributes'     => [
-                    'id'    => 'tax',
-               ],
+                'type'           => 'select2_tax',
+                'label'          => trans('tax.tax'),
+                'name'           => 'tax_id',
+                'entity'         => 'tax',
+                'attribute'      => 'name',
+                'data_value'     => 'value',
+                'model'          => "App\Models\Tax",
+                'attributes'     => [
+                'id'    => 'tax',
+            ],
 
-                // TAB
+                    // TAB
                 'tab'   => trans('product.general_tab'),
             ],
             [
@@ -186,58 +230,104 @@ class ProductCrudController extends CrudController
                 'label'   => trans('common.status'),
                 'type'    => 'select_from_array',
                 'options' => [
-                    '0' => trans('common.inactive'),
-                    '1' => trans('common.active'),
-                 ],
+                '0' => trans('common.inactive'),
+                '1' => trans('common.active'),
+            ],
 
-                // TAB
+                    // TAB
                 'tab'   => trans('product.general_tab'),
             ],
             [
-               'name'       => 'attribute_set_id',
-               'label'      => trans('attribute.attribute_sets'),
-               'type'       => 'select2',
-               'entity'     => 'attributes',
-               'attribute'  => 'name',
-               'model'      => "App\Models\AttributeSet",
-               'attributes' => [
-                    'id'    => 'attributes-set'
-               ],
+                'name'       => 'attribute_set_id',
+                'label'      => trans('attribute.attribute_sets'),
+                'type'       => 'select2',
+                'entity'     => 'attributes',
+                'attribute'  => 'name',
+                'model'      => "App\Models\AttributeSet",
+                'attributes' => [
+                'id'    => 'attributes-set'
+            ],
 
-               // TAB
-               'tab'   => trans('product.attributes_tab'),
+                   // TAB
+                'tab'   => trans('product.attributes_tab'),
             ],
             [
                 'name'  => 'attribute_types',
                 'label' => trans('attribute.name'),
                 'type'  => 'product_attributes',
 
-                // TAB
+                    // TAB
                 'tab'   => trans('product.attributes_tab'),
             ]
-        ]);
+            ]);
 
         $this->crud->addField([
-            'name'          => 'dropzone',
-            'type'          => 'dropzone',
-            'disk'          => 'products', // disk where images will be uploaded
-            'mimes'         => [
+                'name'          => 'dropzone',
+                'type'          => 'dropzone',
+                'disk'          => 'products', // disk where images will be uploaded
+                'mimes'         => [
                 'image/*'
-            ],
-            'filesize'      => 5, // maximum file size in MB
+                ],
+                'filesize'      => 5, // maximum file size in MB
 
-            // TAB
-            'tab'           => trans('product.product_images_tab'),
-        ], 'update');
+                    // TAB
+                'tab'           => trans('product.product_images_tab'),
+            ], 'update');
 
         $this->crud->addField([
-            'name'          => 'product_group',
-            'type'          => 'product_group',
-            'model'         => 'App\Models\Product',
+                'name'          => 'product_group',
+                'type'          => 'product_group',
+                'model'         => 'App\Models\Product',
 
-            // TAB
-            'tab'           => trans('product.group_tab'),
-        ], 'update');
+                    // TAB
+                'tab'           => trans('product.group_tab'),
+            ], 'update');
+
+
+        // Specific price functionality
+        $this->crud->addFields([
+             [
+                'name'  => 'discount_type',
+                'label' => trans('specificprice.discount_type'),
+                'model' =>'App\Models\SpecificPrice',
+                'entity' => 'specificPrice',
+                'type'  => 'enum_discount_simple',
+
+                    // TAB
+                'tab'   => trans('specificprice.specific_price')
+            ],
+            [
+                'name'  => 'reduction',
+                'label' => trans('specificprice.reduction'),
+                'model' => 'App\Models\SpecificPrice',
+                'attribute'   => 'reduction',
+                'type'  => 'number',
+
+
+                    // TAB
+                'tab'   => trans('specificprice.specific_price')
+            ],
+            [
+                'name'  => 'start_date',
+                'label' => trans('specificprice.start_date'),
+                'type'  => 'datetime_picker',
+                'model' => 'App\Models\SpecificPrice',
+                'attribute'   => 'start_date',
+                    // TAB
+                'tab'   => trans('specificprice.specific_price')
+            ],
+            [
+                'name'  => 'expiration_date',
+                'label' => trans('specificprice.expiration_date'),
+                'type'  => 'datetime_picker',
+                'model' => 'App\Models\SpecificPrice',
+                'attribute'   => 'expiration_date',
+
+                    // TAB
+                'tab'   => trans('specificprice.specific_price')
+            ],
+
+        ]);
 
     }
 
@@ -303,7 +393,7 @@ class ProductCrudController extends CrudController
         }
     }
 
-    public function store(StoreRequest $request, ProductGroup $productGroup)
+    public function store(StoreRequest $request, ProductGroup $productGroup, SpecificPrice $specificPrice)
     {
         // Create group entry
         $productGroup = $productGroup->create();
@@ -327,8 +417,49 @@ class ProductCrudController extends CrudController
             }
         }
 
+        $productId = $this->crud->entry->id;
+        $reduction = $request->input('reduction');
+        $discountType = $request->input('discount_type');
+        $startDate = $request->input('start_date');
+        $expirationDate = $request->input('expiration_date');
+
+        if(!$request->has('start_date') || !$request->has('expiration_date')) {
+            \Alert::error(trans('specificprice.dates_cant_be_null'))->flash();
+            return $redirect_location;
+        }
+
+        // Check if a specific price reduction doesn't already exist in this period
+        if(!$this->validateProductDates($productId, $startDate, $expirationDate)) {
+            $product = Product::find($productId);
+            $productName = $product->name;
+
+            \Alert::error(trans('specificprice.wrong_dates', ['productName' => $productName]))->flash();
+            return $redirect_location;
+        }
+
+        // Check if the price after reduction is not less than 0
+        if($request->has('reduction') && $request->has('discount_type')) {
+            if(!$this->validateReductionPrice($productId, $reduction,
+            $discountType)) {
+                \Alert::error(
+                    trans('specificprice.reduction_price_not_ok'))->flash();
+            }
+            else{
+                // Save specific price
+                $specificPrice->discount_type = $discountType;
+                $specificPrice->reduction = $reduction;
+                $specificPrice->start_date = $startDate;
+                $specificPrice->expiration_date = $expirationDate;
+                $specificPrice->product_id = $productId;
+                $specificPrice = $specificPrice->save();
+            }
+        }
+
+
+
         return $redirect_location;
     }
+
 
     public function update(UpdateRequest $request, Attribute $attribute, Product $product)
     {
@@ -389,6 +520,51 @@ class ProductCrudController extends CrudController
             }
         }
 
+
+        $discountType = $request->input('discount_type');
+        $reduction = $request->input('reduction');
+        $startDate = $request->input('start_date');
+        $expirationDate = $request->input('expiration_date');
+        $productId = $this->crud->entry->id;
+
+
+        // Check if the price after reduction is not less than 0
+        if($request->has('reduction') && $request->has('discount_type') && $discountType) {
+            if(!$this->validateReductionPrice($productId, $reduction,
+            $discountType)) {
+                \Alert::error(
+                    trans('specificprice.reduction_price_not_ok'))->flash();
+                return $redirect_location;
+            }
+        }
+
+        if(!$request->has('start_date') || !$request->has('expiration_date')) {
+            \Alert::error(trans('specificprice.dates_cant_be_null'))->flash();
+            return $redirect_location;
+        }
+
+        // Check if a specific price reduction doesn't already exist in this period
+        if(!$this->validateProductDates($productId, $startDate, $expirationDate)) {
+            $product = Product::find($productId);
+            $productName = $product->name;
+
+            \Alert::error(trans('specificprice.wrong_dates', ['productName' => $productName]))->flash();
+            return $redirect_location;
+        }
+
+        if($request->has('reduction') && $request->has('discount_type') && $discountType) {
+            // Save specific price
+            $specificPrice = new SpecificPrice();
+
+            $specificPrice->discount_type = $discountType;
+            $specificPrice->reduction = $reduction;
+            $specificPrice->start_date = $startDate;
+            $specificPrice->expiration_date = $expirationDate;
+            $specificPrice->product_id = $productId;
+            $specificPrice = $specificPrice->save();
+        }
+
+
         return $redirect_location;
     }
 
@@ -440,21 +616,21 @@ class ProductCrudController extends CrudController
 
             switch($relationType) {
                 case 'hasMany':
-                    if (count($product->{$relationName}) > 0) {
-                        foreach ($product->{$relationName} as $relationValue) {
-                            $clone->{$relationName}()->create($relationValue->toArray());
-                        }
+                if (count($product->{$relationName}) > 0) {
+                    foreach ($product->{$relationName} as $relationValue) {
+                        $clone->{$relationName}()->create($relationValue->toArray());
                     }
+                }
                 break;
 
                 case 'hasOne':
-                    if ($product->{$relationName}) {
-                        $clone->{$relationName}()->create($values->toArray());
-                    }
+                if ($product->{$relationName}) {
+                    $clone->{$relationName}()->create($values->toArray());
+                }
                 break;
 
                 case 'belongsToMany':
-                    $clone->{$relationName}()->sync($values);
+                $clone->{$relationName}()->sync($values);
                 break;
             }
         }
@@ -464,4 +640,62 @@ class ProductCrudController extends CrudController
         return redirect()->back();
     }
 
+
+    /**
+     * Validate if the price after reduction is not less than 0
+     *
+     * @return boolean
+     */
+    public function validateReductionPrice($productId, $reduction,
+        $discountType)
+    {
+
+        $product = Product::find($productId);
+        $oldPrice = $product->price;
+        if($discountType == 'Amount') {
+            $newPrice = $oldPrice - $reduction;
+        }
+        if($discountType == 'Percent') {
+            $newPrice = $oldPrice - $reduction/100.00 * $oldPrice;
+        }
+
+        if($newPrice < 0) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Check if it doesn't already exist a specific price reduction for the same
+     * period for a product
+     *
+     * @return boolean
+     */
+    public function validateProductDates($productId, $startDate, $expirationDate)
+    {
+        $specificPrice = SpecificPrice::where('product_id', $productId)->get();
+
+        foreach ($specificPrice as $item) {
+            $existingStartDate = $item->start_date;
+            $existingExpirationDate = $item->expiration_date;
+             if($expirationDate >= $existingStartDate
+                && $startDate <= $existingExpirationDate) {
+                return false;
+            }
+            if($expirationDate >= $existingStartDate
+                && $startDate <= $existingExpirationDate) {
+                return false;
+            }
+            if($startDate <= $existingStartDate
+                && $expirationDate >= $existingExpirationDate) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
 }
+
+
+

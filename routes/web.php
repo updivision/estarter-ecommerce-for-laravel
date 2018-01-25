@@ -19,9 +19,17 @@ Route::group(['middleware' => 'admin',
 	CRUD::resource('taxes', 'TaxCrudController');
 	CRUD::resource('orders', 'OrderCrudController');
 	CRUD::resource('order-statuses', 'OrderStatusCrudController');
+	CRUD::resource('clients', 'ClientCrudController');
+	CRUD::resource('users', 'UserCrudController');
+	CRUD::resource('cart-rules', 'CartRuleCrudController');
+	CRUD::resource('specific-prices', 'SpecificPriceCrudController');
+	CRUD::resource('notification-templates', 'NotificationTemplateCrudController');
 
 	// Clone Products
 	Route::post('products/clone', ['as' => 'clone.product', 'uses' => 'ProductCrudController@cloneProduct']);
+
+	// Update Order Status
+	Route::post('orders/update-status', ['as' => 'updateOrderStatus', 'uses' => 'OrderCrudController@updateStatus']);
 });
 
 
@@ -43,4 +51,17 @@ Route::group(['middleware' => 'admin',
 	Route::post('product-group/list/ungrouped-products', ['as' => 'getUngroupedProducts', 'uses' => 'ProductGroupController@getUngroupedProducts']);
 	Route::post('product-group/add/product', ['as' => 'addProductToGroup', 'uses' => 'ProductGroupController@addProductToGroup']);
 	Route::post('product-group/remove/product', ['as' => 'removeProductFromGroup', 'uses' => 'ProductGroupController@removeProductFromGroup']);
+
+	// Client address
+	Route::post('client/list/addresses', ['as' => 'getClientAddresses', 'uses' => 'ClientAddressController@getClientAddresses']);
+	Route::post('client/add/address', ['as' => 'addClientAddress', 'uses' => 'ClientAddressController@addClientAddress']);
+	Route::post('client/delete/address', ['as' => 'deleteClientAddress', 'uses' => 'ClientAddressController@deleteClientAddress']);
+
+	// Client company
+	Route::post('client/list/companies', ['as' => 'getClientCompanies', 'uses' => 'ClientCompanyController@getClientCompanies']);
+	Route::post('client/add/company', ['as' => 'addClientCompany', 'uses' => 'ClientCompanyController@addClientCompany']);
+	Route::post('client/delete/company', ['as' => 'deleteClientCompany', 'uses' => 'ClientCompanyController@deleteClientCompany']);
+
+	// Notification templates
+	Route::post('notification-templates/list-model-variables', ['as' => 'listModelVars', 'uses' => 'NotificationTemplateCrudController@listModelVars']);
 });

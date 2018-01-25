@@ -8,6 +8,7 @@ return [
 	'description'               => 'Description',
 	'price'                     => 'Price',
 	'price_without_vat'         => 'Price without VAT',
+	'price_with_tax'			=> 'Price with Tax',
 	'hint_price'                => 'Use dot (.) instead comma (,) for separating number decimals',
 	'hint_category'             => 'You can select one or more categories where the product will be displayed',
 	'sku'                       => 'SKU',

@@ -1,0 +1,41 @@
+<?php
+
+return [
+
+	'cart_rule'						=> 'Cart rule',
+	'cart_rules'					=> 'Cart rules',
+	'name'							=> 'Name',
+	'code'							=> 'Code',
+	'priority'						=> 'Priority',
+	'start_date'					=> 'Start date',
+	'expiration_date'				=> 'Expiration date',
+	'status'						=> 'Status',
+	'highlight'						=> 'Highlight',
+	'minimum_amount'				=> 'Minimum amount',
+	'total_available'				=> 'Total available',
+	'total_available_each_user' 	=> 'Total available for each customer',
+	'promo_label'					=> 'Promo label',
+	'promo_text'					=> 'Promo text',
+	'multiply_gift'					=> 'Multiply gift',
+	'limit_to_one_customer'			=> 'Limit to a single customer',
+	'gift'							=> 'Gift',
+	'min_nr_products'				=> 'Minimum nr. of products',
+	'discount_type'					=> 'Discount type',
+	'reduction_amount'				=> 'Reduction amount',
+	'reduction_percent'				=> 'Reduction percent',
+	'reduction_value'				=> 'Reduction value',
+	'currency'						=> 'Currency',
+	'compatible_with'				=> 'Compatible with',
+	'information_tab'				=> 'Information',
+	'actions_tab'					=> 'Actions',
+	'conditions_tab'				=> 'Conditions',
+	'free_delivery'					=> 'Free delivery',
+	'compatible_with_rules'			=> 'Compatible with rules',
+	'send_free_gift'				=> 'Send free gift',
+	'categories_rule'				=> 'The categories are matching one of these:',
+	'products_rule'					=> 'The products are matching one of these:',
+	'customer_groups_rule'			=> 'Apply rule to customers:',
+	'product_groups_rule'			=> 'Apply rule to product groups:',
+	
+
+];
