@@ -23,6 +23,7 @@ Route::group(['middleware' => 'admin',
 	CRUD::resource('users', 'UserCrudController');
 	CRUD::resource('cart-rules', 'CartRuleCrudController');
 	CRUD::resource('specific-prices', 'SpecificPriceCrudController');
+	CRUD::resource('notification-templates', 'NotificationTemplateCrudController');
 
 	// Clone Products
 	Route::post('products/clone', ['as' => 'clone.product', 'uses' => 'ProductCrudController@cloneProduct']);
@@ -51,13 +52,16 @@ Route::group(['middleware' => 'admin',
 	Route::post('product-group/add/product', ['as' => 'addProductToGroup', 'uses' => 'ProductGroupController@addProductToGroup']);
 	Route::post('product-group/remove/product', ['as' => 'removeProductFromGroup', 'uses' => 'ProductGroupController@removeProductFromGroup']);
 
-	// Client address routes
+	// Client address
 	Route::post('client/list/addresses', ['as' => 'getClientAddresses', 'uses' => 'ClientAddressController@getClientAddresses']);
 	Route::post('client/add/address', ['as' => 'addClientAddress', 'uses' => 'ClientAddressController@addClientAddress']);
 	Route::post('client/delete/address', ['as' => 'deleteClientAddress', 'uses' => 'ClientAddressController@deleteClientAddress']);
 
-	// Client company routes
+	// Client company
 	Route::post('client/list/companies', ['as' => 'getClientCompanies', 'uses' => 'ClientCompanyController@getClientCompanies']);
 	Route::post('client/add/company', ['as' => 'addClientCompany', 'uses' => 'ClientCompanyController@addClientCompany']);
 	Route::post('client/delete/company', ['as' => 'deleteClientCompany', 'uses' => 'ClientCompanyController@deleteClientCompany']);
+
+	// Notification templates
+	Route::post('notification-templates/list-model-variables', ['as' => 'listModelVars', 'uses' => 'NotificationTemplateCrudController@listModelVars']);
 });

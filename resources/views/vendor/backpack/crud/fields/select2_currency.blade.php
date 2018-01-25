@@ -45,14 +45,14 @@
     {{-- FIELD CSS - will be loaded in the after_styles section --}}
     @push('crud_fields_styles')
         <!-- include select2 css-->
-        <link href="{{ asset('vendor/adminlte/plugins/select2/select2.min.css') }}" rel="stylesheet" type="text/css" />
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/select2-bootstrap-theme/0.1.0-beta.10/select2-bootstrap.min.css" rel="stylesheet" type="text/css" />
+        {{-- <link href="{{ asset('vendor/adminlte/plugins/select2/select2.min.css') }}" rel="stylesheet" type="text/css" /> --}}
+        {{-- <link href="https://cdnjs.cloudflare.com/ajax/libs/select2-bootstrap-theme/0.1.0-beta.10/select2-bootstrap.min.css" rel="stylesheet" type="text/css" /> --}}
     @endpush
 
     {{-- FIELD JS - will be loaded in the after_scripts section --}}
     @push('crud_fields_scripts')
         <!-- include select2 js-->
-        <script src="{{ asset('vendor/adminlte/plugins/select2/select2.min.js') }}"></script>
+        {{-- <script src="{{ asset('vendor/adminlte/plugins/select2/select2.min.js') }}"></script> --}}
         <script>
             jQuery(document).ready(function($) {
                 // trigger select2 for each untriggered select2 box

@@ -78,13 +78,17 @@
 
                 // Reinitalize select2
                 $('.select2_field').select2("destroy");
-                $('.select2_field').select2();
+                $('.select2_field').select2({
+                    theme: "bootstrap"
+                });
               });
           }
 
           // Render attributes on attributes set change
-          $('#attributes-set').select2().on("change", function(e) {
-            getAttributes($(this).val());
+          $('#attributes-set').select2({
+              theme: "bootstrap"
+          }).on("change", function(e) {
+              getAttributes($(this).val());
           });
 
           // Render attributes fields on document ready

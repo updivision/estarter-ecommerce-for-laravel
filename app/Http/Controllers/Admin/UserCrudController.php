@@ -21,11 +21,14 @@ class UserCrudController extends CrudController
         $this->crud->setModel('App\User');
         $this->crud->setRoute(config('backpack.base.route_prefix') . '/users');
         $this->crud->setEntityNameStrings('user', 'users');
-        $this->crud->addClause('whereHas', 'roles', function ($query) {
-            $adminRoleName = env('ADMIN_ROLE_NAME');
-            $query->whereName($adminRoleName ?: 'administrator');
+
+        // Include all users except clients
+        $this->crud->addClause('whereDoesntHave', 'roles', function ($query) {
+            $clientRoleName = env('CLIENT_ROLE_NAME');
+            return $query->where("name", $clientRoleName ?: 'client');
         });
 
+       
         /*
         |--------------------------------------------------------------------------
         | COLUMNS
@@ -120,6 +123,17 @@ class UserCrudController extends CrudController
                 'name'  => 'password_confirmation',
                 'label' => trans('user.password_confirmation'),
                 'type'  => 'password',
+
+                'tab'   => trans('user.tab_general'),
+            ],
+             [
+                'name'      => 'active',
+                'label'     => trans('common.status'),
+                'type'      => 'select_from_array',
+                'options'   => [
+                    0 => trans('common.inactive'),
+                    1 => trans('common.active'),
+                ],
 
                 'tab'   => trans('user.tab_general'),
             ],

@@ -14,9 +14,15 @@ class RoleUsersTableSeeder extends Seeder
     	DB::table('role_users')->delete();
 
     	$roleUsers = [
+            // Set admin role for user id 1
     		[
                 'role_id'  => 1,
                 'user_id'  => 1
+            ],
+            // Set client role for user id 2
+            [
+                'role_id'  => 2,
+                'user_id'  => 2
             ],
     	];
 

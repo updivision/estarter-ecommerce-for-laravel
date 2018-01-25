@@ -38,5 +38,26 @@ class DatabaseSeeder extends Seeder
         $this->call(RolesTableSeeder::class);
         $this->call(PermissionRolesTableSeeder::class);
         $this->call(RoleUsersTableSeeder::class);
+
+        // Seed currencies
+        $this->call(CurrenciesTableSeeder::class);
+
+        // Seed carriers
+        $this->call(CarriersTableSeeder::class);
+
+        // Seed order statuses
+        $this->call(OrderStatusesTableSeeder::class);
+
+        // Seed order statuses
+        $this->call(NotificationTemplatesTableSeeder::class);
+
+        // Seed client address
+        $this->call(AddressesTableSeeder::class);
+
+        // Seed client company
+        $this->call(CompaniesTableSeeder::class);
+
+        // Orders
+        $this->call(OrdersTableSeeder::class);
     }
 }

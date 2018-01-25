@@ -108,7 +108,6 @@
 @push('crud_fields_scripts')
     <script src="{{ asset('vendor/adminlte/plugins/select2/select2.min.js') }}"></script>
     <script>
-
         // List client addresses
         function getClientAddresses(client_id = null) {
             $.ajax({

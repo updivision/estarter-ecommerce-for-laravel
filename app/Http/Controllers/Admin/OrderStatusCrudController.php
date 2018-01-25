@@ -32,6 +32,12 @@ class OrderStatusCrudController extends CrudController
             [
                 'name'  => 'name',
                 'label' => trans('order.status_name'),
+            ],
+            [
+                'name'  => 'notification',
+                'label' => trans('order.notification'),
+                'type'  => 'boolean',
+                'options' => [0 => 'Disabled', 1 => 'Enabled']
             ]
         ]);
 
@@ -94,6 +100,14 @@ class OrderStatusCrudController extends CrudController
                 'name'  => 'name',
                 'label' => trans('order.status_name'),
                 'type'  => 'text',
+            ],
+            [
+                'name'  => 'notification',
+                'type'  => 'select_from_array',
+                'options' => [
+                    1 => 'Enabled',
+                    0 => 'Disabled'
+                ]
             ]
         ]);
     }

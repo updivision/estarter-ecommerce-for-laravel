@@ -18,7 +18,7 @@ class User extends Authenticatable
     |--------------------------------------------------------------------------
     */
     protected $table = 'users';
-    //protected $primaryKey = 'id';
+    // protected $primaryKey = 'id';
     // public $timestamps = false;
     // protected $guarded = ['id'];
     protected $fillable = [
@@ -35,6 +35,28 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
+
+    public $notificationVars = [
+        'userSalutation',
+        'userName',
+        'userEmail',
+        'age',
+    ];
+
+    /*
+    |--------------------------------------------------------------------------
+    | NOTIFICATIONS VARIABLES
+    |--------------------------------------------------------------------------
+    */
+    public function notificationVariables()
+    {
+        return [
+            'userSalutation' => $this->user->salutation,
+            'userName'       => $this->user->name,
+            'userEmail'      => $this->user->email,
+            'age'            => $this->age(),
+        ];
+    }
 
 
     /*
@@ -78,7 +100,8 @@ class User extends Authenticatable
     {
         return $this->belongsToMany('App\Models\CartRule');
     }
-    
+
+
     /*
     |--------------------------------------------------------------------------
     | SCOPES

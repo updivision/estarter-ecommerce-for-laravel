@@ -128,123 +128,125 @@
                             <li class="active"><a href="#tab-shipping-address" data-toggle="tab">{{ trans('order.shipping_address') }}</a></li>
                             <li><a href="#tab-billing-info" data-toggle="tab">{{ trans('order.billing_info') }}</a></li>
                         </ul>
-                        <div class="tab-content">
-                            <div class="tab-pane active" id="tab-shipping-address">
-								<h4>{{ trans('order.shipping_address') }}</h4>
-								<table class="table table-condensed table-hover">
-									<tr>
-										<td>{{ trans('address.contact_person') }}</td>
-										<td>{{ $order->shippingAddress->name }}</td>
-									</tr>
-									<tr>
-										<td>{{ trans('address.address') }}</td>
-										<td>
-											{{ $order->shippingAddress->address1 }} <br>
-											{{ $order->shippingAddress->address2 }}
-										</td>
-									</tr>
-									<tr>
-										<td>{{ trans('address.county') }}</td>
-										<td>{{ $order->shippingAddress->county }}</td>
-									</tr>
-									<tr>
-										<td>{{ trans('address.city') }}</td>
-										<td>{{ $order->shippingAddress->city }}</td>
-									</tr>
-									<tr>
-										<td>{{ trans('address.postal_code') }}</td>
-										<td>{{ $order->shippingAddress->postal_code }}</td>
-									</tr>
-									<tr>
-										<td>{{ trans('address.phone') }}</td>
-										<td>{{ $order->shippingAddress->phone }}</td>
-									</tr>
-									<tr>
-										<td>{{ trans('address.mobile_phone') }}</td>
-										<td>{{ $order->shippingAddress->mobile_phone }}</td>
-									</tr>
-									<tr>
-										<td>{{ trans('address.comment') }}</td>
-										<td>{{ $order->shippingAddress->comment }}</td>
-									</tr>
-								</table>
-                            </div>
-                            <div class="tab-pane" id="tab-billing-info">
-								@if ($order->billingCompanyInfo)
-									<h4>{{ trans('order.billing_company_details') }}</h4>
-									<table class="table table-condensed table-hover">
-										<tr>
-											<td>{{ trans('company.company_name') }}</td>
-											<td>{{ $order->billingCompanyInfo->name }}</td>
-										</tr>
-										<tr>
-											<td>{{ trans('company.address') }}</td>
-											<td>
-												{{ $order->billingCompanyInfo->address1 }} <br>
-												{{ $order->billingCompanyInfo->address2 }}
-											</td>
-										</tr>
-										<tr>
-											<td>{{ trans('company.county') }}</td>
-											<td>{{ $order->billingCompanyInfo->county }}</td>
-										</tr>
-										<tr>
-											<td>{{ trans('company.city') }}</td>
-											<td>{{ $order->billingCompanyInfo->city }}</td>
-										</tr>
-										<tr>
-											<td>{{ trans('company.tin') }}</td>
-											<td>{{ $order->billingCompanyInfo->tin }}</td>
-										</tr>
-										<tr>
-											<td>{{ trans('company.trn') }}</td>
-											<td>{{ $order->billingCompanyInfo->trn }}</td>
-										</tr>
-									</table>
-								@endif
-
-								@if ($order->billingAddress)
-									<h4>{{ trans('order.billing_address') }}</h4>
+                        @if ($order->shippingAddress)
+	                        <div class="tab-content">
+	                            <div class="tab-pane active" id="tab-shipping-address">
+									<h4>{{ trans('order.shipping_address') }}</h4>
 									<table class="table table-condensed table-hover">
 										<tr>
 											<td>{{ trans('address.contact_person') }}</td>
-											<td>{{ $order->billingAddress->name }}</td>
+											<td>{{ $order->shippingAddress->name }}</td>
 										</tr>
 										<tr>
 											<td>{{ trans('address.address') }}</td>
 											<td>
-												{{ $order->billingAddress->address1 }} <br>
-												{{ $order->billingAddress->address2 }}
+												{{ $order->shippingAddress->address1 }} <br>
+												{{ $order->shippingAddress->address2 }}
 											</td>
 										</tr>
 										<tr>
 											<td>{{ trans('address.county') }}</td>
-											<td>{{ $order->billingAddress->county }}</td>
+											<td>{{ $order->shippingAddress->county }}</td>
 										</tr>
 										<tr>
 											<td>{{ trans('address.city') }}</td>
-											<td>{{ $order->billingAddress->city }}</td>
+											<td>{{ $order->shippingAddress->city }}</td>
 										</tr>
 										<tr>
 											<td>{{ trans('address.postal_code') }}</td>
-											<td>{{ $order->billingAddress->postal_code }}</td>
+											<td>{{ $order->shippingAddress->postal_code }}</td>
 										</tr>
 										<tr>
 											<td>{{ trans('address.phone') }}</td>
-											<td>{{ $order->billingAddress->phone }}</td>
+											<td>{{ $order->shippingAddress->phone }}</td>
 										</tr>
 										<tr>
 											<td>{{ trans('address.mobile_phone') }}</td>
-											<td>{{ $order->billingAddress->mobile_phone }}</td>
+											<td>{{ $order->shippingAddress->mobile_phone }}</td>
 										</tr>
 										<tr>
 											<td>{{ trans('address.comment') }}</td>
-											<td>{{ $order->billingAddress->comment }}</td>
+											<td>{{ $order->shippingAddress->comment }}</td>
 										</tr>
 									</table>
-								@endif
-                            </div>
-                        </div>
+	                            </div>
+	                            <div class="tab-pane" id="tab-billing-info">
+									@if ($order->billingCompanyInfo)
+										<h4>{{ trans('order.billing_company_details') }}</h4>
+										<table class="table table-condensed table-hover">
+											<tr>
+												<td>{{ trans('company.company_name') }}</td>
+												<td>{{ $order->billingCompanyInfo->name }}</td>
+											</tr>
+											<tr>
+												<td>{{ trans('company.address') }}</td>
+												<td>
+													{{ $order->billingCompanyInfo->address1 }} <br>
+													{{ $order->billingCompanyInfo->address2 }}
+												</td>
+											</tr>
+											<tr>
+												<td>{{ trans('company.county') }}</td>
+												<td>{{ $order->billingCompanyInfo->county }}</td>
+											</tr>
+											<tr>
+												<td>{{ trans('company.city') }}</td>
+												<td>{{ $order->billingCompanyInfo->city }}</td>
+											</tr>
+											<tr>
+												<td>{{ trans('company.tin') }}</td>
+												<td>{{ $order->billingCompanyInfo->tin }}</td>
+											</tr>
+											<tr>
+												<td>{{ trans('company.trn') }}</td>
+												<td>{{ $order->billingCompanyInfo->trn }}</td>
+											</tr>
+										</table>
+									@endif
+
+									@if ($order->billingAddress)
+										<h4>{{ trans('order.billing_address') }}</h4>
+										<table class="table table-condensed table-hover">
+											<tr>
+												<td>{{ trans('address.contact_person') }}</td>
+												<td>{{ $order->billingAddress->name }}</td>
+											</tr>
+											<tr>
+												<td>{{ trans('address.address') }}</td>
+												<td>
+													{{ $order->billingAddress->address1 }} <br>
+													{{ $order->billingAddress->address2 }}
+												</td>
+											</tr>
+											<tr>
+												<td>{{ trans('address.county') }}</td>
+												<td>{{ $order->billingAddress->county }}</td>
+											</tr>
+											<tr>
+												<td>{{ trans('address.city') }}</td>
+												<td>{{ $order->billingAddress->city }}</td>
+											</tr>
+											<tr>
+												<td>{{ trans('address.postal_code') }}</td>
+												<td>{{ $order->billingAddress->postal_code }}</td>
+											</tr>
+											<tr>
+												<td>{{ trans('address.phone') }}</td>
+												<td>{{ $order->billingAddress->phone }}</td>
+											</tr>
+											<tr>
+												<td>{{ trans('address.mobile_phone') }}</td>
+												<td>{{ $order->billingAddress->mobile_phone }}</td>
+											</tr>
+											<tr>
+												<td>{{ trans('address.comment') }}</td>
+												<td>{{ $order->billingAddress->comment }}</td>
+											</tr>
+										</table>
+									@endif
+	                            </div>
+	                        </div>
+                        @endif
                     </div>
 			    </div>
 		    </div>
@@ -363,7 +365,9 @@
 	<script>
 		$(document).ready(function () {
 			@if (count($orderStatuses) > 0)
-				$('.select2_field').select2();
+				$('.select2_field').select2({
+                            theme: "bootstrap"
+                        });
 			@endif
 		});
 	</script>

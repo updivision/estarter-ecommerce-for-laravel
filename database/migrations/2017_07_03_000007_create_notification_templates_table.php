@@ -17,7 +17,9 @@ class CreateNotificationTemplatesTable extends Migration
             $table->engine = 'InnoDB';
             $table->increments('id');
             $table->string('name', 255)->nullable()->default(null);
-            $table->longText('content')->nullable()->default(null);
+            $table->string('slug', 255)->unique()->nullable()->default(null);
+            $table->string('model', 255)->nullable()->default(null);
+            $table->longText('body')->nullable()->default(null);
         });
     }
 

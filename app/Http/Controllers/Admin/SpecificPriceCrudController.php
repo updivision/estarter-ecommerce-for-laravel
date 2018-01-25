@@ -136,7 +136,7 @@ class SpecificPriceCrudController extends CrudController
          $this->crud->addField(
              [
                 'name'      => 'product_id',
-                'label'     => trans('specificprice.product') . ' *',
+                'label'     => trans('specificprice.product'),
                 'model'     => 'App\Models\Product',
                 'entity'    => 'product',
                 'attribute' => 'name',
@@ -146,7 +146,7 @@ class SpecificPriceCrudController extends CrudController
         $this->crud->addField(
              [
                 'name'      => 'product_id',
-                'label'     => trans('specificprice.products'). ' *',
+                'label'     => trans('specificprice.products'),
                 'model'     => 'App\Models\Product',
                 'entity'    => 'product',
                 'attribute' => 'name',
@@ -157,26 +157,26 @@ class SpecificPriceCrudController extends CrudController
            
             [
                 'name'      => 'discount_type',
-                'label'     => trans('specificprice.discount_type'). ' *',
+                'label'     => trans('specificprice.discount_type'),
                 'type'      => 'enum_discount_type',
                 'attributes'=> ['field_to_enable' => 'currency_id', 
                                 'enable_field_on_option' => 'Amount'],
             ],
             [
                 'name'  => 'reduction',
-                'label' => trans('specificprice.reduction'). ' *',
+                'label' => trans('specificprice.reduction'),
                 'model' => 'App\Models\SpecificPrice',
                 'type'  => 'number',
             ],
             [
                 'name'  => 'start_date',
-                'label' => trans('specificprice.start_date'). ' *',
+                'label' => trans('specificprice.start_date'),
                 'type'  => 'datetime_picker',
             ],
             
             [
-                'name'  => 'expiration_date',
-                'label' => trans('specificprice.expiration_date'). ' *',
+                 'name'  => 'expiration_date',
+                 'label' => trans('specificprice.expiration_date'),
                  'type'  => 'datetime_picker',
             ],
 

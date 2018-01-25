@@ -8,6 +8,7 @@ return [
 	'order_statuses'          => 'Order Statuses',
 	'status'                  => 'Status',
 	'status_name'             => 'Status Name',
+	'notification'	  		  => 'Notification',
 	'no_status_history'       => 'No status history',
 	'no_order_statuses'       => 'No order statuses defined',
 	'update_status'           => 'Update status',
