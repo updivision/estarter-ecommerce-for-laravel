@@ -83,9 +83,6 @@ class ClientCrudController extends CrudController
 
     public function setFields()
     {
-
-        // dd($this->crud->model->find(1)->roles->first()->name);
-
         $this->crud->addFields([
             [
                 'name'  => 'salutation',
@@ -208,8 +205,8 @@ class ClientCrudController extends CrudController
         $this->handlePasswordInput($request);
 
         $redirect_location = parent::storeCrud($request);
-        $clientRoleID = \DB::table('roles')->whereName( $clientRoleName ?: 'client')->first()->id;
-        $this->crud->entry->roles()->attach($clientRoleID);
+        // $clientRoleID = \DB::table('roles')->whereName($clientRoleName ?: 'client')->first()->id;
+        // $this->crud->entry->roles()->attach($clientRoleID);
 
         return $redirect_location;
     }

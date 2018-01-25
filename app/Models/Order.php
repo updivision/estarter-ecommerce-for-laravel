@@ -76,8 +76,8 @@ class Order extends Model
             // Send notification when order status was changed
             $oldStatus = $order->getOriginal();
             if ($order->status_id != $oldStatus['status_id'] && $order->status->notification != 0) {
-                // example of usage: (be sure that a notification template mail with the slug "test2" exists in db)
-                return \Mail::to($order->user->email)->send(new NotificationTemplateMail($order, "test2"));
+                // example of usage: (be sure that a notification template mail with the slug "example-slug" exists in db)
+                return \Mail::to($order->user->email)->send(new NotificationTemplateMail($order, "order-status-changed"));
             }
         });
     }

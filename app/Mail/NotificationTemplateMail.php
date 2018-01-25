@@ -39,7 +39,6 @@ class NotificationTemplateMail extends Mailable
             return '/(\{{2}\s?'.$key.'\s?\}{2})/mi';
         });
 
-        
         $body = preg_replace($patterns->toArray(), $variables, $this->template->body);
 
         return $this->view('email.notification_template.layout', compact('body'));
