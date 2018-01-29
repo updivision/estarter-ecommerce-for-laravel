@@ -41,7 +41,7 @@
         @endif
 
         {{-- Input old --}}
-        @if (count(old('option')) >= 1)
+        @if (is_array(old('option')) && count(old('option')) > 0)
           @foreach(old('option') as $k=>$option)
             <div class="form-group option">
               <label>Option #{{ $k+1 }}</label>

@@ -49,7 +49,7 @@
           @endif
 
           // Set oldData and oldSetId if old input data is sent
-          @if(count(old('attributes')) > 0)
+          @if(is_array(old('attributes')) && count(old('attributes')) > 0)
             // Encode old input data as json
             var oldData = '{!! json_encode(old('attributes'), JSON_NUMERIC_CHECK) !!}';
 
