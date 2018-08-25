@@ -3,13 +3,14 @@
 	    <div class="dz-message">
 	    	Drop files here or click to upload.
 	    </div>
-
-	    @foreach($entry->images as $image)
-		    <div class="dz-preview" data-id="{{ $image->id }}">
-		    	<img class="dropzone-thumbnail" src={{ asset('uploads/products/'.$image->name) }}>
-				<a class="dz-remove" href="javascript:void(0);" data-remove="{{ $image->id }}">Remove file</a>
-		    </div>
-		@endforeach
+		@if ( $entry->images->count() )
+		    @foreach($entry->images as $image)
+			    <div class="dz-preview" data-id="{{ $image->id }}">
+			    	<img class="dropzone-thumbnail" src={{ asset('uploads/products/'.$image->name) }}>
+					<a class="dz-remove" href="javascript:void(0);" data-remove="{{ $image->id }}">Remove file</a>
+			    </div>
+			@endforeach
+		@endif
 	</div>
 </div>
 
