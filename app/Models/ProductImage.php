@@ -51,6 +51,15 @@ class ProductImage extends Model
 	|--------------------------------------------------------------------------
 	*/
 
+    /**
+     * Get the image path on disk.
+     *
+     * @return string
+     */
+    public function getNameAttribute($name) {
+        return substr($this->product_id, 0, 1) . DIRECTORY_SEPARATOR . $this->product_id . DIRECTORY_SEPARATOR . $name;
+    }
+
     /*
 	|--------------------------------------------------------------------------
 	| MUTATORS

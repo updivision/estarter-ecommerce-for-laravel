@@ -132,9 +132,23 @@
                   {!! csrf_field() !!}
                   <input type="hidden" name="product_id" value="">
 
-                  <strong>{{ trans('product.cloned_product_sku') }}</strong>
-                  <input type="text" class="form-control" name="clone_sku" required="true">
-                  <span>{{ trans('common.must_be_unique') }}</span>
+                  <div class="row">
+                    <div class="form-group col-md-12">
+                      <label>{{ trans('product.cloned_product_sku') }}</label>
+                      <input type="text" class="form-control" name="clone_sku" required="true">
+                      <span>{{ trans('common.must_be_unique') }}</span>
+                    </div>
+
+                    <div class="form-group col-md-12">
+                      <div class="checkbox">
+                        <label>
+                          <input type="checkbox" name="clone_images">
+                          {{ trans('product.clone_images') }}
+                        </label>
+                      </div>
+                      <span>{{ trans('product.clone_images_hint') }}</span>
+                    </div>                    
+                  </div> 
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-default" data-dismiss="modal">{{ trans('common.cancel') }}</button>

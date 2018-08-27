@@ -347,10 +347,11 @@ class ProductCrudController extends CrudController
             }
 
             foreach ($request->file as $file) {
-                $file_content = file_get_contents($file);
-                $filename = md5(uniqid('', true)).'.'.$file->extension();
+                $file_content   = file_get_contents($file);
+                $path           = substr($product->id, 0, 1) . DIRECTORY_SEPARATOR . $product->id . DIRECTORY_SEPARATOR;
+                $filename       = md5(uniqid('', true)).'.'.$file->extension();
 
-                Storage::disk($disk)->put($filename, $file_content);
+                Storage::disk($disk)->put($path . $filename, $file_content);
 
                 $images[] = [
                     'product_id'    => $product->id,
@@ -454,8 +455,6 @@ class ProductCrudController extends CrudController
                 $specificPrice = $specificPrice->save();
             }
         }
-
-
 
         return $redirect_location;
     }
@@ -578,6 +577,7 @@ class ProductCrudController extends CrudController
     {
         $id = $request->input('product_id');
         $cloneSku = $request->input('clone_sku');
+        $cloneImages = $request->input('clone_images');
 
         // Check if cloned product has sku
         if (!$cloneSku) {
@@ -593,8 +593,15 @@ class ProductCrudController extends CrudController
             return redirect()->back();
         }
 
-        // Find product and load relations specified in
-        $product = $product->loadCloneRelations()->find($id);
+        // Prepare relations
+        $relations = ['categories', 'attributes'];
+
+        if ( $cloneImages ) {
+            array_push($relations, 'images');
+        }
+
+        // Find product and load relations specified
+        $product = $product->with($relations)->find($id);
 
         // Redirect back if product what need to be cloned doesn't exist
         if (!$product) {
@@ -618,7 +625,14 @@ class ProductCrudController extends CrudController
                 case 'hasMany':
                 if (count($product->{$relationName}) > 0) {
                     foreach ($product->{$relationName} as $relationValue) {
-                        $clone->{$relationName}()->create($relationValue->toArray());
+                        $values = $relationValue->toArray();
+
+                        // skip image name accessor
+                        if ( $relationName === "images" ) {
+                            $values['name'] = $relationValue->getOriginal('name');
+                        }
+
+                        $clone->{$relationName}()->create($values);
                     }
                 }
                 break;
@@ -635,11 +649,19 @@ class ProductCrudController extends CrudController
             }
         }
 
+        // clone images on disk
+        if ( $cloneImages ) {
+            foreach ($product->images as $image) {
+                $newpath = substr($clone->id, 0, 1) . DIRECTORY_SEPARATOR . $clone->id . DIRECTORY_SEPARATOR;
+
+                Storage::disk('products')->copy($image->name, $newpath . $image->getOriginal('name'));
+            }
+        }
+
         \Alert::success(trans('product.clone_success'))->flash();
 
         return redirect()->back();
     }
-
 
     /**
      * Validate if the price after reduction is not less than 0

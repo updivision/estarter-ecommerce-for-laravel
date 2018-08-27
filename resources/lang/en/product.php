@@ -28,7 +28,8 @@ return [
 	'sku_unique'                => 'SKU must be unique',
 	'cannot_find_product'       => 'Cannot find product',
 	'clone_success'             => 'Product successfully cloned',
-
+	'clone_images' 				=> 'Clone images?',
+	'clone_images_hint' 		=> 'This will also make a copy of the images.',
 
 	// Images
 	'image_deleted'             => 'Image was successfully deleted!',
